@@ -5,6 +5,8 @@ import subprocess
 import re 
 import pandas as pd
 
+# define the global regex for a number
+number = r'[+-]?((\d+\.\d*)|(\.\d+)|(\d+))([eE][+-]?\d+)?'
 #Goal 1: benchmark time vs size
 
 # QUESTIOn Benchmark in Python or make script to benchmark?????
@@ -18,27 +20,47 @@ def log_results(result):
 
     data = pd.DataFrame(result)
 
+    #get CPU information
+    output = subprocess.check_output(['lscpu']).decode("utf-8")
+
+    pattern = r'^Model\sname:\s*(?P<cpuname>.*)'
+    x = re.search(pattern, output,re.MULTILINE)
+    cpu_name = x['cpuname']
+
+    pattern = r'Core\(s\) per socket:\s*(?P<cps>.*)'
+    x = re.search(pattern, output,re.MULTILINE)
+    cores_per_socket = x['cps']
+
+    pattern = r'Socket\(s\):\s*(?P<sockets>.*)'
+    x = re.search(pattern, output,re.MULTILINE)
+    sockets = x['sockets']
+
+
+    data['CPU_name'] = cpu_name
+    data['Sockets'] = sockets
+    data['Cores_per_socket'] = cores_per_socket
+    
 
     if not os.path.exists(results_dir):
         os.mkdir(results_dir)
 
     if os.path.isfile(results_file):
         data_tmp = pd.read_csv(results_file)
-        print("read in")
-        print(data_tmp)
         data = pd.concat([data_tmp, data],ignore_index=True)
         data = data.sort_values(by='Name')
-        print("data new")
-        print(data)
         data.to_csv(results_file,sep=',',index=False)
     else:
         data.to_csv(results_file,sep=',',index=False)
 
-    print(data)
 
 
 def benchmark(executable, size, args=None, env_var=None):
 
+    print("Running...\nApplication: " + executable +
+          " Size: " + str(size) +
+          " Args: " + str(args) +
+          " Vars: " + str(env_var) 
+          )
     # get the path of this python script
     script_dir = os.path.dirname(os.path.realpath(__file__))
     bin_dir = script_dir.replace("scripts","bin")
@@ -61,7 +83,6 @@ def benchmark(executable, size, args=None, env_var=None):
         output = subprocess.check_output([executable, str(size), str(args)]).decode("utf-8")
     
     # regex the results:
-    number = r'[+-]?((\d+\.\d*)|(\.\d+)|(\d+))([eE][+-]?\d+)?'
     size_pattern = r'^SIZE:\s(?P<rsize>' + number + r')\s'
     time_pattern = r'^TIME:\s(?P<rtime>' + number + r')\ssec'
 
@@ -92,8 +113,32 @@ def benchmark(executable, size, args=None, env_var=None):
 
 if __name__ == "__main__":
 
-    matrix_sizes = range(0,1800,100)
+    applications = [
+        "dgemm",
+        "sgemm",
+        "saxpy",
+        "daxpy",
+        ]
+    
+    matrix_sizes = range(0,1000,100)
 
-    for size in matrix_sizes:
-        benchmark("dgemm",size, "-p", env_var="OMP_NUM_THREADS=8")
+    args = ["-s", "-p"]
+
+    env_vars = [
+        "OMP_NUM_THREADS=2",
+        "OMP_NUM_THREADS=4",
+        "OMP_NUM_THREADS=8",
+        "OMP_NUM_THREADS=16",
+        "OMP_NUM_THREADS=32",
+        ]
+
+    for application in applications:
+        for size in matrix_sizes: 
+            for arg in args:
+                if arg.count("p"):
+                    benchmark(application, size, arg)
+                else:
+                    for var in env_vars:
+                        benchmark(application, size, arg, var)
+
 
