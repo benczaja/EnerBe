@@ -120,7 +120,7 @@ if __name__ == "__main__":
         "daxpy",
         ]
     
-    matrix_sizes = range(0,1000,100)
+    matrix_sizes = range(0,2000,100)
 
     args = ["-s", "-p"]
 
@@ -135,7 +135,7 @@ if __name__ == "__main__":
     for application in applications:
         for size in matrix_sizes: 
             for arg in args:
-                if arg.count("p"):
+                if arg.count("s"):
                     benchmark(application, size, arg)
                 else:
                     for var in env_vars:
