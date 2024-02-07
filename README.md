@@ -30,3 +30,11 @@ With PMT:
 cmake -DENABLE_PMT=1 ..
 make && make install
 ```
+
+### If you need to build PMT
+go to the root EnerBe directory
+```
+git clone --recursive https://git.astron.nl/RD/pmt.git
+cd pmt && mkdir build && cd build
+cmake -DCMAKE_INSTALL_PREFIX=../ ..
+```
