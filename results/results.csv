@@ -1,780 +1,1140 @@
 Name,Args,env_var,Size,Total_time,CPU_time,GPU_time,Total_energy,CPU_energy,GPU_energy,CPU_name,Sockets,Cores_per_socket
 daxpy,-s,,0,1e-06,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=4,5000000,0.016517,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=8,14000000,0.03079,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=2,1400,0.00019,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=32,800,0.022046,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=2,1500,0.000173,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=32,500,0.023031,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=4,13000000,0.040352,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=32,1600,0.027168,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=8,5000000,0.012034,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=32,1200,0.019998,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,1400,0.020152,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,2400,0.000502,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,2000,0.020883,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,2400,0.000209,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,1700,0.000565,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,2300,0.022567,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,2200,0.000224,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,1900,0.024513,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,2200,0.000511,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,1500,0.00017,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,1700,1.6e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,17000000,0.072843,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=2,2300,0.000186,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,2000,0.000478,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,2200,0.031611,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,900,0.000543,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,2300,0.000537,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,2100,0.000471,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,1100,0.0005,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,14000000,0.061764,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=2,2100,0.000155,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,1000,0.02573,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
 daxpy,-p,OMP_NUM_THREADS=4,10000000,0.031509,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=32,3000000,0.010617,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=8,1900,0.000473,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=32,1800,0.027273,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=2,900,0.000166,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=8,19000000,0.040161,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=32,8000000,0.016608,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=2,1300,0.000172,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=2,1100,9.9e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=8,1600,0.000468,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,900,0.029237,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
 daxpy,-p,OMP_NUM_THREADS=32,7000000,0.014717,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=8,300,0.000444,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=32,1700,0.03336,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-s,,3000000,0.010947,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=32,18000000,0.034086,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=2,1900,0.000173,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=8,1100,0.000506,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=2,12000000,0.053565,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=32,16000000,0.045302,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=2,1200,0.000219,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=8,500,0.000448,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=2,13000000,0.05763,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=32,1400,0.023515,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=2,16000000,0.068546,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=4,12000000,0.03751,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=8,1000,0.000463,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=8,1400,0.00052,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=2,800,0.000115,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
 daxpy,-p,OMP_NUM_THREADS=32,400,0.030949,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=16,15000000,0.025565,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=32,600,0.023717,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=2,500,0.000155,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=32,100,0.027377,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,300,0.01418,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,1100,0.032919,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,0,0.000435,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,1000,0.000167,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,1600,0.01925,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,1900,0.00046,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,1600,0.000737,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,300,0.000134,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,300,0.000444,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,1600,0.027168,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,3000000,0.010947,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=32,1700,0.026261,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,1800,0.000184,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,1800,0.000499,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,2100,0.026392,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,800,0.022046,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
 daxpy,-p,OMP_NUM_THREADS=2,100,0.000106,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=8,700,0.001161,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=2,400,0.000109,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=8,1200,0.000466,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=16,0,0.000581,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=8,1300,0.000474,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,700,0.024449,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,1800,8e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,1000,0.000468,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,2000000,0.005826,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=8,1400,0.00052,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,300,0.021803,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,1200,0.019998,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,9000000,0.030573,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
 daxpy,-p,OMP_NUM_THREADS=32,1000000,0.009271,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
 daxpy,-p,OMP_NUM_THREADS=2,200,0.000104,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=2,1700,0.000188,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=8,400,0.000391,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=2,1800,8e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=2,1000,0.000167,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=2,15000000,0.066525,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=32,300,0.021803,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=32,11000000,0.021576,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=4,15000000,0.04576,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=8,900,0.000543,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=8,1500,0.000494,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=2,7000000,0.032793,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=8,18000000,0.038013,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=4,19000000,0.059657,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=8,100,0.000435,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=8,800,0.000457,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=8,10000000,0.021781,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-s,,10000000,0.033708,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=32,1000,0.02573,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=32,17000000,0.048639,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=8,11000000,0.024168,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=32,4000000,0.010744,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=8,12000000,0.026226,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=16,12000000,0.022217,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=2,0,8.1e-05,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=2,700,0.000149,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=8,1000000,0.003588,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=8,0,0.000373,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=32,1300,0.021873,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,12000000,0.03751,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=32,8000000,0.016608,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=32,1400,0.023515,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,1600,0.000172,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
 daxpy,-p,OMP_NUM_THREADS=2,2000000,0.009504,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=32,1500,0.021647,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=8,1300,0.000483,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=8,3000000,0.007402,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-s,,900,6e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,1600,0.000468,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,1700,0.000188,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,1400,0.000171,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,1200,0.000481,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,15000000,0.04576,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=8,1800,0.000484,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,400,0.000391,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,13000000,0.028815,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=32,16000000,0.045302,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=2,1200,0.000206,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,0,0.000581,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=2,800,0.000115,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,1200,0.000466,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,1200,0.022978,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,500,0.000448,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,1300,0.00017,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,18000000,0.076776,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=2,1700,0.000184,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,700,0.001161,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,0,0.024414,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,1500,0.000461,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,4000000,0.010744,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=8,18000000,0.038013,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=32,18000000,0.034086,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=32,1000,0.020581,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,600,0.000454,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,7000000,0.015938,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
 daxpy,-p,OMP_NUM_THREADS=32,5000000,0.012071,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=2,1300,0.000172,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,12000000,0.022217,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=8,5000000,0.012034,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=8,1500,0.000494,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,100,0.027377,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
 daxpy,-p,OMP_NUM_THREADS=2,6000000,0.028087,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=2,900,0.000166,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,1300,0.00027,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,7000000,0.032793,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=8,8000000,0.018403,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=2,1000,0.000166,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,0,0.000145,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,0,0.00022,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=8,12000000,0.026226,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=8,3000000,0.007402,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
 daxpy,-p,OMP_NUM_THREADS=32,2000000,0.009939,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
 daxpy,-p,OMP_NUM_THREADS=8,9000000,0.020676,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=4,14000000,0.043883,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=32,200,0.024247,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=8,8000000,0.018403,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=32,1300,0.021873,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=4,0,0.00022,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=2,9000000,0.040976,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=8,0,0.000435,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-s,,4000000,0.014541,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=2,1600,0.000172,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=2,0,0.000145,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=32,1100,0.022767,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=8,4000000,0.009499,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=8,600,0.000454,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=32,700,0.024449,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=32,0,0.001106,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=2,17000000,0.072843,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=32,0,0.024414,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=8,2000000,0.005152,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=2,3000000,0.014745,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=2,300,0.000134,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=8,7000000,0.015938,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=32,900,0.029237,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
 daxpy,-p,OMP_NUM_THREADS=2,11000000,0.049466,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=2,600,0.000157,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=8,6000000,0.013804,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=2,9000000,0.040976,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=8,1000,0.000463,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,1500,0.021647,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,11000000,0.024168,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=32,0,0.001106,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
 daxpy,-p,OMP_NUM_THREADS=8,1700,0.000454,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=8,200,0.003909,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,17000000,0.048639,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=8,0,0.000373,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=32,200,0.024247,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,10000000,0.021781,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=32,11000000,0.021576,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=8,2000000,0.005152,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=2,0,8.1e-05,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=8,1000000,0.003588,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
 daxpy,-p,OMP_NUM_THREADS=16,6000000,0.01166,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=8,16000000,0.033512,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=32,12000000,0.023591,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=8,1800,0.000484,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=2,1000000,0.005333,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=2,18000000,0.076776,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=2,5000000,0.023904,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=32,1900,0.022690,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-s,,11000000,0.037274,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=16,11000000,0.021254,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=16,500,0.002171,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=32,13000000,0.024944,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-s,,1500,1.9e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=16,8000000,0.01505,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=16,17000000,0.028161,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=16,1000,0.009865,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=16,1400,0.006765,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=4,800,0.000264,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-s,,500,3e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=32,15000000,0.039395,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-s,,700,4e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=4,500,0.00025,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=4,100,0.000253,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=16,2000000,0.005826,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=16,700,0.010669,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=4,400,0.000256,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=16,1200,0.006829,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-s,,19000000,0.05831,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-s,,14000000,0.045578,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=4,200,0.000269,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=4,1700,0.000272,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=16,400,0.002815,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=4,1800,0.000282,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=4,1000,0.000269,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=2,10000000,0.04626,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-s,,400,3e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=4,1200,0.000272,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-s,,200,5e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=4,2000000,0.006904,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=16,1900,0.004497,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=2,19000000,0.081634,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=2,14000000,0.061764,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=4,1400,0.000274,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-s,,900,6e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=4,1500,0.000283,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-s,,600,2e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=2,8000000,0.036813,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-s,,1700,1.6e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=4,1000000,0.004357,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-s,,1300,1.8e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=8,13000000,0.028815,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=32,6000000,0.013244,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-s,,1900,2.5e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=16,1100,0.006958,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=4,900,0.000266,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=8,17000000,0.036127,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-s,,9000000,0.030573,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=4,1300,0.00027,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=4,1100,0.000227,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=16,1600,0.010575,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=4,7000000,0.022919,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=16,300,0.01418,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-s,,1800,2.7e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-s,,0,3e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=4,17000000,0.053472,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=4,1900,0.000281,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,4000000,0.009499,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-s,,4000000,0.014541,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=2,16000000,0.068546,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
 daxpy,-p,OMP_NUM_THREADS=16,19000000,0.031238,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=32,19000000,0.036352,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=16,900,0.015432,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=16,1500,0.011807,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=4,4000000,0.013285,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=16,0,0.009732,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=4,8000000,0.025668,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=4,1600,0.000301,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=4,0,0.000272,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-s,,1200,1.2e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=16,9000000,0.017435,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=16,600,0.008857,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-s,,800,1e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-s,,12000000,0.03996,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=16,18000000,0.031813,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=2,1000000,0.005333,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=4,19000000,0.059657,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=32,6000000,0.013244,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=32,1100,0.022767,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,14000000,0.043883,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=2,19000000,0.081634,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=4,5000000,0.016517,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=32,1800,0.027264,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,12000000,0.023591,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=8,6000000,0.013804,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=2,13000000,0.05763,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-s,,0,3e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,3000000,0.014745,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-s,,10000000,0.033708,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=2,400,0.000109,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,800,0.000457,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,200,0.003909,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,1200,0.000272,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,1900,0.000495,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,600,0.023717,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,1600,0.000176,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,500,0.000155,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,15000000,0.025565,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=2,700,0.000149,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,1800,0.027273,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,600,0.000157,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,1300,0.025005,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,1500,0.027594,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,1100,0.000171,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,100,0.000435,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,1100,9.9e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,1200,0.000219,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,1300,0.000483,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,1400,0.000471,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,15000000,0.066525,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=8,16000000,0.033512,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=2,2000,0.00017,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,7000000,0.022919,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=32,2400,0.026061,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,11000000,0.037274,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
 daxpy,-s,,100,3e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-s,,17000000,0.050532,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-s,,18000000,0.05496,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=4,300,0.000253,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=16,1000000,0.005204,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-s,,1000,1e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-s,,6000000,0.021472,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=4,600,0.000216,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=4,9000000,0.030622,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=16,1700,0.008822,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=16,200,0.0099,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=2,4000000,0.018881,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=16,16000000,0.026623,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=16,5000000,0.010009,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=16,1800,0.006997,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-s,,8000000,0.027859,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-s,,5000000,0.017685,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-s,,1400,1.5e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=4,16000000,0.050082,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=32,9000000,0.019687,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=4,11000000,0.034473,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-s,,16000000,0.049921,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=32,14000000,0.027607,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-s,,1500,1.9e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,17000000,0.053472,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=16,17000000,0.028161,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
 daxpy,-p,OMP_NUM_THREADS=16,100,0.006938,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=16,800,0.00862,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=16,7000000,0.013294,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=16,14000000,0.025299,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-s,,1100,8e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-s,,13000000,0.04145,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=16,13000000,0.023709,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-s,,1000000,0.00425,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=32,10000000,0.02032,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=4,6000000,0.019972,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-s,,300,3e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=4,700,0.000234,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-s,,2000000,0.007849,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=4,18000000,0.055916,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=4,200,0.000269,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,14000000,0.045578,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=4,1100,0.000227,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,900,0.000266,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,100,0.000253,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,400,0.002815,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,1500,0.000173,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,1000,0.007262,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,1700,0.000272,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,800,1e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,1300,0.00929,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,11000000,0.021254,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=16,900,0.015432,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,1600,0.000301,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,1000000,0.004357,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-s,,600,2e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,13000000,0.040352,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=4,1700,0.000274,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,1800,0.000282,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,1300,0.000272,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,500,0.002171,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,1300,1.8e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,1200,0.006829,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,2000000,0.006904,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-s,,19000000,0.05831,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=4,1200,0.000204,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,5000000,0.023904,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=32,3000000,0.010617,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-s,,500,3e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,4000000,0.018881,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-s,,400,3e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,1200,0.007188,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,1400,0.000256,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,800,0.000264,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,2200,2.8e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,1800,0.009895,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,1800,0.000321,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,1800,2.6e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,19000000,0.036352,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-s,,2300,3.6e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,2000,0.007176,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,2300,0.000224,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,18000000,0.031813,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=8,17000000,0.036127,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=4,1500,0.000184,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,2300,0.001809,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,2200,0.009778,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,2200,0.00031,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,2400,3.5e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,1700,0.008235,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,2400,0.000281,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,2100,2.8e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,2400,0.005577,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,1500,7e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,2000,1.5e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,2100,0.010427,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,1100,0.008701,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,500,0.023031,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,1900,0.000281,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,1300,1.8e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,1100,0.006958,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,300,0.000253,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,1600,0.008193,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,1900,0.000299,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,1700,1.8e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,1000,0.000269,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,1500,0.011807,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,1200,7e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,1100,0.000506,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,1400,0.006765,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,1400,0.00019,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,1000,1e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,1900,0.004497,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
 daxpy,-p,OMP_NUM_THREADS=4,3000000,0.010009,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-s,,1600,2e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,2100,0.000267,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,11000000,0.034473,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=16,1500,0.012718,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,0,0.009732,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
 daxpy,-p,OMP_NUM_THREADS=16,1300,0.00978,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-daxpy,-p,OMP_NUM_THREADS=16,10000000,0.018804,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-p,OMP_NUM_THREADS=16,4000000,0.008131,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-s,,15000000,0.047561,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=4,400,0.000256,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,14000000,0.025299,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-s,,18000000,0.05496,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=2,12000000,0.053565,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=32,13000000,0.024944,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=4,9000000,0.030622,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=32,14000000,0.027607,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-s,,1900,2.8e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,1400,0.000274,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,19000000,0.040161,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
 daxpy,-p,OMP_NUM_THREADS=16,3000000,0.006937,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-daxpy,-s,,7000000,0.024612,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-s,,1200,1.2e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,1500,0.000283,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,5000000,0.010009,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-s,,8000000,0.027859,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=2,1900,0.000173,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,8000000,0.01505,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=16,800,0.00862,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,700,0.010669,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,2000,0.000266,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,1900,0.010063,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,7000000,0.013294,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=2,10000000,0.04626,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=16,1400,0.004869,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,16000000,0.026623,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=16,1600,0.010575,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,1000,1.2e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,1000000,0.00425,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=4,1100,0.000213,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,1600,2.1e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,1400,1.1e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,600,0.000216,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,14000000,0.03079,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=16,13000000,0.023709,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=32,15000000,0.039395,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-s,,200,5e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,1600,0.000255,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,700,4e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,8000000,0.025668,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=16,9000000,0.017435,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=16,1800,0.006997,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,4000000,0.013285,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-s,,16000000,0.049921,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-s,,1400,1.5e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,1900,2.5e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=8,1900,0.000473,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,16000000,0.050082,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=32,1900,0.02269,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,15000000,0.047561,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=4,1000,0.000276,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,1800,2.7e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,1700,0.03336,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,2000000,0.007849,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=16,1000000,0.005204,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=16,600,0.008857,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,1100,1e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=2,8000000,0.036813,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=4,700,0.000234,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,9000000,0.019687,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=4,0,0.000272,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,5000000,0.017685,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=4,6000000,0.019972,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=16,200,0.0099,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
 daxpy,-p,OMP_NUM_THREADS=8,15000000,0.033005,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-dgemm,-p,OMP_NUM_THREADS=8,500,0.032133,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-s,,1800,24.018163,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-s,,1500,7.694831,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=2,700,0.209135,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=8,900,0.12776,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-s,,1400,4.497287,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=2,500,0.085328,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=4,1500,2.459508,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=4,1400,1.521464,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=8,800,0.094859,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=2,300,0.023147,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=32,900,0.04514,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=8,700,0.06655,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-s,,1300,3.04468,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=4,1300,1.02545,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=32,600,0.020529,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=2,200,0.010198,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=32,200,0.002886,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=4,1200,0.730374,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=16,1300,0.279179,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=8,600,0.046925,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=32,500,0.016634,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=16,1400,0.410318,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=2,600,0.136844,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-s,,1100,1.811496,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=16,1100,0.176679,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=4,1800,5.427062,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=8,100,0.001254,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=32,0,0.002078,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=32,800,0.03656,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=8,400,0.022667,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=32,700,0.027563,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=32,400,0.010271,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=8,300,0.012869,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=2,800,0.325628,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=2,400,0.043637,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=4,1100,0.520702,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=32,300,0.005257,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=4,1900,5.980316,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=16,1800,1.734502,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=16,1900,1.631265,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=16,1000,0.101218,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=8,200,0.004714,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=4,1600,3.635229,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-s,,1000,1.193422,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=32,100,0.002235,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=2,0,0.000192,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=8,0,0.000568,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=4,1000,0.347353,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-s,,1900,19.117979,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-s,,1200,2.56334,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=16,1500,0.655863,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=16,1200,0.194198,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,500,0.00025,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=32,10000000,0.02032,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-s,,1100,8e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,10000000,0.018804,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-s,,17000000,0.050532,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=16,1700,0.008822,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-s,,12000000,0.03996,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-s,,13000000,0.04145,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-s,,7000000,0.024612,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-p,OMP_NUM_THREADS=16,1000,0.009865,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=4,18000000,0.055916,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-s,,6000000,0.021472,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-s,,300,3e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+daxpy,-p,OMP_NUM_THREADS=16,4000000,0.008131,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+daxpy,-s,,1600,2e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,1200,0.367199,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,2400,4.845023,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,1800,3.239628,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,1300,0.524822,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
 dgemm,-p,OMP_NUM_THREADS=4,1700,5.057001,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=2,100,0.002011,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-s,,1700,17.964099,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=16,1600,0.995219,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,500,0.016634,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,1600,6.888832,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,700,0.209135,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,1900,15.129039,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,1000,0.101218,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,1600,0.528121,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,1700,0.702433,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,900,0.04514,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,600,0.046925,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,1200,0.113543,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,1400,4.497287,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
 dgemm,-s,,1600,13.46436,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,2300,14.922973,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,1400,0.223384,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,1600,1.825133,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,1100,0.176679,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,1300,0.152415,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,1900,1.173399,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,1700,2.438219,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
 dgemm,-p,OMP_NUM_THREADS=16,1700,1.325482,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,0,0.000192,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,800,0.03656,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,1000,0.061868,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,0,0.000568,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,1400,1.521464,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,600,0.136844,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,100,0.001254,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,200,0.004714,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,1200,0.730374,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,1800,5.427062,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,1100,1.811496,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,1300,1.02545,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,1100,0.255216,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,1000,0.670316,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,600,0.020529,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,2000,8.939162,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,1700,17.964099,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,2100,33.602071,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,1300,3.04468,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,1300,0.279179,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,1400,2.624406,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,1100,0.97095,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,700,0.06655,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,1900,1.631265,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,800,0.094859,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,1500,1.250236,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,1600,3.635229,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,500,0.032133,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,1700,9.08115,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,1400,0.792855,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,2200,37.826231,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,200,0.010198,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,2100,2.701516,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,2200,3.604329,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,1500,0.326038,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,1500,4.106878,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,1800,12.460481,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,900,0.12776,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,800,0.325628,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,0,0.002078,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,1500,2.459508,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,1800,0.91998,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,1900,19.117979,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,2300,39.010184,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,1500,7.694831,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,1900,4.064862,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,1600,0.995219,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,1200,0.194198,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,1300,1.820661,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
 dgemm,-p,OMP_NUM_THREADS=2,900,0.466798,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=16,300,0.007706,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-s,,900,0.832193,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-s,,700,0.382529,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=32,1400,0.348847,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=16,200,0.003404,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=8,1000,0.17818,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,1400,0.410318,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,500,0.085328,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,700,0.027563,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,2000,35.299799,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,100,0.002235,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,1000,1.193422,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,1200,2.56334,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,2000,2.517343,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,300,0.005257,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,1100,0.086445,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,100,0.002011,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,2200,11.87605,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,1800,1.734502,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,2100,11.006121,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,1800,24.018163,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,2300,4.290422,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,300,0.012869,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,1000,0.347353,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,400,0.043637,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,1500,0.655863,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,1200,1.336072,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,1100,0.520702,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,300,0.023147,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,1000,0.186109,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,400,0.022667,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,1900,5.980316,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,2400,18.054391,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,200,0.002886,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,400,0.010271,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,2400,47.152247,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
 dgemm,-p,OMP_NUM_THREADS=16,100,0.00155,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=16,600,0.029984,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=32,1600,0.873969,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=8,1900,4.180051,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=4,500,0.049108,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=8,1700,2.552465,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-s,,300,0.033485,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=8,1600,1.940105,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=16,0,0.001026,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=4,600,0.079898,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=4,800,0.169799,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=16,800,0.055727,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=2,1300,1.654478,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=16,900,0.071439,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=8,1800,3.375097,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=4,300,0.018932,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=32,1500,0.462317,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=4,900,0.23439,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=2,1000,0.643069,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-s,,500,0.140087,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
 dgemm,-p,OMP_NUM_THREADS=8,1300,0.552514,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-s,,600,0.244892,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=32,1800,1.418351,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=4,200,0.008136,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=4,400,0.030994,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=16,400,0.016116,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-s,,0,3e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-s,,200,0.014836,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=2,1400,2.640076,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=2,1500,4.470445,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=16,500,0.022934,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-s,,100,0.00361,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=2,1100,0.952564,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=4,700,0.116363,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=2,1900,12.068939,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-s,,800,0.60255,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=32,1900,1.685904,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=4,0,0.000307,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=8,1400,0.753203,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-s,,400,0.076902,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=2,1700,9.835408,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=8,1500,1.219738,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=8,1200,0.364994,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=32,1200,0.225933,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=32,1100,0.179643,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=2,1800,9.797273,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,1300,3.333671,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,1100,1.980736,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,800,0.055727,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,300,0.018932,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,1200,2.393235,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,1600,1.940105,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,2400,8.907293,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,2100,6.068029,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,2300,8.054666,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,1700,1.296788,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,700,0.382529,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,900,0.832193,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
 dgemm,-p,OMP_NUM_THREADS=4,100,0.001482,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=32,1000,0.061095,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=2,1200,1.263739,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=2,1600,7.36316,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=8,1100,0.270198,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-dgemm,-p,OMP_NUM_THREADS=32,1300,0.260868,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,900,0.071439,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,1900,1.685904,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,1100,0.512441,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,200,0.003404,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
 dgemm,-p,OMP_NUM_THREADS=32,1700,1.100003,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,1600,3.366538,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,1900,2.121509,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,400,0.016116,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,1500,2.001514,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,1800,1.702335,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,1300,0.877265,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,1100,0.141238,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,600,0.079898,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,300,0.033485,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,1500,7.866202,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,1900,12.068939,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,1100,0.952564,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,100,0.00361,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,200,0.014836,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,300,0.007706,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,2100,1.67692,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,1800,9.797273,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,1300,0.260868,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,1500,0.639272,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,1300,1.654478,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,1700,17.710737,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,500,0.140087,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,1900,30.028885,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,1400,2.640076,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,1800,1.418351,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,0,0.001026,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,0,0.000307,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,1900,4.180051,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,1200,0.200116,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,1200,0.364994,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,200,0.008136,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,1800,6.109987,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,500,0.049108,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,1600,13.300708,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,1800,3.375097,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,1600,7.36316,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,1200,1.263739,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,800,0.60255,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,500,0.022934,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,1400,0.753203,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,1000,0.061095,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,2000,17.879158,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,2400,2.97295,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,2000,1.384195,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,1300,0.275036,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,700,0.116363,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,1200,0.662691,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,1000,1.208348,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,1400,0.404683,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,2300,27.876774,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,400,0.030994,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,0,3e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,1800,23.990519,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,800,0.169799,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,2300,2.684912,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,1100,0.179643,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,1400,1.337768,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,2100,19.623696,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,1000,0.097153,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,1100,0.270198,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,2000,4.84039,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,1400,0.348847,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,1500,4.470445,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,1700,9.835408,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,2200,1.903691,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,1700,2.552465,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,1600,0.995408,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,1000,0.351887,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,900,0.23439,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,1400,4.862656,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,2200,22.490645,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,1000,0.643069,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
 dgemm,-p,OMP_NUM_THREADS=16,700,0.040252,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=2,6000000,0.009107,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=4,18000000,0.02893,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,900,3e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=8,14000000,0.015078,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,1400,0.000434,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=32,2000000,0.009138,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,4000000,0.006553,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=32,4000000,0.007068,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=32,1500,0.02673,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=4,400,0.000251,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=32,19000000,0.019286,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,600,0.000151,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=2,100,0.000114,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=2,4000000,0.009524,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,1800,0.00046,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=4,9000000,0.013262,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=32,1000000,0.009085,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,16000000,0.028265,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,3000000,0.007303,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=4,7000000,0.011666,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,7000000,0.010117,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=4,16000000,0.025831,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=4,1200,0.000243,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-s,,700,1e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=16,15000000,0.014495,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=4,6000000,0.009047,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=16,9000000,0.013727,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=32,1400,0.026483,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=32,800,0.025712,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-s,,1000000,0.00188,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,1000000,0.002702,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=32,12000000,0.013282,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,400,0.000438,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=16,600,0.008241,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-s,,4000000,0.007682,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,200,0.000111,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=8,1600,0.00041,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=32,6000000,0.010558,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=4,15000000,0.024387,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=16,0,0.00069,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,7000000,0.010835,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=16,13000000,0.012481,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,10000000,0.017943,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,14000000,0.020733,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=16,300,0.009642,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=32,1300,0.022779,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=2,9000000,0.01314,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=32,17000000,0.017927,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=4,2000000,0.003528,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,6000000,0.014175,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,1000000,0.002313,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,8000000,0.017232,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,15000000,0.026412,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,5000000,0.008112,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=4,700,0.000245,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-s,,7000000,0.012492,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,2000000,0.003871,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,19000000,0.042656,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=4,5000000,0.007596,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=32,200,0.024606,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=8,100,0.000423,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=8,7000000,0.008307,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=16,17000000,0.017428,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=32,9000000,0.011488,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=32,1000000,0.00337,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=16,19000000,0.017653,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=32,100,0.024057,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=16,14000000,0.012384,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=16,700,0.009537,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=8,0,0.000776,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=4,14000000,0.022121,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,10000000,0.023834,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,500,0.000463,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=4,12000000,0.01999,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,6000000,0.009288,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,3000000,0.004383,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,0,2e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=8,1000,0.000485,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=16,4000000,0.007657,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=32,11000000,0.012748,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=32,15000000,0.015411,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,1400,0.000157,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=16,1300,0.006181,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=4,1800,0.000213,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=16,9000000,0.009161,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,0,0.000151,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=4,0,0.000189,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,1900,3e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=4,4000000,0.0067,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=32,400,0.029096,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=32,1700,0.02165,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-s,,1200,3e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=4,1000,0.000239,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=32,0,0.026974,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=2,1000000,0.002457,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,4000000,0.004977,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=4,600,0.000246,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=4,1100,0.000252,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=2,16000000,0.035856,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,2000000,0.003226,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,18000000,0.039026,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=16,5000000,0.006484,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=4,1600,0.00026,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-s,,12000000,0.021455,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=16,3000000,0.005451,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+dgemm,-p,OMP_NUM_THREADS=8,2200,6.790409,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=16,600,0.029984,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,600,0.244892,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,1700,4.475148,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,1500,0.462317,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,1600,0.873969,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=32,1200,0.225933,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,1500,1.219738,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=8,1000,0.17818,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=2,2400,30.675159,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-p,OMP_NUM_THREADS=4,1900,7.535274,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+dgemm,-s,,400,0.076902,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
 saxpy,-s,,1800,9e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=16,800,0.012567,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=8,15000000,0.017059,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,11000000,0.025095,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,2000000,0.004313,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,3000000,0.005194,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=32,700,0.026648,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=8,1500,0.000488,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=32,8000000,0.012727,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=16,4000000,0.005722,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,2400,0.000167,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
 saxpy,-p,OMP_NUM_THREADS=32,0,0.001191,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=4,1300,0.000271,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-s,,19000000,0.032927,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,600,1e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=8,12000000,0.013642,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,7000000,0.016781,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,15000000,0.034246,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,1300,3e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=4,7000000,0.011361,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=16,1200,0.010164,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-s,,1700,1e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=4,500,0.000242,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=16,8000000,0.008214,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=16,1800,0.004502,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=16,100,0.010081,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=4,3000000,0.005312,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=32,18000000,0.018439,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=16,2000000,0.005133,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=16,5000000,0.008273,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=4,5000000,0.008161,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,1500,6e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=16,7000000,0.008014,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,400,2e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=16,200,0.005432,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=16,0,0.000579,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,8000000,0.012349,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,19000000,0.02182,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,900,0.000144,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=4,0,0.000257,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=8,1000000,0.003418,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=32,7000000,0.010363,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,800,2e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=32,1900,0.020584,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=32,6000000,0.011711,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,1900,0.000473,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=32,2000000,0.004364,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,1300,0.000151,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=2,800,0.000127,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=2,9000000,0.021565,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,2000000,0.004074,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,12000000,0.027787,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=4,800,0.000208,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=4,900,0.000257,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=16,7000000,0.011308,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=4,1000000,0.002484,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,0,0.000279,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,11000000,0.012473,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,0,1e-06,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=32,500,0.023766,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=8,1000000,0.002872,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=16,1000,0.005285,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=4,100,0.000253,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=4,9000000,0.014792,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,200,1e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=16,1700,0.004984,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=16,500,0.010078,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=4,4000000,0.006385,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,1700,0.000439,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=16,3000000,0.005839,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=32,7000000,0.011708,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,5000000,0.00601,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=4,10000000,0.016655,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=16,900,0.011158,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=16,8000000,0.01218,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=16,10000000,0.010093,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,18000000,0.018869,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=32,14000000,0.015537,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,5000000,0.011763,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=16,16000000,0.015136,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=4,200,0.000242,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=4,0,0.000232,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,0,0.000765,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,0,0.000113,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,9000000,0.011079,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=4,1900,0.000254,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=16,2000000,0.004405,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=32,3000000,0.005976,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,9000000,0.016259,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,500,0.000193,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=4,1400,0.000195,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=4,8000000,0.012069,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,4000000,0.005856,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=4,1000000,0.002266,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,300,0.00043,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-s,,13000000,0.023087,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=4,17000000,0.029529,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=16,6000000,0.009523,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,8000000,0.010284,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=32,16000000,0.016411,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=16,1000000,0.002976,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=4,300,0.00024,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-s,,1100,2e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-s,,17000000,0.027175,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,600,0.000436,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=4,2000000,0.003663,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,18000000,0.026331,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,300,2e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-s,,5000000,0.007607,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=16,1400,0.001632,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=16,12000000,0.011749,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,300,9.3e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=32,8000000,0.011285,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=4,19000000,0.030779,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=32,1100,0.022306,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-s,,100,2e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=16,1500,0.009533,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=16,0,0.010613,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=16,6000000,0.006966,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,6000000,0.011165,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,0,0.000472,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=32,3000000,0.009629,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,1600,0.000143,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=8,800,0.000427,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=8,16000000,0.017909,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,1700,0.000156,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=32,1200,0.025775,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=8,700,0.000485,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=8,2000000,0.003892,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=32,1000,0.023923,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=2,17000000,0.042246,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=16,18000000,0.016947,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,1500,0.000155,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=8,200,0.00043,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=2,1100,6e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=32,10000000,0.012119,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,6000000,0.009167,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,1000,3e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=32,1800,0.025208,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=8,10000000,0.011535,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=4,1700,0.000273,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=8,6000000,0.007318,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,8000000,0.012199,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,13000000,0.014814,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=32,4000000,0.00989,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=4,3000000,0.005403,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=16,11000000,0.010933,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,9000000,0.01377,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=16,1100,0.006376,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=32,13000000,0.013974,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=32,300,0.024423,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=4,11000000,0.018086,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,4000000,0.006568,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,3000000,0.004562,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=32,600,0.030359,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=16,1000000,0.004878,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,0,1e-06,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,8000000,0.011612,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,11000000,0.019929,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,7000000,0.01054,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,8000000,0.012197,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,1200,0.000151,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=16,400,0.012193,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=2,700,0.000151,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=2,1900,0.000162,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=8,900,0.000463,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-s,,500,2e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=2,13000000,0.029977,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
 saxpy,-p,OMP_NUM_THREADS=32,1600,0.025714,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=2,1000,0.000138,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-s,,1400,4e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=4,1500,0.000272,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=2,3000000,0.004781,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,5000000,0.009254,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,9000000,0.013229,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=16,1900,0.003281,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=32,5000000,0.010291,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=4,6000000,0.009903,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,1300,0.000404,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=2,14000000,0.029983,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,3000000,0.005953,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=2,1800,0.000162,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=4,8000000,0.015066,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-s,,400,2e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,1900,0.000204,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,1600,0.000455,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,1800,0.025208,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
 saxpy,-p,OMP_NUM_THREADS=2,2000000,0.004871,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,17000000,0.019238,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=4,13000000,0.021463,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-s,,1600,6e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=32,0,0.001209,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=16,1600,0.013311,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,1400,2e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,2000,1.2e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,13000000,0.013974,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
 saxpy,-p,OMP_NUM_THREADS=32,900,0.02643,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=2,5000000,0.007845,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-saxpy,-p,OMP_NUM_THREADS=8,1200,0.000384,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,1500,0.024613,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=16,7000000,0.011308,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,11000000,0.010933,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
 saxpy,-p,OMP_NUM_THREADS=8,1100,0.000416,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-saxpy,-p,OMP_NUM_THREADS=2,400,0.000141,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=16,1500,0.009533,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,1200,0.000384,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,1100,0.022306,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,16000000,0.025831,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,5000000,0.006484,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=4,14000000,0.022121,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,2000000,0.003871,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-s,,1500,6e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,9000000,0.011488,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,1600,0.013311,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,800,0.000127,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,100,0.024057,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,1400,0.000195,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,3000000,0.005312,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,1300,0.000436,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,1000000,0.00337,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-s,,1200,4e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,1300,0.000177,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,1900,0.000254,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,1600,0.02505,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,1900,0.000445,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,18000000,0.02893,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-s,,1600,1e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,600,0.000246,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,1000000,0.002702,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=32,1400,0.024864,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,200,0.024606,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,1400,0.00044,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,1100,6e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,700,0.026648,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,7000000,0.011361,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,1400,9.8e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,12000000,0.013642,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-s,,1600,6e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,15000000,0.026412,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,1900,0.004303,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,1300,3e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=16,10000000,0.010093,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-s,,1400,4e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,0,2e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,1500,6e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=16,0,0.010613,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,1600,0.000287,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,1000,3e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=16,900,0.011158,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,15000000,0.024387,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,1000,0.005285,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=16,2200,0.007283,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,1300,0.000268,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=16,1700,0.00712,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=16,9000000,0.013727,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=32,1800,0.019719,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,13000000,0.029977,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,1200,0.000448,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,1700,0.00042,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
 saxpy,-p,OMP_NUM_THREADS=32,5000000,0.00875,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
-sgemm,-p,OMP_NUM_THREADS=4,900,0.216598,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=8,100,0.000757,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=16,1500,0.398289,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=4,1000,0.306788,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=16,300,0.009667,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=4,1300,0.63884,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=8,0,0.000481,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=16,1700,1.063156,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=32,400,0.026258,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=4,1900,7.019328,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=16,400,0.020611,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=2,1100,0.777656,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=2,1500,2.87548,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=4,700,0.109749,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-s,,1600,10.245099,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=4,1500,1.506013,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=16,100,0.010284,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-s,,400,0.066279,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=8,1800,2.803112,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=16,1300,0.242886,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=16,200,0.008135,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=8,1300,0.329429,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=32,200,0.028477,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-s,,1700,14.968062,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-s,,500,0.13038,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=2,1800,10.62745,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=2,1200,1.529826,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=8,400,0.021327,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=32,1000,0.113199,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-s,,1500,5.373492,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=2,1400,1.795549,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-s,,600,0.23052,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=2,1700,7.648229,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=4,1200,0.733539,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-s,,800,0.550117,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=16,1600,0.766046,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=2,500,0.078106,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=8,1100,0.21245,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-s,,900,0.772599,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-s,,1200,2.520325,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=32,900,0.070865,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=2,1300,1.217007,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=32,1200,0.205944,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=32,300,0.032281,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=2,400,0.044977,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=4,100,0.001223,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=4,1400,0.834199,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-s,,100,0.001579,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-s,,300,0.031074,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=32,100,0.024354,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=4,1700,4.029257,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=32,600,0.047379,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=32,800,0.07559,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=32,1700,0.989158,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=16,1200,0.263513,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=2,200,0.010864,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=8,1400,0.437821,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=32,1100,0.147278,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=8,1600,1.396575,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-s,,1900,24.603904,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=4,300,0.019079,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=16,500,0.026497,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-s,,1800,20.721659,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=16,1900,1.771311,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=32,700,0.054667,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=2,900,0.408884,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=4,400,0.030084,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=32,500,0.03918,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=32,1900,1.621944,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-s,,1100,1.510899,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=16,1800,1.519392,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=32,1400,0.271301,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=2,1000,0.558876,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=16,1400,0.230029,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=2,600,0.12358,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=8,1900,3.421475,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-s,,200,0.014738,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,1900,0.000473,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,2000,0.000117,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,800,0.000427,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,300,0.024423,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,1000,0.000447,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,1700,0.000273,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,17000000,0.017927,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,1100,0.006376,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,8000000,0.012727,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,4000000,0.006553,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,14000000,0.012384,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,9000000,0.011079,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-s,,1000000,0.00188,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=32,6000000,0.011711,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=32,19000000,0.019286,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-s,,1700,1e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,4000000,0.004977,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-s,,17000000,0.027175,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,1500,0.0003,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,900,0.000463,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=16,1300,0.010818,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,2100,0.000262,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,2300,8e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,100,2e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,1000,0.000485,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=16,1900,0.003281,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,0,0.000232,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,6000000,0.006966,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-s,,2100,7e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,500,0.000193,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,2200,0.000258,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,1200,0.020293,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,11000000,0.012748,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,2000000,0.003892,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=32,7000000,0.010363,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=4,800,0.000208,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,300,9.3e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,4000000,0.007682,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,1500,0.011681,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=16,3000000,0.005451,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,2000000,0.004405,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=32,800,0.025712,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,4000000,0.005856,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,8000000,0.010284,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-s,,700,1e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,2400,1.2e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=16,2100,0.00807,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,700,0.000245,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,0,1e-06,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,3000000,0.007303,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=32,1400,0.026483,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,0,1e-06,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=4,19000000,0.030779,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=4,1400,0.000248,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,12000000,0.021455,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,5000000,0.008112,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,8000000,0.012199,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,300,0.009642,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,2300,0.000202,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,4000000,0.009524,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,8000000,0.01218,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-s,,1900,6e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,1900,3e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,8000000,0.012349,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=4,1600,0.00026,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,1200,3e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,500,0.000242,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,1800,0.000213,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,2000,0.000282,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,2400,0.000258,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,10000000,0.017943,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=4,1200,0.000243,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=16,0,0.00069,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=4,200,0.000242,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,19000000,0.02182,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,16000000,0.015136,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=4,100,0.000253,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,0,0.000189,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-s,,2000000,0.004313,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,13000000,0.012481,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,200,0.000111,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,16000000,0.035856,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,18000000,0.018869,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,1100,0.010739,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,5000000,0.009254,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=32,0,0.026974,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,2000000,0.003528,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-s,,900,3e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,1700,0.000439,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,1200,0.025775,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=16,12000000,0.011749,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,18000000,0.016947,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-s,,2200,5e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,400,0.000438,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,400,0.000251,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=16,2300,0.005728,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=16,1400,0.001632,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,900,0.000144,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,15000000,0.034246,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,0,0.000776,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,14000000,0.015078,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,2000000,0.005133,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-s,,7000000,0.012492,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,1300,0.006181,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,12000000,0.013282,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,8000000,0.017232,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,1000000,0.002457,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,8000000,0.008214,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,1600,0.00041,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,800,2e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=16,5000000,0.008273,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=4,4000000,0.006385,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-s,,5000000,0.007607,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,7000000,0.008014,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,6000000,0.007318,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,500,0.000463,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=16,0,0.000579,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=32,500,0.023766,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,7000000,0.010117,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,0,0.000151,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,1300,3e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,300,2e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,7000000,0.016781,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=32,4000000,0.00989,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,10000000,0.023834,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,1500,0.000167,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,9000000,0.016259,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,6000000,0.009107,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,1300,0.000404,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,1800,0.00046,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,13000000,0.014814,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=32,1100,0.023665,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,6000000,0.014175,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,1700,0.000156,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,600,1e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,9000000,0.01314,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=32,2000000,0.004364,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,1000000,0.003418,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=32,1900,0.025337,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,0,0.000257,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,18000000,0.018439,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=4,1700,0.00026,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,1100,0.000252,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,1000000,0.002266,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=4,6000000,0.009903,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,800,0.012567,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,11000000,0.019929,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,300,0.00043,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,11000000,0.012473,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,10000000,0.011535,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=4,1500,0.000261,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=16,19000000,0.017653,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,1000000,0.002976,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,1700,0.000171,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,1900,0.020584,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,1000000,0.002313,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,18000000,0.039026,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=4,8000000,0.012069,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,600,0.008241,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,17000000,0.042246,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,700,0.000485,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,14000000,0.015537,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=4,10000000,0.016655,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=4,1200,0.00027,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,1000,0.000258,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,16000000,0.016411,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,1100,0.000139,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,2400,0.000484,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,5000000,0.011763,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=32,1300,0.022455,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,1900,0.000146,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,1200,0.000151,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,5000000,0.008161,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,100,0.010081,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,0,0.001209,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,2400,0.012004,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,6000000,0.009288,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-s,,2000000,0.003226,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=32,15000000,0.015411,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,11000000,0.025095,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=32,5000000,0.010291,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=4,12000000,0.01999,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,1800,0.000112,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,1400,0.000157,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,1100,2e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,16000000,0.028265,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=32,2000000,0.009138,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,7000000,0.010835,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,1500,0.000155,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=16,9000000,0.009161,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-s,,200,1e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,1800,0.000473,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=16,1200,0.010164,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,1000,0.000239,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,1000,0.023923,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,8000000,0.011285,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=4,17000000,0.029529,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,1800,0.004502,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,14000000,0.020733,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-s,,9000000,0.013229,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,16000000,0.017909,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,0,0.000113,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=4,1100,0.00027,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=16,3000000,0.005839,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=4,4000000,0.0067,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,4000000,0.007657,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-s,,1800,9e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,9000000,0.013262,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,1500,0.000488,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=16,2000,0.003353,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,2300,0.027033,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,10000000,0.012119,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=4,1500,0.000272,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=16,1600,0.008325,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,900,0.000257,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=16,1000,0.004835,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,7000000,0.01054,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,1200,0.000104,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,2100,0.020745,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,9000000,0.021565,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,3000000,0.004781,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=4,9000000,0.014792,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,2100,0.000463,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,18000000,0.026331,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,400,0.000141,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,9000000,0.01377,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-s,,6000000,0.011165,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-s,,8000000,0.011612,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=32,3000000,0.005976,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=32,1000000,0.009085,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-s,,6000000,0.009167,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,1000,0.000124,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,1600,0.000159,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=16,500,0.010078,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,8000000,0.012197,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=4,8000000,0.015066,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,1000,0.000138,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,300,0.00024,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,14000000,0.029983,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,1300,0.000151,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,3000000,0.004383,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,1400,0.002956,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,200,0.00043,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,400,0.029096,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,1900,0.000162,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,1500,0.02673,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,13000000,0.023087,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,5000000,0.00601,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,4000000,0.006568,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,1400,0.000434,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,5000000,0.007596,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-s,,1000,3e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,600,0.000151,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,3000000,0.004562,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,0,0.000279,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=4,2000000,0.003663,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,200,0.005432,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,0,0.000472,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,600,0.030359,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,0,0.000765,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,400,0.012193,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,3000000,0.005953,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,4000000,0.005722,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,1700,0.004984,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,5000000,0.007845,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,6000000,0.009523,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,1000000,0.004878,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-s,,1700,1e-05,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,1000000,0.002872,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,12000000,0.027787,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,2200,0.000154,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,2300,0.000142,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-s,,19000000,0.032927,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-s,,1100,1e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,3000000,0.005194,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=32,1700,0.02165,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,2000000,0.004074,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,100,0.000114,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,1600,0.000143,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,7000000,0.011708,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,15000000,0.014495,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,7000000,0.008307,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,15000000,0.017059,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=4,6000000,0.009047,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,700,0.009537,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=16,1800,0.006831,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,1300,0.000271,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=16,1200,0.005825,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,2100,0.000118,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,6000000,0.010558,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=32,4000000,0.007068,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-s,,500,2e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,2200,0.000506,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,2200,0.021652,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,2000,0.00045,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,17000000,0.019238,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=32,1300,0.022779,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,2000,0.020167,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,3000000,0.005403,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=32,3000000,0.009629,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=16,17000000,0.017428,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,1800,0.000162,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,2400,0.032779,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,1700,0.025446,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=2,19000000,0.042656,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,2300,0.000486,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=32,1000,0.020292,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,13000000,0.021463,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=4,1800,0.000266,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,11000000,0.018086,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=2,700,0.000151,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,1100,0.000444,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=4,1000000,0.002484,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=4,7000000,0.011666,,,,,,AMD EPYC 7H12 64-Core Processor,2,64
+saxpy,-p,OMP_NUM_THREADS=8,100,0.000423,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+saxpy,-p,OMP_NUM_THREADS=8,600,0.000436,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,2400,25.891248,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
 sgemm,-s,,0,3e-06,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=16,800,0.05669,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-s,,1300,2.367545,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=8,300,0.013686,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=16,700,0.040471,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=8,1500,0.738993,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=2,700,0.200414,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=2,1600,5.265957,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=4,1600,2.740086,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-s,,1400,3.076898,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,2300,3.943045,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
 sgemm,-p,OMP_NUM_THREADS=2,800,0.29149,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-s,,1000,1.085799,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=8,700,0.064525,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=8,500,0.031048,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=4,1800,5.470519,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-s,,700,0.385749,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=8,600,0.042284,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=32,0,0.028856,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=4,200,0.008071,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=16,1100,0.136979,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=4,600,0.072187,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=16,600,0.033524,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=8,800,0.085041,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=4,500,0.047282,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=8,200,0.004328,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=2,100,0.00205,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=16,1000,0.10275,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=4,800,0.156256,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=8,900,0.117428,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=4,1100,0.423511,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=8,1700,2.044067,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=4,0,0.000266,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=16,0,0.008289,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=2,300,0.02659,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=32,1300,0.223132,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=32,1500,0.363169,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=2,1900,12.941643,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=8,1000,0.155218,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=16,900,0.090458,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=32,1800,1.261509,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=8,1200,0.395019,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
-sgemm,-p,OMP_NUM_THREADS=2,0,0.000159,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,900,0.408884,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,1800,2.848787,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,1900,3.450835,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,1100,0.764862,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
 sgemm,-p,OMP_NUM_THREADS=32,1600,0.714052,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,1300,2.36033,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,1900,24.852522,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,200,0.008135,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,1500,0.76216,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,300,0.032281,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,1000,0.558876,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,1300,0.223132,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,1200,2.903598,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,400,0.044977,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,2000,30.756675,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,2200,42.40382,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,700,0.200414,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,2100,5.3963,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,900,0.772599,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,100,0.00205,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,1200,0.395019,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,1400,3.076898,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,1400,0.437821,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,1000,0.113199,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,1200,2.520325,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,1500,5.373492,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,0,0.000159,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,1500,0.400062,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,1500,1.506013,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,2200,5.744087,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,1000,0.099078,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,200,0.014738,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,1600,1.406408,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,1900,6.876887,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,1700,14.968062,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,2300,49.043649,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,1100,0.209898,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,1300,2.367545,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,1800,1.519392,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,300,0.031074,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,600,0.042284,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,400,0.021327,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,800,0.550117,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,1800,2.803112,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,1100,1.522161,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,200,0.004328,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,1500,2.771859,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,1900,24.603904,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,1000,1.076085,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,2200,11.17396,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,1900,7.019328,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,1000,0.306788,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,0,0.008289,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,1900,1.230934,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,1200,0.398256,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,1200,0.199976,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,1200,0.733539,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,200,0.010864,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,1100,0.408096,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,1700,0.766591,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,1300,0.174465,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,1400,3.092617,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,1100,0.147278,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,1800,1.261509,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,1600,5.528284,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,900,0.070865,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,1600,0.619627,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,1300,0.19744,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,2300,12.227891,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,300,0.02659,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,500,0.026497,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,2000,4.284281,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,500,0.047282,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,1600,5.265957,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,1900,12.941643,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,2000,2.166021,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,1900,1.771311,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,1100,0.423511,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,800,0.07559,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,1100,0.132883,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,100,0.001579,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,500,0.078106,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,1700,4.029257,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,500,0.031048,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,1200,0.717798,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,700,0.054667,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,600,0.047379,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,1400,0.834199,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,700,0.385749,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,100,0.024354,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,300,0.013686,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,1400,0.257596,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,1800,5.470519,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,1200,0.205944,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,1700,0.989158,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,1400,0.824665,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,1400,1.795549,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,1700,7.648229,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,1400,1.562844,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,1600,1.396575,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,1700,2.019821,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,300,0.019079,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,1500,0.366877,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,1500,1.433792,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,1600,2.806924,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,600,0.23052,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,400,0.066279,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,1200,0.201283,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,700,0.064525,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,2400,29.01642,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,2000,8.154622,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,2100,38.887536,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,1100,1.510899,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,1300,0.242886,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,2300,20.97826,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,800,0.156256,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,1500,0.738993,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,400,0.030084,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,1900,1.786548,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,2400,6.81407,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,700,0.109749,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,700,0.040471,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,1200,1.529826,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,400,0.026258,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,1900,12.730782,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,2200,22.002895,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,1000,0.29554,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,1300,1.217007,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,1200,1.539086,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,900,0.216598,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,500,0.03918,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,1400,0.271301,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,1600,2.740086,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,1800,10.595579,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,1800,5.72492,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,2100,10.110841,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,2100,2.729278,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,1800,1.071902,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,1700,1.063156,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,2100,19.765973,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,2000,1.545707,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,1700,14.778808,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,1400,0.216205,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,2300,6.678905,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,900,0.117428,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,1600,10.245099,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,1700,1.046633,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,1300,0.337894,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,2100,1.773327,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,1800,10.62745,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,1800,1.44781,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,1600,0.734402,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,1200,0.263513,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,1300,0.329429,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,2400,4.061521,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,1000,1.085799,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,1000,0.548416,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,900,0.090458,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,800,0.085041,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,1100,0.136979,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,0,0.028856,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,1500,0.398289,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,1100,0.777656,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,100,0.000757,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,1500,2.87548,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,1000,0.155218,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,1400,0.444709,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,1600,0.766046,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,1900,1.621944,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,1600,10.32477,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,600,0.033524,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,500,0.13038,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,1300,0.632984,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,1500,0.363169,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,800,0.05669,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,1000,0.105101,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,200,0.008071,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,600,0.072187,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,0,0.000481,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,1300,1.202228,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,200,0.028477,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,2300,2.529217,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,1800,20.935837,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,1800,20.721659,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,2400,2.605195,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,1700,2.044067,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,1900,3.421475,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,400,0.020611,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,1700,7.469672,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,1300,0.63884,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,300,0.009667,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,2200,3.032127,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,100,0.001223,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,1000,0.10275,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-s,,1500,5.613942,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,1000,0.155513,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,2000,15.78104,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=2,600,0.12358,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=8,1100,0.21245,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,1700,3.999432,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,1400,0.230029,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,2400,12.893822,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,2200,1.910326,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=32,1100,0.129902,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=4,0,0.000266,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
+sgemm,-p,OMP_NUM_THREADS=16,100,0.010284,,,,,,Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,2,26
