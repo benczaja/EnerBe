@@ -100,12 +100,12 @@ int main( int argc, char *argv[] )  {
         auto CPUend = CPUsensor->Read();
 
         std::cout << "SIZE: " << N << std::endl;
-        std::cout << "CPU (RAPL) Seconds: " << pmt::PMT::seconds(CPUstart, CPUend) << " | GPU (NVML) Seconds: " << pmt::PMT::seconds(GPUstart, GPUend) << " s"<< std::endl;
-        std::cout << "CPU (RAPL) Joules: " << pmt::PMT::joules(CPUstart, CPUend) << " | GPU (NVML) Joules: " << pmt::PMT::joules(GPUstart, GPUend) << " J"<< std::endl;
-        std::cout << "CPU (RAPL) Watts: " << pmt::PMT::watts(CPUstart, CPUend) << " | GPU (NVML) Watts: " << pmt::PMT::watts(GPUstart, GPUend) << " W"<< std::endl;
-        std::cout << "Total Seconds: " << (pmt::PMT::seconds(CPUstart, CPUend) + pmt::PMT::seconds(GPUstart, GPUend))*0.5 << " s"<< std::endl;
-        std::cout << "Total Joules: " << (pmt::PMT::joules(CPUstart, CPUend) + pmt::PMT::joules(GPUstart, GPUend)) << " J"<< std::endl;
-        std::cout << "Total Watts: " << (pmt::PMT::watts(CPUstart, CPUend) + pmt::PMT::watts(GPUstart, GPUend)) << " W"<< std::endl;
+        std::cout << "CPU (RAPL) TIME: " << pmt::PMT::seconds(CPUstart, CPUend) << " | GPU (NVML) TIME: " << pmt::PMT::seconds(GPUstart, GPUend) << " s"<< std::endl;
+        std::cout << "CPU (RAPL) JOULES: " << pmt::PMT::joules(CPUstart, CPUend) << " | GPU (NVML) JOULES: " << pmt::PMT::joules(GPUstart, GPUend) << " J"<< std::endl;
+        std::cout << "CPU (RAPL) WATTS: " << pmt::PMT::watts(CPUstart, CPUend) << " | GPU (NVML) WATTS: " << pmt::PMT::watts(GPUstart, GPUend) << " W"<< std::endl;
+        std::cout << "Total TIME: " << (pmt::PMT::seconds(CPUstart, CPUend) + pmt::PMT::seconds(GPUstart, GPUend))*0.5 << " s"<< std::endl;
+        std::cout << "Total JOULES: " << (pmt::PMT::joules(CPUstart, CPUend) + pmt::PMT::joules(GPUstart, GPUend)) << " J"<< std::endl;
+        std::cout << "Total WATTS: " << (pmt::PMT::watts(CPUstart, CPUend) + pmt::PMT::watts(GPUstart, GPUend)) << " W"<< std::endl;
     
     }
     /* OpenMP parallel saxpy */
