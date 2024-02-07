@@ -107,6 +107,14 @@ endif()
 
 
 if (ENABLE_PMT)
+    message(STATUS "Looking for pmt")
+    find_library(PMT_LIBRARY NAMES pmt)
+    if (PMT_LIBRARY)
+        message(STATUS "Looking for pmt - found")
+    else()
+        message(FATAL_ERROR "Looking for pmt - not found")
+    endif()
+
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -O3 -fpermissive")
     # compile the double precision binaries
     #######################################
