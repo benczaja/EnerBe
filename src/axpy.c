@@ -61,7 +61,7 @@ int main( int argc, char *argv[] )  {
       t = clock() - t; // stop the clock    
       double time_taken = ((double)t)/CLOCKS_PER_SEC; // convert to seconds (and long to double)
       printf("SIZE: %d\n",N);
-      printf("TIME: %f sec\n",time_taken);
+      printf("TIME: %f s\n",time_taken);
     }
 
     /* OpenMP parallel saxpy */
@@ -76,7 +76,7 @@ int main( int argc, char *argv[] )  {
     
     double end = omp_get_wtime();
     printf("SIZE: %d\n",N);    
-    printf("TIME: %f sec\n",(end-start));
+    printf("TIME: %f s\n",(end-start));
 
     }
 

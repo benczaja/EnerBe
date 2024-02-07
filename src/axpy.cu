@@ -90,7 +90,7 @@ int main( int argc, char *argv[] )  {
     
       t = clock() - t; // stop the clock    
       double time_taken = ((double)t)/CLOCKS_PER_SEC; // convert to seconds (and long to double)
-      printf("TIME: %f sec\n",time_taken);
+      printf("TIME: %f s\n",time_taken);
     }
 
     /* OpenMP parallel saxpy */
@@ -104,7 +104,7 @@ int main( int argc, char *argv[] )  {
     openmp_axpy(N, 2.0, sx, sy);
     
     double end = omp_get_wtime(); 
-    printf("TIME: %f sec\n",(end-start));
+    printf("TIME: %f s\n",(end-start));
 
     }
 

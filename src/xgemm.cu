@@ -80,7 +80,7 @@ int main( int argc, char *argv[] )  {
   initialize_matrices(A, B, C, ROWS, COLUMNS);
     
   double end = omp_get_wtime(); 
-  printf("Init TIME: %f sec\n",(end-start));
+  printf("Init TIME: %f s\n",(end-start));
 
 
   /*======================================================================*/
@@ -106,7 +106,7 @@ int main( int argc, char *argv[] )  {
     t = clock() - t; // stop the clock
 
     double time_taken = ((double)t)/CLOCKS_PER_SEC; // convert to seconds (and long to double)
-    printf("GPU Compute Time: %f sec\n",time_taken);
+    printf("GPU Compute Time: %f s\n",time_taken);
 
   /*======================================================================*/
   /*                 END of Section of the code that matters!!!           */

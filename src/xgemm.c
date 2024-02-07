@@ -110,7 +110,7 @@ int main( int argc, char *argv[] )  {
 
     time_taken = ((double)t)/CLOCKS_PER_SEC; // convert to seconds (and long to double)
     printf("SIZE: %d \n",ROWS);
-    printf("TIME: %f sec\n",time_taken);
+    printf("TIME: %f s\n",time_taken);
   }
 
 
@@ -127,7 +127,7 @@ int main( int argc, char *argv[] )  {
     double end = omp_get_wtime(); 
     time_taken = (end-start);
     printf("SIZE: %d \n",ROWS);
-    printf("TIME: %f sec\n",time_taken);    
+    printf("TIME: %f s\n",time_taken);    
   }
 
   /*======================================================================*/

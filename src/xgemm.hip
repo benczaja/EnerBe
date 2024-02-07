@@ -107,7 +107,7 @@ int main( int argc, char *argv[] )  {
     t = clock() - t; // stop the clock
 
     double time_taken = ((double)t)/CLOCKS_PER_SEC; // convert to seconds (and long to double)
-    printf("GPU Compute Time: %f sec\n",time_taken);
+    printf("GPU Compute Time: %f s\n",time_taken);
   }
 
 
