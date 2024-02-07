@@ -114,7 +114,7 @@ if (ENABLE_PMT)
     if (PMT_LIBRARY)
         message(STATUS "Looking for pmt - found")
     else()
-        message(FATAL_ERROR "Looking for pmt - not found")
+        message(FATAL_ERROR "Looking for pmt - not found\n You may need to set -DPMT_DIR to the local installation of PMT ")
     endif()
 
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -O3 -fpermissive -lpmt")

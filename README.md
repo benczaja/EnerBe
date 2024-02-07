@@ -37,4 +37,11 @@ go to the root EnerBe directory
 git clone --recursive https://git.astron.nl/RD/pmt.git
 cd pmt && mkdir build && cd build
 cmake -DCMAKE_INSTALL_PREFIX=../ ..
+make install
 ```
+Then set the `-DPMT_DIR` with CMake
+example
+```
+cmake -DENABLE_PMT=1 -DPMT_DIR=/home/benjamic/EnerBe/pmt ../
+```
+
