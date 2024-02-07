@@ -108,20 +108,22 @@ endif()
 
 if (ENABLE_PMT)
     message(STATUS "Looking for pmt")
-    find_library(PMT_LIBRARY NAMES pmt)
+    set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} ${PMT_DIR}/lib)
+    include_directories(${PMT_DIR}/include)
+    find_library(PMT_LIBRARY NAMES pmt HINTS PMT_DIR)
     if (PMT_LIBRARY)
         message(STATUS "Looking for pmt - found")
     else()
         message(FATAL_ERROR "Looking for pmt - not found")
     endif()
 
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -O3 -fpermissive")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -O3 -fpermissive -lpmt")
     # compile the double precision binaries
     #######################################
     add_executable(dgemm_pmt xgemm_pmt.cpp)
     target_link_libraries(dgemm_pmt HELPER_LIB)
     target_compile_definitions(dgemm_pmt PUBLIC USE_DOUBLE)    
-    target_link_options(dgemm_pmt PUBLIC "-lpmt")
+    #target_link_options(dgemm_pmt PUBLIC "-lpmt")
 
     add_executable(daxpy_pmt axpy_pmt.cpp)
     target_link_libraries(daxpy_pmt HELPER_LIB)
