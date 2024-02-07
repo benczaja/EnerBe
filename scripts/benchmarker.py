@@ -16,7 +16,7 @@ def log_results(result):
 
     script_dir = os.path.dirname(os.path.realpath(__file__))
     results_dir = script_dir.replace("scripts","results")
-    results_file = results_dir + "/results.csv"
+    results_file = results_dir + "/results_test.csv"
 
     data = pd.DataFrame(result)
 
@@ -54,18 +54,24 @@ def log_results(result):
 
 
 
-def benchmark(executable, size, args=None, env_var=None):
+def benchmark(application, size, args=None, env_var=None):
 
-    print("Running...\nApplication: " + executable +
+    nan = float('nan')
+    result_size = nan
+    result_time = nan
+    result_watt = nan 
+    result_joule = nan 
+
+    print("Running...\nApplication: " + application +
           " Size: " + str(size) +
           " Args: " + str(args) +
           " Vars: " + str(env_var) 
           )
+    
     # get the path of this python script
     script_dir = os.path.dirname(os.path.realpath(__file__))
     bin_dir = script_dir.replace("scripts","bin")
-    
-    executable = bin_dir + "/" + executable
+    executable = bin_dir + "/" + application
 
     if not os.path.isfile(executable):
         print("Executable....")
@@ -82,9 +88,40 @@ def benchmark(executable, size, args=None, env_var=None):
     else:
         output = subprocess.check_output([executable, str(size), str(args)]).decode("utf-8")
     
+
     # regex the results:
-    size_pattern = r'^SIZE:\s(?P<rsize>' + number + r')\s'
-    time_pattern = r'^TIME:\s(?P<rtime>' + number + r')\ssec'
+    size_pattern = r'SIZE:\s(?P<rsize>' + number + r')\s'
+    time_pattern = r'TIME:\s(?P<rtime>' + number + r')\ss'
+
+    print(output)
+    x = re.search(size_pattern, output,re.MULTILINE)
+    result_size = x['rsize']
+
+    x = re.search(time_pattern, output,re.MULTILINE)
+    result_time = x['rtime']
+
+    # regex the results:
+    if "pmt" in application:
+        print(output)
+        watt_pattern = r'WATTS:\s(?P<rwatt>' + number + r')\sW'
+        joule_pattern = r'JOULES:\s(?P<rjoule>' + number + r')\sJ'
+
+        try:
+            x = re.search(watt_pattern, output,re.MULTILINE)
+            result_watt = x['rwatt']
+        except TypeError as error:
+            print(error)
+            print("Could not find REGEX match for WATTS: in output")
+            exit(1)
+
+        try:
+            x = re.search(joule_pattern, output,re.MULTILINE)
+            result_joule = x['rjoule']
+        except TypeError as error:
+            print(error)
+            print("Could not find REGEX match for JOULES: in output")
+            exit(1)
+        
 
     x = re.search(size_pattern, output,re.MULTILINE)
     result_size = x['rsize']
@@ -92,19 +129,21 @@ def benchmark(executable, size, args=None, env_var=None):
     x = re.search(time_pattern, output,re.MULTILINE)
     result_time = x['rtime']
 
-    nan = float('nan')
     # save the results
     result = {
-    "Name": [executable.split("/")[-1]],
+    "Name": [application],
     "Args": [args],
     "env_var": [env_var],
     "Size": [result_size],
     "Total_time": [result_time],
     "CPU_time": [nan],
     "GPU_time": [nan],
-    "Total_energy": [nan],
+    "Total_energy": [result_joule],
     "CPU_energy": [nan],
     "GPU_energy": [nan],
+    "Total_power": [result_watt],
+    "CPU_power": [nan],
+    "GPU_power": [nan],
 
     }
 
@@ -113,17 +152,17 @@ def benchmark(executable, size, args=None, env_var=None):
 
 if __name__ == "__main__":
 
+
     applications = [
-        "dgemm",
-        "sgemm",
-        "saxpy",
-        "daxpy",
+        "dgemm_pmt",
+        "sgemm_pmt",
+        #"saxpy",
+        #"daxpy",
         ]
     
-    matrix_sizes = range(0,2000,100)
-
+    matrix_sizes = range(0,2500,100)
     args = ["-s", "-p"]
-
+    
     env_vars = [
         "OMP_NUM_THREADS=2",
         "OMP_NUM_THREADS=4",
@@ -131,7 +170,7 @@ if __name__ == "__main__":
         "OMP_NUM_THREADS=16",
         "OMP_NUM_THREADS=32",
         ]
-
+    
     for application in applications:
         for size in matrix_sizes: 
             for arg in args:
