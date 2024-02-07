@@ -93,7 +93,6 @@ def benchmark(application, size, args=None, env_var=None):
     size_pattern = r'SIZE:\s(?P<rsize>' + number + r')\s'
     time_pattern = r'TIME:\s(?P<rtime>' + number + r')\ss'
 
-    print(output)
     x = re.search(size_pattern, output,re.MULTILINE)
     result_size = x['rsize']
 
@@ -102,7 +101,6 @@ def benchmark(application, size, args=None, env_var=None):
 
     # regex the results:
     if "pmt" in application:
-        print(output)
         watt_pattern = r'WATTS:\s(?P<rwatt>' + number + r')\sW'
         joule_pattern = r'JOULES:\s(?P<rjoule>' + number + r')\sJ'
 
@@ -160,7 +158,7 @@ if __name__ == "__main__":
         #"daxpy",
         ]
     
-    matrix_sizes = range(0,2500,100)
+    matrix_sizes = range(0,1600,500)
     args = ["-s", "-p"]
     
     env_vars = [
