@@ -4,7 +4,6 @@
 # you pick up the best policies.
 cmake_minimum_required(VERSION 3.24.0)
 
-include(ExternalProject)
 # This is your project statement. You should always list languages;
 # Listing the version is nice here since it sets lots of useful variables
 project(
