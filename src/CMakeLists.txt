@@ -117,7 +117,7 @@ if (ENABLE_PMT)
     if (PMT_LIBRARY)
         message(STATUS "Looking for pmt - found")
     else()
-        #message(FATAL_ERROR "Looking for pmt - not found\n You may need to set -DPMT_DIR to the local installation of PMT ")
+        message(STATUS "Looking for pmt - not found\n Building PMT locally ")
         message("Ben")
         ExternalProject_Add(PMT_LIBRARY
 	    INSTALL_DIR			"${PROJECT_SOURCE_DIR}/pmt"
