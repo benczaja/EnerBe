@@ -126,12 +126,12 @@ if (ENABLE_PMT)
         CMAKE_ARGS          -DCMAKE_INSTALL_PREFIX=${PROJECT_SOURCE_DIR}/pmt
 	    )
         include_directories(${PROJECT_SOURCE_DIR}/pmt/include)
-        set(CMAKE_BUILD_RPATH "${PROJECT_SOURCE_DIR}/pmt/lib64")
-        set(CMAKE_INSTALL_RPATH "${PROJECT_SOURCE_DIR}/pmt/lib64")
+        set(CMAKE_BUILD_RPATH "${PROJECT_SOURCE_DIR}/pmt/lib64" "${PROJECT_SOURCE_DIR}/pmt/lib")
+        set(CMAKE_INSTALL_RPATH "${PROJECT_SOURCE_DIR}/pmt/lib64" "${PROJECT_SOURCE_DIR}/pmt/lib")
 
     endif()
 
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -O3 -fpermissive -L${PROJECT_SOURCE_DIR}/pmt/lib64 ")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -O3 -fpermissive -L${PROJECT_SOURCE_DIR}/pmt/lib64 -L${PROJECT_SOURCE_DIR}/pmt/lib")
     # compile the double precision binaries
     #######################################
     add_executable(dgemm_pmt xgemm_pmt.cpp)
