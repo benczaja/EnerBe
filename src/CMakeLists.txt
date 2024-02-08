@@ -1,4 +1,7 @@
 include_directories(${PROJECT_SOURCE_DIR}/src/)
+include(ExternalProject)
+
+
 
 find_package(OpenMP REQUIRED)
 
@@ -108,21 +111,41 @@ endif()
 
 if (ENABLE_PMT)
     message(STATUS "Looking for pmt")
-    set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} ${PMT_DIR}/lib)
-    include_directories(${PMT_DIR}/include)
-    find_library(PMT_LIBRARY NAMES pmt HINTS PMT_DIR)
+    #set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} ${PMT_DIR}/lib)
+    #include_directories(${PMT_DIR}/include)
+    find_library(PMT_LIBRARY NAMES pmt)
     if (PMT_LIBRARY)
         message(STATUS "Looking for pmt - found")
     else()
-        message(FATAL_ERROR "Looking for pmt - not found\n You may need to set -DPMT_DIR to the local installation of PMT ")
+        #message(FATAL_ERROR "Looking for pmt - not found\n You may need to set -DPMT_DIR to the local installation of PMT ")
+        message("Ben")
+        ExternalProject_Add(PMT_LIBRARY
+	    INSTALL_DIR			"${PROJECT_SOURCE_DIR}/pmt"
+        #GIT_TAG             "master"
+        GIT_REPOSITORY      "https://git.astron.nl/RD/pmt.git"
+	    #CONFIGURE_COMMAND	"git submodule update --init"
+        CMAKE_ARGS          -DCMAKE_INSTALL_PREFIX=${PROJECT_SOURCE_DIR}/pmt
+	    )
+        #find_library(PMT_LIBRARY NAMES pmt)
+        include_directories(${PROJECT_SOURCE_DIR}/pmt/include)
+        #set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} ${PROJECT_SOURCE_DIR}/pmt/lib64)
+        #add_library(pmt STATIC ${PROJECT_SOURCE_DIR}/pmt)
+        #set(pmt_ROOT ${PROJECT_SOURCE_DIR}/pmt)
+        #set(LINK_FLAGS "-L${PROJECT_SOURCE_DIR}/pmt/lib64")
+        set(CMAKE_BUILD_RPATH "${PROJECT_SOURCE_DIR}/pmt/lib64")
+        set(CMAKE_INSTALL_RPATH "${PROJECT_SOURCE_DIR}/pmt/lib64")
+
     endif()
 
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -O3 -fpermissive -lpmt")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -O3 -fpermissive -L${PROJECT_SOURCE_DIR}/pmt/lib64 ")
     # compile the double precision binaries
     #######################################
     add_executable(dgemm_pmt xgemm_pmt.cpp)
     target_link_libraries(dgemm_pmt HELPER_LIB)
-    target_compile_definitions(dgemm_pmt PUBLIC USE_DOUBLE)    
+    target_link_libraries(dgemm_pmt pmt)
+    target_compile_definitions(dgemm_pmt PUBLIC USE_DOUBLE)
+    #set_target_properties(dgemm_pmt PROPERTIES INSTALL_RPATH "${PROJECT_SOURCE_DIR}/pmt/lib64")
+    #set_target_properties(dgemm_pmt PROPERTIES BUILD_WITH_INSTALL_RPATH ON)
     #target_link_options(dgemm_pmt PUBLIC "-lpmt")
 
     add_executable(daxpy_pmt axpy_pmt.cpp)
