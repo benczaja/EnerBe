@@ -121,17 +121,11 @@ if (ENABLE_PMT)
         message("Ben")
         ExternalProject_Add(PMT_LIBRARY
 	    INSTALL_DIR			"${PROJECT_SOURCE_DIR}/pmt"
-        #GIT_TAG             "master"
         GIT_REPOSITORY      "https://git.astron.nl/RD/pmt.git"
 	    #CONFIGURE_COMMAND	"git submodule update --init"
         CMAKE_ARGS          -DCMAKE_INSTALL_PREFIX=${PROJECT_SOURCE_DIR}/pmt
 	    )
-        #find_library(PMT_LIBRARY NAMES pmt)
         include_directories(${PROJECT_SOURCE_DIR}/pmt/include)
-        #set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} ${PROJECT_SOURCE_DIR}/pmt/lib64)
-        #add_library(pmt STATIC ${PROJECT_SOURCE_DIR}/pmt)
-        #set(pmt_ROOT ${PROJECT_SOURCE_DIR}/pmt)
-        #set(LINK_FLAGS "-L${PROJECT_SOURCE_DIR}/pmt/lib64")
         set(CMAKE_BUILD_RPATH "${PROJECT_SOURCE_DIR}/pmt/lib64")
         set(CMAKE_INSTALL_RPATH "${PROJECT_SOURCE_DIR}/pmt/lib64")
 
@@ -144,24 +138,22 @@ if (ENABLE_PMT)
     target_link_libraries(dgemm_pmt HELPER_LIB)
     target_link_libraries(dgemm_pmt pmt)
     target_compile_definitions(dgemm_pmt PUBLIC USE_DOUBLE)
-    #set_target_properties(dgemm_pmt PROPERTIES INSTALL_RPATH "${PROJECT_SOURCE_DIR}/pmt/lib64")
-    #set_target_properties(dgemm_pmt PROPERTIES BUILD_WITH_INSTALL_RPATH ON)
-    #target_link_options(dgemm_pmt PUBLIC "-lpmt")
 
     add_executable(daxpy_pmt axpy_pmt.cpp)
     target_link_libraries(daxpy_pmt HELPER_LIB)
+    target_link_libraries(daxpy_pmt pmt)
     target_compile_definitions(daxpy_pmt PUBLIC USE_DOUBLE)    
-    target_link_options(daxpy_pmt PUBLIC "-lpmt")
 
     # compile the single precision binaries
     #######################################
     add_executable(sgemm_pmt xgemm_pmt.cpp)
     target_link_libraries(sgemm_pmt HELPER_LIB)
-    target_link_options(sgemm_pmt PUBLIC "-lpmt")
+    target_link_libraries(sgemm_pmt pmt)
+
 
     add_executable(saxpy_pmt axpy_pmt.cpp)
     target_link_libraries(saxpy_pmt HELPER_LIB)
-    target_link_options(saxpy_pmt PUBLIC "-lpmt")
+    target_link_libraries(saxpy_pmt pmt)
 
     install(TARGETS dgemm_pmt sgemm_pmt daxpy_pmt saxpy_pmt
     RUNTIME
