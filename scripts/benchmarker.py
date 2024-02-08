@@ -84,9 +84,10 @@ def benchmark(application, size, args=None, env_var=None):
         name = env_var.split("=")[0]
         value = env_var.split("=")[1]
         os.environ[name] = value
-        output = subprocess.check_output([executable, str(size), str(args)]).decode("utf-8")
+        output = subprocess.run([executable, str(size), str(args)], capture_output=True).stdout.decode("utf-8")
     else:
-        output = subprocess.check_output([executable, str(size), str(args)]).decode("utf-8")
+        output = subprocess.run([executable, str(size), str(args)], capture_output=True).stdout.decode("utf-8")
+        
     
 
     # regex the results:
@@ -158,7 +159,7 @@ if __name__ == "__main__":
         #"daxpy",
         ]
     
-    matrix_sizes = range(0,1600,500)
+    matrix_sizes = range(0,2600,200)
     args = ["-s", "-p"]
     
     env_vars = [
