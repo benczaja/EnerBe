@@ -2,13 +2,18 @@
 Energy Benchmarks
 
 
+### Build instructions
 
-### Build insttructions
+Requirements
+- C and C++ Compliers (GNU preferred)
+- ROCM or CUDA Compilers if compiling for AMD or NVIDIA GPUs
+- CMake
 
-Simplist example
+Simplest example
 ```
-module load 2023 foss/2023a
-module load CMake/3.26.3-GCCcore-12.3.0 
+
+git clone https://github.com/benczaja/EnerBe.git
+cd EnerBe
 mkdir build && cd build
 cmake ../
 make 
@@ -26,7 +31,7 @@ cmake -DENABLE_HIP=1 ..
 make && make install
 ```
 With PMT:
-> If you do not have PMT, PMT will be installed 
+> If you do not have PMT, PMT will be installed (https://git.astron.nl/RD/pmt)
 ```
 cmake -DENABLE_PMT=1 ..
 make && make install
