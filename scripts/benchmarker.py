@@ -7,16 +7,17 @@ import pandas as pd
 
 # define the global regex for a number
 number = r'[+-]?((\d+\.\d*)|(\.\d+)|(\d+))([eE][+-]?\d+)?'
-#Goal 1: benchmark time vs size
 
-# QUESTIOn Benchmark in Python or make script to benchmark?????
-
-
-def log_results(result):
+def log_results(result,cluster=False):
 
     script_dir = os.path.dirname(os.path.realpath(__file__))
-    results_dir = script_dir.replace("scripts","results")
-    results_file = results_dir + "/results_test.csv"
+    results_dir = script_dir.replace("scripts","tmp_results")
+    if cluster:
+        jobid = os.environ['SLURM_JOB_ID']
+        print(jobid)
+        results_file = results_dir + "/results_" + jobid +".csv"
+    else:
+        results_file = results_dir + "/results.csv"
 
     data = pd.DataFrame(result)
 
@@ -52,9 +53,10 @@ def log_results(result):
     else:
         data.to_csv(results_file,sep=',',index=False)
 
+    return(results_file)
 
 
-def benchmark(application, size, args=None, env_var=None):
+def benchmark(application, size, args=None, env_var=None,cluster=False):
 
     nan = float('nan')
     result_size = nan
@@ -146,7 +148,7 @@ def benchmark(application, size, args=None, env_var=None):
 
     }
 
-    log_results(result)
+    log_results(result,cluster)
 
 
 if __name__ == "__main__":
@@ -174,9 +176,9 @@ if __name__ == "__main__":
         for size in matrix_sizes: 
             for arg in args:
                 if arg.count("s"):
-                    benchmark(application, size, arg)
+                    benchmark(application, size, arg,cluster=True)
                 else:
                     for var in env_vars:
-                        benchmark(application, size, arg, var)
+                        benchmark(application, size, arg, var,cluster=True)
 
 
