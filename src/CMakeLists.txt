@@ -117,12 +117,11 @@ if (ENABLE_PMT)
     if (PMT_LIBRARY)
         message(STATUS "Looking for pmt - found")
     else()
-        message(STATUS "Looking for pmt - not found\n Building PMT locally ")
-        message("Ben")
+        message(STATUS "Looking for pmt - not found\n Configuring PMT to be built locally ")
+        message(STATUS "Will build PMT Here .... ${PROJECT_SOURCE_DIR}/pmt ")
         ExternalProject_Add(PMT_LIBRARY
 	    INSTALL_DIR			"${PROJECT_SOURCE_DIR}/pmt"
         GIT_REPOSITORY      "https://git.astron.nl/RD/pmt.git"
-	    #CONFIGURE_COMMAND	"git submodule update --init"
         CMAKE_ARGS          -DCMAKE_INSTALL_PREFIX=${PROJECT_SOURCE_DIR}/pmt
 	    )
         include_directories(${PROJECT_SOURCE_DIR}/pmt/include)
