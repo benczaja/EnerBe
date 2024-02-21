@@ -2,7 +2,6 @@ include_directories(${PROJECT_SOURCE_DIR}/src/)
 include(ExternalProject)
 
 
-
 find_package(OpenMP REQUIRED)
 
 if (OPENMP_FOUND)
@@ -111,26 +110,35 @@ endif()
 
 if (ENABLE_PMT)
     message(STATUS "Looking for pmt")
-    #set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} ${PMT_DIR}/lib)
-    #include_directories(${PMT_DIR}/include)
     find_library(PMT_LIBRARY NAMES pmt)
     if (PMT_LIBRARY)
         message(STATUS "Looking for pmt - found")
     else()
         message(STATUS "Looking for pmt - not found\n Configuring PMT to be built locally ")
-        message(STATUS "Will build PMT Here .... ${PROJECT_SOURCE_DIR}/pmt ")
+
+        set(PMT_CONFIG_ARGS "-DCMAKE_INSTALL_PREFIX=${PROJECT_SOURCE_DIR}/pmt")
+        if (ENABLE_CUDA)
+            set(PMT_CONFIG_ARGS "${PMT_CONFIG_ARGS};-DBUILD_NVML_PMT=1")
+        endif()
+        message(STATUS "PMT will be configured with these arguments: ")
+        message(STATUS "${PMT_CONFIG_ARGS} ")
+
         ExternalProject_Add(PMT_LIBRARY
 	    INSTALL_DIR			"${PROJECT_SOURCE_DIR}/pmt"
         GIT_REPOSITORY      "https://git.astron.nl/RD/pmt.git"
-        CMAKE_ARGS          -DCMAKE_INSTALL_PREFIX=${PROJECT_SOURCE_DIR}/pmt
+        CMAKE_ARGS          "${PMT_CONFIG_ARGS}"
 	    )
         include_directories(${PROJECT_SOURCE_DIR}/pmt/include)
+        link_directories(${PROJECT_SOURCE_DIR}/pmt/lib)
+        link_directories(${PROJECT_SOURCE_DIR}/pmt/lib64)
+        
+        # just to go a bit Nuclear if we are running into EESSI compat layer issues.
         set(CMAKE_BUILD_RPATH "${PROJECT_SOURCE_DIR}/pmt/lib64" "${PROJECT_SOURCE_DIR}/pmt/lib")
         set(CMAKE_INSTALL_RPATH "${PROJECT_SOURCE_DIR}/pmt/lib64" "${PROJECT_SOURCE_DIR}/pmt/lib")
 
     endif()
 
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -O3 -fpermissive -L${PROJECT_SOURCE_DIR}/pmt/lib64 -L${PROJECT_SOURCE_DIR}/pmt/lib")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -O3 -fpermissive")
     # compile the double precision binaries
     #######################################
     add_executable(dgemm_pmt xgemm_pmt.cpp)
@@ -163,12 +171,13 @@ if (ENABLE_PMT)
     enable_language(CUDA)
     set(CMAKE_CUDA_FLAGS "-gencode arch=compute_80,code=sm_80 -lineinfo --ptxas-options=-v --disable-warnings")
 
+
     #DOUBLE PRECISION
     add_executable(dgemm_pmt_gpu xgemm_pmt.cu)
     target_link_options(dgemm_pmt_gpu PUBLIC "-fopenmp")
     target_link_libraries(dgemm_pmt_gpu HELPER_LIB)
+    target_link_libraries(dgemm_pmt_gpu pmt)
     target_compile_definitions(dgemm_pmt_gpu PUBLIC USE_DOUBLE)
-    target_link_options(dgemm_pmt_gpu PUBLIC "-lpmt")
 
     add_executable(daxpy_pmt_gpu axpy_pmt.cu)
     target_link_options(daxpy_pmt_gpu PUBLIC "-fopenmp")
