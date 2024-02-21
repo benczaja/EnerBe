@@ -89,7 +89,6 @@ int main( int argc, char *argv[] )  {
         // Transfer data from host to device memory
         cudaMemcpy(d_sx, sx, sizeof(X_TYPE) * N, cudaMemcpyHostToDevice);
         cudaMemcpy(d_sy, sy, sizeof(X_TYPE) * N, cudaMemcpyHostToDevice);
-        //cudaMemcpy(d_a, a, sizeof(X_TYPE) , cudaMemcpyHostToDevice);
 
         gpu_axpy<<<grid_size,block_size>>>(N, a, d_sx, d_sy);
 
@@ -100,9 +99,9 @@ int main( int argc, char *argv[] )  {
         auto CPUend = CPUsensor->Read();
 
         std::cout << "SIZE: " << N << std::endl;
-        std::cout << "CPU (RAPL) TIME: " << pmt::PMT::seconds(CPUstart, CPUend) << " | GPU (NVML) TIME: " << pmt::PMT::seconds(GPUstart, GPUend) << " s"<< std::endl;
-        std::cout << "CPU (RAPL) JOULES: " << pmt::PMT::joules(CPUstart, CPUend) << " | GPU (NVML) JOULES: " << pmt::PMT::joules(GPUstart, GPUend) << " J"<< std::endl;
-        std::cout << "CPU (RAPL) WATTS: " << pmt::PMT::watts(CPUstart, CPUend) << " | GPU (NVML) WATTS: " << pmt::PMT::watts(GPUstart, GPUend) << " W"<< std::endl;
+        std::cout << "(RAPL) CPU_TIME: " << pmt::PMT::seconds(CPUstart, CPUend) << " | (NVML) GPU_TIME: " << pmt::PMT::seconds(GPUstart, GPUend) << " s"<< std::endl;
+        std::cout << "(RAPL) CPU_JOULES: " << pmt::PMT::joules(CPUstart, CPUend) << " | (NVML) GPU_JOULES: " << pmt::PMT::joules(GPUstart, GPUend) << " J"<< std::endl;
+        std::cout << "(RAPL) CPU_WATTS: " << pmt::PMT::watts(CPUstart, CPUend) << " | (NVML) GPU_WATTS: " << pmt::PMT::watts(GPUstart, GPUend) << " W"<< std::endl;
         std::cout << "Total TIME: " << (pmt::PMT::seconds(CPUstart, CPUend) + pmt::PMT::seconds(GPUstart, GPUend))*0.5 << " s"<< std::endl;
         std::cout << "Total JOULES: " << (pmt::PMT::joules(CPUstart, CPUend) + pmt::PMT::joules(GPUstart, GPUend)) << " J"<< std::endl;
         std::cout << "Total WATTS: " << (pmt::PMT::watts(CPUstart, CPUend) + pmt::PMT::watts(GPUstart, GPUend)) << " W"<< std::endl;

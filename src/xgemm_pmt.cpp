@@ -115,9 +115,9 @@ int main( int argc, char *argv[] )  {
 
     /// SORRY FOR THE CPP !!!!! BUT WE ARE JUST PRINTING!!!!
     std::cout << "SIZE: " << N <<std::endl;
-    std::cout << "PMT TIME: " << pmt::PMT::seconds(start, end) << " s"<< std::endl;
-    std::cout << "PMT JOULES: " << pmt::PMT::joules(start, end) << " J" << std::endl;
-    std::cout << "PMT WATTS: " << pmt::PMT::watts(start, end) << " W" << std::endl;
+    std::cout << "(RAPL) CPU_TIME: " << pmt::PMT::seconds(start, end) << " s"<< std::endl;
+    std::cout << "(RAPL) CPU_JOULES: " << pmt::PMT::joules(start, end) << " J" << std::endl;
+    std::cout << "(RAPL) CPU_WATTS: " << pmt::PMT::watts(start, end) << " W" << std::endl;
 
 
   }
@@ -136,9 +136,9 @@ int main( int argc, char *argv[] )  {
 
     /// SORRY FOR THE CPP !!!!! BUT WE ARE JUST PRINTING!!!!
     std::cout << "SIZE: " << N <<std::endl;
-    std::cout << "PMT TIME: " << pmt::PMT::seconds(start, end) << " s"<< std::endl;
-    std::cout << "PMT JOULES: " << pmt::PMT::joules(start, end) << " J" << std::endl;
-    std::cout << "PMT WATTS: " << pmt::PMT::watts(start, end) << " W" << std::endl;
+    std::cout << "(RAPL) CPU_TIME: " << pmt::PMT::seconds(start, end) << " s"<< std::endl;
+    std::cout << "(RAPL) CPU_JOULES: " << pmt::PMT::joules(start, end) << " J" << std::endl;
+    std::cout << "(RAPL) CPU_WATTS: " << pmt::PMT::watts(start, end) << " W" << std::endl;
 
   }
 
