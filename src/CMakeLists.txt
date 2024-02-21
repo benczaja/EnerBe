@@ -43,7 +43,8 @@ install(TARGETS dgemm sgemm daxpy saxpy
 if (ENABLE_CUDA)
     enable_language(CUDA)
     set(CMAKE_CUDA_FLAGS "-gencode arch=compute_80,code=sm_80 -lineinfo --ptxas-options=-v --disable-warnings")
-    
+
+  
     #DOUBLE PRECISION
     add_executable(dgemm_gpu xgemm.cu)
     target_link_options(dgemm_gpu PUBLIC "-fopenmp")
@@ -120,6 +121,9 @@ if (ENABLE_PMT)
         if (ENABLE_CUDA)
             set(PMT_CONFIG_ARGS "${PMT_CONFIG_ARGS};-DBUILD_NVML_PMT=1")
         endif()
+        if (ENABLE_HIP)
+            set(PMT_CONFIG_ARGS "${PMT_CONFIG_ARGS};-DBUILD_ROCM_PMT=1")
+        endif()
         message(STATUS "PMT will be configured with these arguments: ")
         message(STATUS "${PMT_CONFIG_ARGS} ")
 
@@ -171,7 +175,6 @@ if (ENABLE_PMT)
     enable_language(CUDA)
     set(CMAKE_CUDA_FLAGS "-gencode arch=compute_80,code=sm_80 -lineinfo --ptxas-options=-v --disable-warnings")
 
-
     #DOUBLE PRECISION
     add_executable(dgemm_pmt_gpu xgemm_pmt.cu)
     target_link_options(dgemm_pmt_gpu PUBLIC "-fopenmp")
@@ -201,5 +204,39 @@ if (ENABLE_PMT)
     DESTINATION ${PROJECT_SOURCE_DIR}/bin
     )
     endif()
+
+    if (ENABLE_HIP)
+    enable_language(HIP)
+
+    #DOUBLE PRECISION
+    add_executable(dgemm_pmt_gpu xgemm_pmt.hip)
+    target_link_options(dgemm_pmt_gpu PUBLIC "-fopenmp")
+    target_link_libraries(dgemm_pmt_gpu HELPER_LIB)
+    target_link_libraries(dgemm_pmt_gpu pmt)
+    target_compile_definitions(dgemm_pmt_gpu PUBLIC USE_DOUBLE)
+
+    #add_executable(daxpy_pmt_gpu axpy_pmt.cu)
+    #target_link_options(daxpy_pmt_gpu PUBLIC "-fopenmp")
+    #target_link_libraries(daxpy_pmt_gpu HELPER_LIB)
+    #target_compile_definitions(daxpy_pmt_gpu PUBLIC USE_DOUBLE)
+    #target_link_options(daxpy_pmt_gpu PUBLIC "-lpmt")
+#
+    ##SINGLE PRECISION
+    #add_executable(sgemm_pmt_gpu xgemm_pmt.cu)
+    #target_link_options(sgemm_pmt_gpu PUBLIC "-fopenmp")
+    #target_link_libraries(sgemm_pmt_gpu HELPER_LIB)
+    #target_link_options(sgemm_pmt_gpu PUBLIC "-lpmt")
+#
+    #add_executable(saxpy_pmt_gpu axpy_pmt.cu)
+    #target_link_options(saxpy_pmt_gpu PUBLIC "-fopenmp")
+    #target_link_libraries(saxpy_pmt_gpu HELPER_LIB)
+    #target_link_options(saxpy_pmt_gpu PUBLIC "-lpmt")
+    
+    install(TARGETS dgemm_pmt_gpu
+    RUNTIME
+    DESTINATION ${PROJECT_SOURCE_DIR}/bin
+    )
+    endif()
+
 endif()
 
