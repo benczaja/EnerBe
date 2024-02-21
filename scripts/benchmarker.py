@@ -36,12 +36,18 @@ def log_results(result,cluster=False):
     x = re.search(pattern, output,re.MULTILINE)
     sockets = x['sockets']
 
-
     data['CPU_name'] = cpu_name
     data['Sockets'] = sockets
     data['Cores_per_socket'] = cores_per_socket
-    
 
+
+    # get DEVICE information
+    try:
+        output = subprocess.check_output(['nvidia-smi', '--query-gpu=name', '--format=csv,noheader']).decode("utf-8")
+        data["GPU_name"] = output.split("\n")[0]
+    except subprocess.CalledProcessError:
+        data["GPU_name"] = float("nan")
+    
     if not os.path.exists(results_dir):
         os.mkdir(results_dir)
 
