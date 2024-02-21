@@ -17,7 +17,7 @@ def log_results(result,cluster=False):
         print(jobid)
         results_file = results_dir + "/results_" + jobid +".csv"
     else:
-        results_file = results_dir + "/results.csv"
+        results_file = results_dir + "/results_tmp.csv"
 
     data = pd.DataFrame(result)
 
@@ -60,9 +60,12 @@ def benchmark(application, size, args=None, env_var=None,cluster=False):
 
     nan = float('nan')
     result_size = nan
-    result_time = nan
-    result_watt = nan 
-    result_joule = nan 
+    cpu_result_time = nan
+    cpu_result_watt = nan 
+    cpu_result_joule = nan 
+    gpu_result_time = nan
+    gpu_result_watt = nan 
+    gpu_result_joule = nan 
 
     print("Running...\nApplication: " + application +
           " Size: " + str(size) +
@@ -90,45 +93,105 @@ def benchmark(application, size, args=None, env_var=None,cluster=False):
     else:
         output = subprocess.run([executable, str(size), str(args)], capture_output=True).stdout.decode("utf-8")
         
-    
 
+    # regex the results:
+    if ("pmt" in application) & ("gpu" in application):
+        gpu_time_pattern = r'GPU_TIME:\s(?P<rgtime>' + number + r')\ss'
+        gpu_watt_pattern = r'GPU_WATTS:\s(?P<rgwatt>' + number + r')\sW'
+        gpu_joule_pattern = r'GPU_JOULES:\s(?P<rgjoule>' + number + r')\sJ'
+        
+        cpu_time_pattern = r'CPU_TIME:\s(?P<rctime>' + number + r')\s'
+        cpu_watt_pattern = r'CPU_WATTS:\s(?P<rcwatt>' + number + r')\s'
+        cpu_joule_pattern = r'CPU_JOULES:\s(?P<rcjoule>' + number + r')\s'
+
+        try:
+            x = re.search(gpu_time_pattern, output,re.MULTILINE)
+            gpu_result_time = x['rgtime']
+        except TypeError as error:
+            print(error)
+            print("Could not find REGEX match for GPU_TIME: in output")
+            exit(1)
+
+        try:
+            x = re.search(gpu_watt_pattern, output,re.MULTILINE)
+            gpu_result_watt = x['rgwatt']
+        except TypeError as error:
+            print(error)
+            print("Could not find REGEX match for GPU_WATTS: in output")
+            exit(1)
+
+        try:
+            x = re.search(gpu_joule_pattern, output,re.MULTILINE)
+            gpu_result_joule = x['rgjoule']
+        except TypeError as error:
+            print(error)
+            print("Could not find REGEX match for GPU_JOULES: in output")
+            exit(1)
+
+        try:
+            x = re.search(cpu_time_pattern, output,re.MULTILINE)
+            cpu_result_time = x['rctime']
+        except TypeError as error:
+            print(error)
+            print("Could not find REGEX match for CPU_TIME: in output")
+            exit(1)
+
+        try:
+            x = re.search(cpu_watt_pattern, output,re.MULTILINE)
+            cpu_result_watt = x['rcwatt']
+        except TypeError as error:
+            print(error)
+            print("Could not find REGEX match for CPU_WATTS: in output")
+            exit(1)
+
+        try:
+            x = re.search(cpu_joule_pattern, output,re.MULTILINE)
+            cpu_result_joule = x['rcjoule']
+        except TypeError as error:
+            print(error)
+            print("Could not find REGEX match for CPU_JOULES: in output")
+            exit(1)
+
+
+    elif ("pmt" in application):
+        cpu_time_pattern = r'CPU_TIME:\s(?P<rctime>' + number + r')\ss'
+        cpu_watt_pattern = r'CPU_WATTS:\s(?P<rcwatt>' + number + r')\sW'
+        cpu_joule_pattern = r'CPU_JOULES:\s(?P<rcjoule>' + number + r')\sJ'
+
+        try:
+            x = re.search(cpu_time_pattern, output,re.MULTILINE)
+            cpu_result_time = x['rctime']
+        except TypeError as error:
+            print(error)
+            print("Could not find REGEX match for CPU_TIME: in output")
+            exit(1)
+
+        try:
+            x = re.search(cpu_watt_pattern, output,re.MULTILINE)
+            cpu_result_watt = x['rcwatt']
+        except TypeError as error:
+            print(error)
+            print("Could not find REGEX match for CPU_WATTS: in output")
+            exit(1)
+
+        try:
+            x = re.search(cpu_joule_pattern, output,re.MULTILINE)
+            cpu_result_joule = x['rcjoule']
+        except TypeError as error:
+            print(error)
+            print("Could not find REGEX match for CPU_JOULES: in output")
+            exit(1)
+    else:
+        time_pattern = r'TIME:\s(?P<rtime>' + number + r')\ss'
+        x = re.search(time_pattern, output,re.MULTILINE)
+        cpu_result_time = x['rtime']
+
+    
     # regex the results:
     size_pattern = r'SIZE:\s(?P<rsize>' + number + r')\s'
-    time_pattern = r'TIME:\s(?P<rtime>' + number + r')\ss'
 
     x = re.search(size_pattern, output,re.MULTILINE)
     result_size = x['rsize']
-
-    x = re.search(time_pattern, output,re.MULTILINE)
-    result_time = x['rtime']
-
-    # regex the results:
-    if "pmt" in application:
-        watt_pattern = r'WATTS:\s(?P<rwatt>' + number + r')\sW'
-        joule_pattern = r'JOULES:\s(?P<rjoule>' + number + r')\sJ'
-
-        try:
-            x = re.search(watt_pattern, output,re.MULTILINE)
-            result_watt = x['rwatt']
-        except TypeError as error:
-            print(error)
-            print("Could not find REGEX match for WATTS: in output")
-            exit(1)
-
-        try:
-            x = re.search(joule_pattern, output,re.MULTILINE)
-            result_joule = x['rjoule']
-        except TypeError as error:
-            print(error)
-            print("Could not find REGEX match for JOULES: in output")
-            exit(1)
-        
-
-    x = re.search(size_pattern, output,re.MULTILINE)
-    result_size = x['rsize']
-
-    x = re.search(time_pattern, output,re.MULTILINE)
-    result_time = x['rtime']
 
     # save the results
     result = {
@@ -136,17 +199,15 @@ def benchmark(application, size, args=None, env_var=None,cluster=False):
     "Args": [args],
     "env_var": [env_var],
     "Size": [result_size],
-    "Total_time": [result_time],
-    "CPU_time": [nan],
-    "GPU_time": [nan],
-    "Total_energy": [result_joule],
-    "CPU_energy": [nan],
-    "GPU_energy": [nan],
-    "Total_power": [result_watt],
-    "CPU_power": [nan],
-    "GPU_power": [nan],
-
+    "CPU_time": [cpu_result_time],
+    "GPU_time": [gpu_result_time],
+    "CPU_energy": [cpu_result_joule],
+    "GPU_energy": [gpu_result_joule],
+    "CPU_power": [cpu_result_watt],
+    "GPU_power": [gpu_result_watt],
     }
+
+    print(cpu_result_time, gpu_result_time)
 
     log_results(result,cluster)
 
@@ -156,29 +217,29 @@ if __name__ == "__main__":
 
     applications = [
         "dgemm_pmt",
-        "sgemm_pmt",
+        "dgemm_pmt_gpu",
         #"saxpy",
         #"daxpy",
         ]
     
-    matrix_sizes = range(0,2600,200)
+    matrix_sizes = range(0,400,200)
     args = ["-s", "-p"]
     
-    env_vars = [
-        "OMP_NUM_THREADS=2",
-        "OMP_NUM_THREADS=4",
-        "OMP_NUM_THREADS=8",
-        "OMP_NUM_THREADS=16",
-        "OMP_NUM_THREADS=32",
-        ]
+    env_vars = []
+    #    "OMP_NUM_THREADS=2",
+    #    "OMP_NUM_THREADS=4",
+    #    "OMP_NUM_THREADS=8",
+    #    "OMP_NUM_THREADS=16",
+    #    "OMP_NUM_THREADS=32",
+    #    ]
     
     for application in applications:
         for size in matrix_sizes: 
             for arg in args:
                 if arg.count("s"):
-                    benchmark(application, size, arg,cluster=True)
+                    benchmark(application, size, arg,cluster=False)
                 else:
                     for var in env_vars:
-                        benchmark(application, size, arg, var,cluster=True)
+                        benchmark(application, size, arg, var,cluster=False)
 
 
