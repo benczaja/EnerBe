@@ -42,11 +42,21 @@ def log_results(result,cluster=False):
 
 
     # get DEVICE information
+    #NVIDIA
     try:
         output = subprocess.check_output(['nvidia-smi', '--query-gpu=name', '--format=csv,noheader']).decode("utf-8")
         data["GPU_name"] = output.split("\n")[0]
     except subprocess.CalledProcessError:
-        data["GPU_name"] = float("nan")
+        # AMD
+        try:
+            output = subprocess.check_output(['rocm-smi', '--showproductname']).decode("utf-8")
+
+            pattern = r'Card series:\s*(?P<gpuname>.*)'
+            x = re.search(pattern, output,re.MULTILINE)
+            data["GPU_name"] = x['gpuname']
+
+        except subprocess.CalledProcessError:
+            data["GPU_name"] = float("nan")
     
     if not os.path.exists(results_dir):
         os.mkdir(results_dir)
@@ -222,15 +232,15 @@ if __name__ == "__main__":
 
 
     applications = [
-        "dgemm_pmt",
+        "sgemm_pmt_gpu",
         "dgemm_pmt_gpu",
         #"saxpy",
         #"daxpy",
         ]
     
-    matrix_sizes = range(0,400,200)
-    args = ["-s", "-p"]
-    
+    matrix_sizes = range(0,40000,1000)
+    #args = ["-s", "-p"]
+    args = ["-s"]
     env_vars = []
     #    "OMP_NUM_THREADS=2",
     #    "OMP_NUM_THREADS=4",
