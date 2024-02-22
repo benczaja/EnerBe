@@ -46,7 +46,7 @@ def log_results(result,cluster=False):
     try:
         output = subprocess.check_output(['nvidia-smi', '--query-gpu=name', '--format=csv,noheader']).decode("utf-8")
         data["GPU_name"] = output.split("\n")[0]
-    except subprocess.CalledProcessError:
+    except:
         # AMD
         try:
             output = subprocess.check_output(['rocm-smi', '--showproductname']).decode("utf-8")
@@ -55,7 +55,7 @@ def log_results(result,cluster=False):
             x = re.search(pattern, output,re.MULTILINE)
             data["GPU_name"] = x['gpuname']
 
-        except subprocess.CalledProcessError:
+        except:
             data["GPU_name"] = float("nan")
     
     if not os.path.exists(results_dir):
@@ -253,9 +253,9 @@ if __name__ == "__main__":
         for size in matrix_sizes: 
             for arg in args:
                 if arg.count("s"):
-                    benchmark(application, size, arg,cluster=False)
+                    benchmark(application, size, arg,cluster=True)
                 else:
                     for var in env_vars:
-                        benchmark(application, size, arg, var,cluster=False)
+                        benchmark(application, size, arg, var,cluster=True)
 
 
