@@ -215,11 +215,11 @@ if (ENABLE_PMT)
     target_link_libraries(dgemm_pmt_gpu pmt)
     target_compile_definitions(dgemm_pmt_gpu PUBLIC USE_DOUBLE)
 
-    #add_executable(daxpy_pmt_gpu axpy_pmt.hip)
-    #target_link_options(daxpy_pmt_gpu PUBLIC "-fopenmp")
-    #target_link_libraries(daxpy_pmt_gpu HELPER_LIB)
-    #target_compile_definitions(daxpy_pmt_gpu PUBLIC USE_DOUBLE)
-    #target_link_options(daxpy_pmt_gpu PUBLIC "-lpmt")
+    add_executable(daxpy_pmt_gpu axpy_pmt.hip)
+    target_link_options(daxpy_pmt_gpu PUBLIC "-fopenmp")
+    target_link_libraries(daxpy_pmt_gpu HELPER_LIB)
+    target_link_libraries(daxpy_pmt_gpu pmt)
+    target_compile_definitions(daxpy_pmt_gpu PUBLIC USE_DOUBLE)
 
     #SINGLE PRECISION
     add_executable(sgemm_pmt_gpu xgemm_pmt.hip)
@@ -227,11 +227,12 @@ if (ENABLE_PMT)
     target_link_libraries(sgemm_pmt_gpu HELPER_LIB)
     target_link_libraries(sgemm_pmt_gpu pmt)
 
-    #add_executable(saxpy_pmt_gpu axpy_pmt.cu)
-    #target_link_options(saxpy_pmt_gpu PUBLIC "-fopenmp")
-    #target_link_libraries(saxpy_pmt_gpu HELPER_LIB)
+    add_executable(saxpy_pmt_gpu axpy_pmt.hip)
+    target_link_options(saxpy_pmt_gpu PUBLIC "-fopenmp")
+    target_link_libraries(saxpy_pmt_gpu HELPER_LIB)
+    target_link_libraries(saxpy_pmt_gpu pmt)
     
-    install(TARGETS dgemm_pmt_gpu sgemm_pmt_gpu
+    install(TARGETS dgemm_pmt_gpu sgemm_pmt_gpu daxpy_pmt_gpu saxpy_pmt_gpu
     RUNTIME
     DESTINATION ${PROJECT_SOURCE_DIR}/bin
     )

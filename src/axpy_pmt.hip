@@ -4,7 +4,8 @@
 #include <time.h> // needed for clock() and CLOCKS_PER_SEC etc
 #include "helper.h" // local helper header to clean up code
 #include <pmt.h> // needed for PMT
-#include<iostream> // needed for CPP IO ... cout, endl etc etc
+#include <pmt/ROCM.h> // needed for PMT
+#include <iostream> // needed for CPP IO ... cout, endl etc etc
 
 #ifdef USE_DOUBLE
 typedef double X_TYPE;
@@ -72,7 +73,7 @@ int main( int argc, char *argv[] )  {
     hipMalloc((void**)&d_sy, sizeof(X_TYPE) * N);
 
     // THIS IS NEW !!!!!!!
-    auto GPUsensor = pmt::nvml::NVML::Create();
+    auto GPUsensor = pmt::rocm::ROCM::Create();
     auto CPUsensor = pmt::rapl::Rapl::Create();
 
     /* Simple saxpy */
@@ -84,7 +85,7 @@ int main( int argc, char *argv[] )  {
         int grid_size = ((N + block_size) / block_size);
         
         //Start the PMT "sensor"
-        auto GPUstart = GPUsensor->Read(); // READING the GPU via NVML
+        auto GPUstart = GPUsensor->Read(); // READING the GPU via ROCM
         auto CPUstart = CPUsensor->Read(); // READING the CPU via RAPL
         
         // Transfer data from host to device memory
@@ -100,9 +101,9 @@ int main( int argc, char *argv[] )  {
         auto CPUend = CPUsensor->Read();
 
         std::cout << "SIZE: " << N << std::endl;
-        std::cout << "(RAPL) CPU_TIME: " << pmt::PMT::seconds(CPUstart, CPUend) << " | (NVML) GPU_TIME: " << pmt::PMT::seconds(GPUstart, GPUend) << " s"<< std::endl;
-        std::cout << "(RAPL) CPU_JOULES: " << pmt::PMT::joules(CPUstart, CPUend) << " | (NVML) GPU_JOULES: " << pmt::PMT::joules(GPUstart, GPUend) << " J"<< std::endl;
-        std::cout << "(RAPL) CPU_WATTS: " << pmt::PMT::watts(CPUstart, CPUend) << " | (NVML) GPU_WATTS: " << pmt::PMT::watts(GPUstart, GPUend) << " W"<< std::endl;
+        std::cout << "(RAPL) CPU_TIME: " << pmt::PMT::seconds(CPUstart, CPUend) << " | (ROCM) GPU_TIME: " << pmt::PMT::seconds(GPUstart, GPUend) << " s"<< std::endl;
+        std::cout << "(RAPL) CPU_JOULES: " << pmt::PMT::joules(CPUstart, CPUend) << " | (ROCM) GPU_JOULES: " << pmt::PMT::joules(GPUstart, GPUend) << " J"<< std::endl;
+        std::cout << "(RAPL) CPU_WATTS: " << pmt::PMT::watts(CPUstart, CPUend) << " | (ROCM) GPU_WATTS: " << pmt::PMT::watts(GPUstart, GPUend) << " W"<< std::endl;
         std::cout << "Total TIME: " << (pmt::PMT::seconds(CPUstart, CPUend) + pmt::PMT::seconds(GPUstart, GPUend))*0.5 << " s"<< std::endl;
         std::cout << "Total JOULES: " << (pmt::PMT::joules(CPUstart, CPUend) + pmt::PMT::joules(GPUstart, GPUend)) << " J"<< std::endl;
         std::cout << "Total WATTS: " << (pmt::PMT::watts(CPUstart, CPUend) + pmt::PMT::watts(GPUstart, GPUend)) << " W"<< std::endl;
