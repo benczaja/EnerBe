@@ -18,7 +18,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
 add_library(HELPER_LIB INTERFACE)
 
 ## Here is where you want to add the sources....
-set(applications "xgemm;xaxpy")
+set(applications "xgemm")#;xaxpy")
 
 if (ENABLE_CUDA)
 
@@ -27,11 +27,11 @@ if (ENABLE_CUDA)
     set(source_suffixs ".c;.cu")
 
 elseif(ENABLE_HIP)
-    enable_language(C CXX HIP)
-    
     list(APPEND CMAKE_PREFIX_PATH /opt/rocm/hip /opt/rocm)
 
+    enable_language(C CXX HIP)
     find_package(hip REQUIRED)
+
     set(HIP_PATH "/opt/rocm/hip" CACHE PATH "Path to which HIP has been installed")
     set(CMAKE_HIP_FLAGS "--offload-arch=gfx90a")
 
@@ -83,40 +83,40 @@ foreach(application IN LISTS applications)
     endforeach()
 
 
-if (ENABLE_HIP)
-
-   enable_language(HIP)
-
-    list(APPEND CMAKE_PREFIX_PATH /opt/rocm/hip /opt/rocm)
-
-    find_package(hip REQUIRED)
-    set(HIP_PATH "/opt/rocm/hip" CACHE PATH "Path to which HIP has been installed")
-    set(CMAKE_HIP_FLAGS "--offload-arch=gfx90a")
-
-    set(CMAKE_CXX_COMPILER ${HIP_HIPCC_EXECUTABLE})
-    set(CMAKE_CXX_LINKER   ${HIP_HIPCC_EXECUTABLE})
-
-    #DOUBLE PRECISION
-    add_executable(dgemm_gpu xgemm.hip)
-    # Link Libraries - HIP Device and OpenMP.
-    target_link_options(dgemm_gpu PUBLIC "-fopenmp")
-    target_link_libraries(dgemm_gpu HELPER_LIB)
-    target_compile_definitions(dgemm_gpu PUBLIC USE_DOUBLE)    
-
-    #SINGLE PRECISION
-    add_executable(sgemm_gpu xgemm.hip)
-    # Link Libraries - HIP Device and OpenMP.
-    target_link_options(sgemm_gpu PUBLIC "-fopenmp")
-    target_link_libraries(sgemm_gpu HELPER_LIB)
-
-
-    install(TARGETS dgemm_gpu sgemm_gpu 
-    RUNTIME
-    DESTINATION ${PROJECT_SOURCE_DIR}/bin
-    )
-
-endif()
-
+#if (ENABLE_HIP)
+#
+#   enable_language(HIP)
+#
+#    list(APPEND CMAKE_PREFIX_PATH /opt/rocm/hip /opt/rocm)
+#
+#    find_package(hip REQUIRED)
+#    set(HIP_PATH "/opt/rocm/hip" CACHE PATH "Path to which HIP has been installed")
+#    set(CMAKE_HIP_FLAGS "--offload-arch=gfx90a")
+#
+#    set(CMAKE_CXX_COMPILER ${HIP_HIPCC_EXECUTABLE})
+#    set(CMAKE_CXX_LINKER   ${HIP_HIPCC_EXECUTABLE})
+#
+#    #DOUBLE PRECISION
+#    add_executable(dgemm_gpu xgemm.hip)
+#    # Link Libraries - HIP Device and OpenMP.
+#    target_link_options(dgemm_gpu PUBLIC "-fopenmp")
+#    target_link_libraries(dgemm_gpu HELPER_LIB)
+#    target_compile_definitions(dgemm_gpu PUBLIC USE_DOUBLE)    
+#
+#    #SINGLE PRECISION
+#    add_executable(sgemm_gpu xgemm.hip)
+#    # Link Libraries - HIP Device and OpenMP.
+#    target_link_options(sgemm_gpu PUBLIC "-fopenmp")
+#    target_link_libraries(sgemm_gpu HELPER_LIB)
+#
+#
+#    install(TARGETS dgemm_gpu sgemm_gpu 
+#    RUNTIME
+#    DESTINATION ${PROJECT_SOURCE_DIR}/bin
+#    )
+#
+#endif()
+#
 
 
 if (ENABLE_PMT)
