@@ -15,30 +15,30 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -fopenmp")
 
 add_library(HELPER_LIB INTERFACE)
 
+# Here is where you want to add the sources....
+set(sources "xgemm.c;xaxpy.c")
 
-# compile the double precision binaries
-#######################################
-add_executable(dgemm xgemm.c)
-target_link_libraries(dgemm HELPER_LIB)
-target_compile_definitions(dgemm PUBLIC USE_DOUBLE)
+foreach(source IN LISTS sources)
 
+    string(REPLACE ".c" "" executable "${source}")
 
-add_executable(daxpy axpy.c)
-target_link_libraries(daxpy HELPER_LIB)
-target_compile_definitions(daxpy PUBLIC USE_DOUBLE)
+    #Double Precision
+    string(REGEX REPLACE "^x" "d" executable "${executable}")
+    add_executable("${executable}" "${source}")
+    target_link_libraries("${executable}" HELPER_LIB)
+    target_compile_definitions("${executable}" PUBLIC USE_DOUBLE)
 
-# compile the single precision binaries
-#######################################
-add_executable(sgemm xgemm.c)
-target_link_libraries(sgemm HELPER_LIB)
+    install(TARGETS "${executable}" RUNTIME DESTINATION ${PROJECT_SOURCE_DIR}/bin)
 
-add_executable(saxpy axpy.c)
-target_link_libraries(saxpy HELPER_LIB)
+    #Single Precision
+    string(REPLACE ".c" "" executable "${source}")
+    string(REGEX REPLACE "^x" "s" executable "${executable}")
+    add_executable("${executable}" "${source}")
+    target_link_libraries("${executable}" HELPER_LIB)
 
-install(TARGETS dgemm sgemm daxpy saxpy 
-    RUNTIME
-    DESTINATION ${PROJECT_SOURCE_DIR}/bin
-    )
+    install(TARGETS "${executable}" RUNTIME DESTINATION ${PROJECT_SOURCE_DIR}/bin)
+
+endforeach()
 
 if (ENABLE_CUDA)
     enable_language(CUDA)
