@@ -21,18 +21,37 @@ add_library(HELPER_LIB INTERFACE)
 set(applications "xgemm;xaxpy")
 
 if (ENABLE_CUDA)
+
     enable_language(C CXX CUDA)
     set(CMAKE_CUDA_FLAGS "-gencode arch=compute_80,code=sm_80 -lineinfo --ptxas-options=-v --disable-warnings")
     set(source_suffixs ".c;.cu")
+
+elseif(ENABLE_HIP)
+    enable_language(C CXX HIP)
+    
+    list(APPEND CMAKE_PREFIX_PATH /opt/rocm/hip /opt/rocm)
+
+    find_package(hip REQUIRED)
+    set(HIP_PATH "/opt/rocm/hip" CACHE PATH "Path to which HIP has been installed")
+    set(CMAKE_HIP_FLAGS "--offload-arch=gfx90a")
+
+    set(CMAKE_CXX_COMPILER ${HIP_HIPCC_EXECUTABLE})
+    set(CMAKE_CXX_LINKER   ${HIP_HIPCC_EXECUTABLE})
+
+    set(source_suffixs ".c;.hip")
+
 else()
     set(source_suffixs ".c")
 endif()
+
 
 foreach(application IN LISTS applications)
     foreach(source_suffix IN LISTS source_suffixs)
 
         if(source_suffix MATCHES ".cu")
-            set(executable_suffix "_cuda")
+            set(executable_suffix "_gpu")
+        elseif(source_suffix MATCHES ".hip")
+            set(executable_suffix "_gpu")
         else()
             set(executable_suffix "")
         endif()
