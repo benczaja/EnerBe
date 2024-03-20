@@ -46,8 +46,8 @@ int main( int argc, char *argv[] )  {
     X_TYPE *sx; /* n is an array of N integers */
     X_TYPE *sy; /* n is an array of N integers */
 
-    sx = malloc(N * sizeof (X_TYPE));
-    sy = malloc(N * sizeof (X_TYPE));
+    sx = (X_TYPE*)malloc(N * sizeof (X_TYPE));
+    sy = (X_TYPE*)malloc(N * sizeof (X_TYPE));
 
     /* Simple saxpy */
     /*==============================*/
