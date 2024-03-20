@@ -64,7 +64,7 @@ if (ENABLE_PMT)
 if (ENABLE_CUDA)
 
     enable_language(C CXX CUDA)
-    set(CMAKE_CUDA_FLAGS "-gencode arch=compute_80,code=sm_80 -lineinfo --ptxas-options=-v --disable-warnings")
+    set(CMAKE_CUDA_FLAGS "-Xcompiler=-fopenmp -gencode arch=compute_80,code=sm_80 -lineinfo --ptxas-options=-v --disable-warnings")
     set(source_suffixs ".cpp;.cu")
 
 elseif(ENABLE_HIP)
