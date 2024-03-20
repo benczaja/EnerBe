@@ -74,7 +74,7 @@ elseif(ENABLE_HIP)
     find_package(hip REQUIRED)
 
     set(HIP_PATH "/opt/rocm/hip" CACHE PATH "Path to which HIP has been installed")
-    set(CMAKE_HIP_FLAGS "--offload-arch=gfx90a")
+    set(CMAKE_HIP_FLAGS "--offload-arch=gfx90a -fopenmp")
 
     set(CMAKE_CXX_COMPILER ${HIP_HIPCC_EXECUTABLE})
     set(CMAKE_CXX_LINKER   ${HIP_HIPCC_EXECUTABLE})
