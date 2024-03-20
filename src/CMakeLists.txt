@@ -18,13 +18,54 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
 add_library(HELPER_LIB INTERFACE)
 
 ## Here is where you want to add the sources....
-set(applications "xgemm")#;xaxpy")
+set(applications "xgemm;xaxpy")
+
+
+if (ENABLE_PMT)
+    message(STATUS "Looking for pmt")
+    find_library(PMT_LIBRARY NAMES pmt)
+    if (PMT_LIBRARY)
+        message(STATUS "Looking for pmt - found")
+    else()
+        message(STATUS "Looking for pmt - not found\n Configuring PMT to be built locally ")
+
+        set(PMT_CONFIG_ARGS "-DCMAKE_INSTALL_PREFIX=${PROJECT_SOURCE_DIR}/pmt")
+        if (ENABLE_CUDA)
+            set(PMT_CONFIG_ARGS "${PMT_CONFIG_ARGS};-DBUILD_NVML_PMT=1")
+        endif()
+        if (ENABLE_HIP)
+            set(PMT_CONFIG_ARGS "${PMT_CONFIG_ARGS};-DBUILD_ROCM_PMT=1")
+        endif()
+        message(STATUS "PMT will be configured with these arguments: ")
+        message(STATUS "${PMT_CONFIG_ARGS} ")
+
+        ExternalProject_Add(PMT_LIBRARY
+	    INSTALL_DIR			"${PROJECT_SOURCE_DIR}/pmt"
+        GIT_REPOSITORY      "https://git.astron.nl/RD/pmt.git" 
+        #GIT_TAG             f2c9854f5f0458254fa82c105d6f20ddc058f658
+        CMAKE_ARGS          "${PMT_CONFIG_ARGS}"
+	    )
+        include_directories(${PROJECT_SOURCE_DIR}/pmt/include)
+        link_directories(${PROJECT_SOURCE_DIR}/pmt/lib)
+        link_directories(${PROJECT_SOURCE_DIR}/pmt/lib64)
+        
+        # just to go a bit Nuclear if we are running into EESSI compat layer issues.
+        set(CMAKE_BUILD_RPATH "${PROJECT_SOURCE_DIR}/pmt/lib64" "${PROJECT_SOURCE_DIR}/pmt/lib")
+        set(CMAKE_INSTALL_RPATH "${PROJECT_SOURCE_DIR}/pmt/lib64" "${PROJECT_SOURCE_DIR}/pmt/lib")
+
+    endif()
+
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -O3 -fpermissive")
+
+    list(TRANSFORM applications APPEND "_pmt")
+    endif()
+
 
 if (ENABLE_CUDA)
 
     enable_language(C CXX CUDA)
     set(CMAKE_CUDA_FLAGS "-gencode arch=compute_80,code=sm_80 -lineinfo --ptxas-options=-v --disable-warnings")
-    set(source_suffixs ".c;.cu")
+    set(source_suffixs ".cpp;.cu")
 
 elseif(ENABLE_HIP)
     list(APPEND CMAKE_PREFIX_PATH /opt/rocm/hip /opt/rocm)
@@ -38,10 +79,10 @@ elseif(ENABLE_HIP)
     set(CMAKE_CXX_COMPILER ${HIP_HIPCC_EXECUTABLE})
     set(CMAKE_CXX_LINKER   ${HIP_HIPCC_EXECUTABLE})
 
-    set(source_suffixs ".c;.hip")
+    set(source_suffixs ".cpp;.hip")
 
 else()
-    set(source_suffixs ".c")
+    set(source_suffixs ".cpp")
 endif()
 
 
@@ -66,6 +107,9 @@ foreach(application IN LISTS applications)
         add_executable("${executable}" "${source}")
         target_link_options("${executable}" PUBLIC "-fopenmp")
         target_link_libraries("${executable}" HELPER_LIB)
+        if (ENABLE_PMT)
+            target_link_libraries("${executable}" pmt)
+        endif()
         target_compile_definitions("${executable}" PUBLIC USE_DOUBLE)
 
         install(TARGETS "${executable}" RUNTIME DESTINATION ${PROJECT_SOURCE_DIR}/bin)
@@ -77,141 +121,12 @@ foreach(application IN LISTS applications)
         target_link_options("${executable}" PUBLIC "-fopenmp")
         target_link_libraries("${executable}" HELPER_LIB)
 
+        if (ENABLE_PMT)
+            target_link_libraries("${executable}" pmt)
+        endif()
+
         install(TARGETS "${executable}" RUNTIME DESTINATION ${PROJECT_SOURCE_DIR}/bin)
 
         endforeach()
     endforeach()
-
-
-
-if (ENABLE_PMT)
-    message(STATUS "Looking for pmt")
-    find_library(PMT_LIBRARY NAMES pmt)
-    if (PMT_LIBRARY)
-        message(STATUS "Looking for pmt - found")
-    else()
-        message(STATUS "Looking for pmt - not found\n Configuring PMT to be built locally ")
-
-        set(PMT_CONFIG_ARGS "-DCMAKE_INSTALL_PREFIX=${PROJECT_SOURCE_DIR}/pmt")
-        if (ENABLE_CUDA)
-            set(PMT_CONFIG_ARGS "${PMT_CONFIG_ARGS};-DBUILD_NVML_PMT=1")
-        endif()
-        if (ENABLE_HIP)
-            set(PMT_CONFIG_ARGS "${PMT_CONFIG_ARGS};-DBUILD_ROCM_PMT=1")
-        endif()
-        message(STATUS "PMT will be configured with these arguments: ")
-        message(STATUS "${PMT_CONFIG_ARGS} ")
-
-        ExternalProject_Add(PMT_LIBRARY
-	    INSTALL_DIR			"${PROJECT_SOURCE_DIR}/pmt"
-        GIT_REPOSITORY      "https://git.astron.nl/RD/pmt.git"
-        CMAKE_ARGS          "${PMT_CONFIG_ARGS}"
-	    )
-        include_directories(${PROJECT_SOURCE_DIR}/pmt/include)
-        link_directories(${PROJECT_SOURCE_DIR}/pmt/lib)
-        link_directories(${PROJECT_SOURCE_DIR}/pmt/lib64)
-        
-        # just to go a bit Nuclear if we are running into EESSI compat layer issues.
-        set(CMAKE_BUILD_RPATH "${PROJECT_SOURCE_DIR}/pmt/lib64" "${PROJECT_SOURCE_DIR}/pmt/lib")
-        set(CMAKE_INSTALL_RPATH "${PROJECT_SOURCE_DIR}/pmt/lib64" "${PROJECT_SOURCE_DIR}/pmt/lib")
-
-    endif()
-
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -O3 -fpermissive")
-    # compile the double precision binaries
-    #######################################
-    add_executable(dgemm_pmt xgemm_pmt.cpp)
-    target_link_libraries(dgemm_pmt HELPER_LIB)
-    target_link_libraries(dgemm_pmt pmt)
-    target_compile_definitions(dgemm_pmt PUBLIC USE_DOUBLE)
-
-    add_executable(daxpy_pmt axpy_pmt.cpp)
-    target_link_libraries(daxpy_pmt HELPER_LIB)
-    target_link_libraries(daxpy_pmt pmt)
-    target_compile_definitions(daxpy_pmt PUBLIC USE_DOUBLE)    
-
-    # compile the single precision binaries
-    #######################################
-    add_executable(sgemm_pmt xgemm_pmt.cpp)
-    target_link_libraries(sgemm_pmt HELPER_LIB)
-    target_link_libraries(sgemm_pmt pmt)
-
-
-    add_executable(saxpy_pmt axpy_pmt.cpp)
-    target_link_libraries(saxpy_pmt HELPER_LIB)
-    target_link_libraries(saxpy_pmt pmt)
-
-    install(TARGETS dgemm_pmt sgemm_pmt daxpy_pmt saxpy_pmt
-    RUNTIME
-    DESTINATION ${PROJECT_SOURCE_DIR}/bin
-    )
-
-    if (ENABLE_CUDA)
-    enable_language(CUDA)
-    set(CMAKE_CUDA_FLAGS "-gencode arch=compute_80,code=sm_80 -lineinfo --ptxas-options=-v --disable-warnings")
-
-    #DOUBLE PRECISION
-    add_executable(dgemm_pmt_gpu xgemm_pmt.cu)
-    target_link_options(dgemm_pmt_gpu PUBLIC "-fopenmp")
-    target_link_libraries(dgemm_pmt_gpu HELPER_LIB)
-    target_link_libraries(dgemm_pmt_gpu pmt)
-    target_compile_definitions(dgemm_pmt_gpu PUBLIC USE_DOUBLE)
-
-    add_executable(daxpy_pmt_gpu axpy_pmt.cu)
-    target_link_options(daxpy_pmt_gpu PUBLIC "-fopenmp")
-    target_link_libraries(daxpy_pmt_gpu HELPER_LIB)
-    target_link_libraries(daxpy_pmt_gpu pmt)
-    target_compile_definitions(daxpy_pmt_gpu PUBLIC USE_DOUBLE)
-
-    #SINGLE PRECISION
-    add_executable(sgemm_pmt_gpu xgemm_pmt.cu)
-    target_link_options(sgemm_pmt_gpu PUBLIC "-fopenmp")
-    target_link_libraries(sgemm_pmt_gpu HELPER_LIB)
-    target_link_libraries(sgemm_pmt_gpu pmt)
-
-    add_executable(saxpy_pmt_gpu axpy_pmt.cu)
-    target_link_options(saxpy_pmt_gpu PUBLIC "-fopenmp")
-    target_link_libraries(saxpy_pmt_gpu HELPER_LIB)
-    target_link_libraries(saxpy_pmt_gpu pmt)
-    
-    install(TARGETS dgemm_pmt_gpu sgemm_pmt_gpu daxpy_pmt_gpu saxpy_pmt_gpu
-    RUNTIME
-    DESTINATION ${PROJECT_SOURCE_DIR}/bin
-    )
-    endif()
-
-    if (ENABLE_HIP)
-    enable_language(HIP)
-
-    #DOUBLE PRECISION
-    add_executable(dgemm_pmt_gpu xgemm_pmt.hip)
-    target_link_options(dgemm_pmt_gpu PUBLIC "-fopenmp")
-    target_link_libraries(dgemm_pmt_gpu HELPER_LIB)
-    target_link_libraries(dgemm_pmt_gpu pmt)
-    target_compile_definitions(dgemm_pmt_gpu PUBLIC USE_DOUBLE)
-
-    add_executable(daxpy_pmt_gpu axpy_pmt.hip)
-    target_link_options(daxpy_pmt_gpu PUBLIC "-fopenmp")
-    target_link_libraries(daxpy_pmt_gpu HELPER_LIB)
-    target_link_libraries(daxpy_pmt_gpu pmt)
-    target_compile_definitions(daxpy_pmt_gpu PUBLIC USE_DOUBLE)
-
-    #SINGLE PRECISION
-    add_executable(sgemm_pmt_gpu xgemm_pmt.hip)
-    target_link_options(sgemm_pmt_gpu PUBLIC "-fopenmp")
-    target_link_libraries(sgemm_pmt_gpu HELPER_LIB)
-    target_link_libraries(sgemm_pmt_gpu pmt)
-
-    add_executable(saxpy_pmt_gpu axpy_pmt.hip)
-    target_link_options(saxpy_pmt_gpu PUBLIC "-fopenmp")
-    target_link_libraries(saxpy_pmt_gpu HELPER_LIB)
-    target_link_libraries(saxpy_pmt_gpu pmt)
-    
-    install(TARGETS dgemm_pmt_gpu sgemm_pmt_gpu daxpy_pmt_gpu saxpy_pmt_gpu
-    RUNTIME
-    DESTINATION ${PROJECT_SOURCE_DIR}/bin
-    )
-    endif()
-
-endif()
 
