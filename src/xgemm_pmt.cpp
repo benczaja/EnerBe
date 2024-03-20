@@ -4,7 +4,8 @@
 #include <time.h> // needed for clock() and CLOCKS_PER_SEC etc
 #include "helper.h" // local helper header to clean up code
 #include <pmt.h> // needed for PMT
-#include<iostream> // needed for CPP IO ... cout, endl etc etc
+#include <pmt/Rapl.h> // needed for RAPL
+#include <iostream> // needed for CPP IO ... cout, endl etc etc
 
 
 #ifdef USE_DOUBLE

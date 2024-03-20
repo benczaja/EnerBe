@@ -29,12 +29,12 @@ if (ENABLE_PMT)
     else()
         message(STATUS "Looking for pmt - not found\n Configuring PMT to be built locally ")
 
-        set(PMT_CONFIG_ARGS "-DCMAKE_INSTALL_PREFIX=${PROJECT_SOURCE_DIR}/pmt")
+        set(PMT_CONFIG_ARGS "-DCMAKE_INSTALL_PREFIX=${PROJECT_SOURCE_DIR}/pmt;-DBUILD_RAPL_PMT=1")
         if (ENABLE_CUDA)
-            set(PMT_CONFIG_ARGS "${PMT_CONFIG_ARGS};-DBUILD_NVML_PMT=1")
+            set(PMT_CONFIG_ARGS "${PMT_CONFIG_ARGS};-DBUILD_RAPL_PMT=1;-DBUILD_NVML_PMT=1")
         endif()
         if (ENABLE_HIP)
-            set(PMT_CONFIG_ARGS "${PMT_CONFIG_ARGS};-DBUILD_ROCM_PMT=1")
+            set(PMT_CONFIG_ARGS "${PMT_CONFIG_ARGS};-DBUILD_RAPL_PMT=1;-DBUILD_ROCM_PMT=1")
         endif()
         message(STATUS "PMT will be configured with these arguments: ")
         message(STATUS "${PMT_CONFIG_ARGS} ")
@@ -42,7 +42,7 @@ if (ENABLE_PMT)
         ExternalProject_Add(PMT_LIBRARY
 	    INSTALL_DIR			"${PROJECT_SOURCE_DIR}/pmt"
         GIT_REPOSITORY      "https://git.astron.nl/RD/pmt.git" 
-        #GIT_TAG             f2c9854f5f0458254fa82c105d6f20ddc058f658
+        GIT_TAG             f2c9854f5f0458254fa82c105d6f20ddc058f658
         CMAKE_ARGS          "${PMT_CONFIG_ARGS}"
 	    )
         include_directories(${PROJECT_SOURCE_DIR}/pmt/include)
