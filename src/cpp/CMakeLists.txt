@@ -14,7 +14,6 @@ set(source_suffixs ".cpp")
 
 
 
-
 foreach(application IN LISTS applications)
     foreach(source_suffix IN LISTS source_suffixs)
 
@@ -25,7 +24,6 @@ foreach(application IN LISTS applications)
         string(REGEX REPLACE "^x" "d" executable "${application}")
 
         add_executable("${executable}" "${source}")
-        target_link_options("${executable}" PUBLIC "-fopenmp")
         target_link_libraries("${executable}" HELPER_LIB)
         if (ENABLE_PMT)
             target_link_libraries("${executable}" pmt)
@@ -37,7 +35,6 @@ foreach(application IN LISTS applications)
         #Single Precision
         string(REGEX REPLACE "^x" "s" executable "${application}")
         add_executable("${executable}" "${source}")
-        target_link_options("${executable}" PUBLIC "-fopenmp")
         target_link_libraries("${executable}" HELPER_LIB)
         if (ENABLE_PMT)
             target_link_libraries("${executable}" pmt)
