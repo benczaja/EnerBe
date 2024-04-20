@@ -8,20 +8,6 @@
 #include<iostream> // needed for CPP IO ... cout, endl etc etc
 
 
-void initialize_matrices(X_TYPE* A, X_TYPE* B, X_TYPE* C, int ROWS, int COLUMNS){
-    // Do this in Parallel with OpenMP
-    // Needs a seperate seed per thread as rand() is obtaining a mutex and therefore locking each thread.
-    unsigned int globalSeed = clock();  
-    #pragma omp parallel for
-    for (int i = 0; i < ROWS * COLUMNS; i++)
-        {
-          unsigned int randomState = i ^ globalSeed;
-          A[i] = (X_TYPE) rand_r(&randomState) / RAND_MAX;
-          B[i] = (X_TYPE) rand_r(&randomState) / RAND_MAX;
-          C[i] = 0.0 ;
-        }
-}
-
 __global__ void simple_matrix_multiply(X_TYPE* D_A, X_TYPE* D_B, X_TYPE* D_C, int ROWS, int COLUMNS){
     
     int local_COLUMN = threadIdx.x + blockIdx.x * blockDim.x;
