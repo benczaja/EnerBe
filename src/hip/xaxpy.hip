@@ -76,7 +76,7 @@ int main( int argc, char *argv[] )  {
     if (true == simple)
     {
     int block_size = 512;
-    int grid_size = ((ROWS + block_size) / block_size);
+    int grid_size = ((N + block_size) / block_size);
     
     t = clock(); // start the clock
 
