@@ -4,11 +4,6 @@
 #include <time.h> // needed for clock() and CLOCKS_PER_SEC etc
 #include "../helper.h" // local helper header to clean up code
 
-#ifdef USE_DOUBLE
-typedef double X_TYPE;
-#else
-typedef float X_TYPE;
-#endif
 
 void simple_axpy(int n, X_TYPE a, X_TYPE * x, X_TYPE * y){
 

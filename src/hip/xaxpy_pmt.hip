@@ -8,11 +8,6 @@
 #include <pmt/ROCM.h> // needed for PMT
 #include <iostream> // needed for CPP IO ... cout, endl etc etc
 
-#ifdef USE_DOUBLE
-typedef double X_TYPE;
-#else
-typedef float X_TYPE;
-#endif
 
 void simple_axpy(int n, X_TYPE a, X_TYPE * x, X_TYPE * y){
 

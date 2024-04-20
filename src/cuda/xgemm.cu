@@ -4,11 +4,6 @@
 #include <time.h> // needed for clock() and CLOCKS_PER_SEC etc
 #include "../helper.h" // local helper header to clean up code
 
-#ifdef USE_DOUBLE
-typedef double X_TYPE;
-#else
-typedef float X_TYPE;
-#endif
 
 void initialize_matrices(X_TYPE* A, X_TYPE* B, X_TYPE* C, int ROWS, int COLUMNS){
     // Do this in Parallel with OpenMP

@@ -8,12 +8,6 @@
 #include <iostream> // needed for CPP IO ... cout, endl etc etc
 
 
-#ifdef USE_DOUBLE
-typedef double X_TYPE;
-#else
-typedef float X_TYPE;
-#endif
-
 void simple_matrix_multiply(X_TYPE** A, X_TYPE** B, X_TYPE** C, int ROWS, int COLUMNS){
     
     printf("(Simple) Matix Multiplication of 2D matricies of equal sizes (%d, %d)\n",ROWS,COLUMNS);

@@ -8,12 +8,6 @@
 #include<iostream> // needed for CPP IO ... cout, endl etc etc
 
 
-#ifdef USE_DOUBLE
-typedef double X_TYPE;
-#else
-typedef float X_TYPE;
-#endif
-
 void initialize_matrices(X_TYPE* A, X_TYPE* B, X_TYPE* C, int ROWS, int COLUMNS){
     // Do this in Parallel with OpenMP
     // Needs a seperate seed per thread as rand() is obtaining a mutex and therefore locking each thread.
