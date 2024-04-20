@@ -56,6 +56,10 @@ if (ENABLE_CUDA)
     add_subdirectory(cuda)
 endif()
 
+if (ENABLE_HIP)
+    add_subdirectory(hip)
+endif()
+
 
 # Need this Library to help things out
 #include_directories("cpp")
