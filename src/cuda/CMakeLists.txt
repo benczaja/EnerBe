@@ -12,6 +12,10 @@ enable_language(C CXX CUDA)
 set(CMAKE_CUDA_FLAGS "-Xcompiler=-fopenmp -gencode arch=compute_80,code=sm_80 -lineinfo --ptxas-options=-v --disable-warnings")
 set(source_suffixs ".cu")
 
+
+
+
+
 foreach(application IN LISTS applications)
     foreach(source_suffix IN LISTS source_suffixs)
         

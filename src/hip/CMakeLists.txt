@@ -21,6 +21,10 @@ set(CMAKE_CXX_LINKER   ${HIP_HIPCC_EXECUTABLE})
 
 set(source_suffixs ".hip")
 
+
+
+
+
 foreach(application IN LISTS applications)
     foreach(source_suffix IN LISTS source_suffixs)
 

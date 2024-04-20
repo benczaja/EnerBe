@@ -11,6 +11,10 @@ endif()
 
 set(source_suffixs ".cpp")
 
+
+
+
+
 foreach(application IN LISTS applications)
     foreach(source_suffix IN LISTS source_suffixs)
 
