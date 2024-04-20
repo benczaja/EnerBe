@@ -94,7 +94,6 @@ int main( int argc, char *argv[] )  {
     printf("GPU Compute Time: %f s\n",time_taken);
   }
 
-    }
     /* OpenMP parallel saxpy */
     /*==============================*/
     if (true == openmp)
