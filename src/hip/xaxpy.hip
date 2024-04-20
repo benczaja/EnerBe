@@ -70,9 +70,6 @@ int main( int argc, char *argv[] )  {
     hipMalloc((void**)&d_sx, sizeof(X_TYPE) * N);
     hipMalloc((void**)&d_sy, sizeof(X_TYPE) * N);
 
-    // THIS IS NEW !!!!!!!
-    auto GPUsensor = pmt::rocm::ROCM::Create();
-    auto CPUsensor = pmt::rapl::Rapl::Create();
 
     /* Simple saxpy */
     /*==============================*/
