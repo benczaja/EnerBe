@@ -10,18 +10,6 @@ typedef double X_TYPE;
 typedef float X_TYPE;
 #endif
 
-void initialize_matrices(X_TYPE** A, X_TYPE** B, X_TYPE** C, int ROWS, int COLUMNS){
-    for (int i = 0 ; i < ROWS ; i++)
-    {
-        for (int j = 0 ; j < COLUMNS ; j++)
-        {
-            A[i][j] = (X_TYPE) rand() / RAND_MAX ;
-            B[i][j] = (X_TYPE) rand() / RAND_MAX ;
-            C[i][j] = 0.0 ;
-        }
-    }
-}
-
 void simple_matrix_multiply(X_TYPE** A, X_TYPE** B, X_TYPE** C, int ROWS, int COLUMNS){
     
     printf("(Simple) Matix Multiplication of 2D matricies of equal sizes (%d, %d)\n",ROWS,COLUMNS);
