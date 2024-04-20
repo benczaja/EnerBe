@@ -49,6 +49,7 @@ int main( int argc, char *argv[] )  {
     printf("X_TYPE size is (%d) bytes \n",sizeof (X_TYPE));
 
     int N;
+    clock_t t; // declare clock_t (long type)
     /* DUMB bools needed for the argument parsing logic */
     bool openmp = false;
     bool simple = true;
