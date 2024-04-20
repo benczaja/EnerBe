@@ -81,13 +81,12 @@ int main( int argc, char *argv[] )  {
     t = clock(); // start the clock
 
     // Transfer data from host to device memory
-    hipMemcpy(D_A, A, sizeof(X_TYPE) * (ROWS * COLUMNS), hipMemcpyHostToDevice);
-    hipMemcpy(D_B, B, sizeof(X_TYPE) * (ROWS * COLUMNS), hipMemcpyHostToDevice);
-    
+    hipMemcpy(d_sx, sx, sizeof(X_TYPE) * N, hipMemcpyHostToDevice);
+    hipMemcpy(d_sy, sy, sizeof(X_TYPE) * N, hipMemcpyHostToDevice);
+
     gpu_axpy<<<grid_size,block_size>>>(N, a, d_sx, d_sy);
 
-    // Transfer data from device to host memory
-    hipMemcpy(C, D_C, sizeof(X_TYPE) * (ROWS * COLUMNS), hipMemcpyDeviceToHost);
+    hipMemcpy(sy, d_sy, sizeof(X_TYPE) * N, hipMemcpyDeviceToHost);
 
     t = clock() - t; // stop the clock
 
