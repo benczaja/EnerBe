@@ -2,6 +2,7 @@
 #include <stdio.h> // needed for ‘printf’ 
 #include <stdlib.h> // needed for ‘EXIT_FAILURE’ 
 #include <string.h> // needed for strcmp
+#include <iostream> // needed for CPP IO ... cout, endl etc etc
 #include <stdbool.h> // needed for bool usage
 #include <omp.h> // needed for OpenMP 
 
@@ -10,6 +11,60 @@ typedef double X_TYPE;
 #else
 typedef float X_TYPE;
 #endif
+
+
+class kernal {      
+  public:
+
+    std::string name;
+    std::string algorithm;
+    
+    double size = sizeof(X_TYPE);
+    double time = 0.0;
+    double rapl_time = 0.0;
+    double nvml_time = 0.0;
+    double rocm_time = 0.0;
+
+    double rapl_power = 0.0;
+    double nvml_power = 0.0;
+    double rocm_power = 0.0;
+
+    double rapl_energy = 0.0;
+    double nvml_energy = 0.0;
+    double rocm_energy = 0.0;
+
+    void print_info() { 
+        std::cout << "NAME: " << name << std::endl;
+        std::cout << "ALGO: "<< algorithm << std::endl;
+        std::cout << "PRECISION: "<< sizeof (X_TYPE) <<" bytes"<< std::endl;
+        std::cout << "OMP_THREADS: "<< omp_get_max_threads() << std::endl;
+        std::cout << "SIZE: " << size << std::endl;
+        std::cout << "TIME: " << time << " s"<< std::endl;
+    } 
+
+    void print_pmt_rapl_info() { 
+        std::cout << "NAME: " << name << std::endl;
+        std::cout << "ALGO: "<< algorithm << std::endl;
+        std::cout << "PRECISION: "<< sizeof (X_TYPE) <<" bytes"<< std::endl;
+        std::cout << "OMP_THREADS: "<< omp_get_max_threads() << std::endl;
+        std::cout << "SIZE: " << size << std::endl;
+        std::cout << "(RAPL) CPU_TIME: " << rapl_time << " s"<< std::endl;
+        std::cout << "(RAPL) CPU_WATTS: " << rapl_power << " W" << std::endl;
+        std::cout << "(RAPL) CPU_JOULES: " << rapl_energy << " J" << std::endl;
+    } 
+
+    void print_pmt_nvml_info() { 
+        std::cout << "NAME: " << name << std::endl;
+        std::cout << "ALGO: "<< algorithm << std::endl;
+        std::cout << "PRECISION: "<< sizeof (X_TYPE) <<" bytes"<< std::endl;
+        std::cout << "OMP_THREADS: "<< omp_get_max_threads() << std::endl;
+        std::cout << "SIZE: " << size <<std::endl;
+        std::cout << "(RAPL) CPU_TIME: " << rapl_time << " s"<< std::endl;
+        std::cout << "(RAPL) CPU_WATTS: " << rapl_power << " W" << std::endl;
+        std::cout << "(RAPL) CPU_JOULES: " << rapl_energy << " J" << std::endl;
+    } 
+};
+
 
 /* DUMB bools needed for the argument parsing logic */
 bool openmp = false;

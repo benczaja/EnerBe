@@ -10,23 +10,22 @@
 
 int main( int argc, char *argv[] )  {
 
-  double time_taken=0;
-  
+  kernal kernal;
+  kernal.name = "xgemm";
+
   /* VERY DUMB Argument Parsers */
-  int N = parse_arguments(argc, argv, &simple, &openmp, &sanity_check);
-  int ROWS = N;
-  int COLUMNS = N;
+  kernal.size = parse_arguments(argc, argv, &simple, &openmp, &sanity_check);
 
   /* declare the arrays */
-  X_TYPE** A = (X_TYPE**)malloc(ROWS * sizeof( X_TYPE* ));
-  X_TYPE** B = (X_TYPE**)malloc(ROWS * sizeof( X_TYPE* ));
-  X_TYPE** C = (X_TYPE**)malloc(ROWS * sizeof( X_TYPE* ));
+  X_TYPE** A = (X_TYPE**)malloc(kernal.size * sizeof( X_TYPE* ));
+  X_TYPE** B = (X_TYPE**)malloc(kernal.size * sizeof( X_TYPE* ));
+  X_TYPE** C = (X_TYPE**)malloc(kernal.size * sizeof( X_TYPE* ));
 
-    for (int i =0; i <ROWS; i++)
+    for (int i =0; i <kernal.size; i++)
     {
-        A[i] = (X_TYPE*)malloc(COLUMNS * sizeof(X_TYPE));
-        B[i] = (X_TYPE*)malloc(COLUMNS * sizeof(X_TYPE));
-        C[i] = (X_TYPE*)malloc(COLUMNS * sizeof(X_TYPE));
+        A[i] = (X_TYPE*)malloc(kernal.size * sizeof(X_TYPE));
+        B[i] = (X_TYPE*)malloc(kernal.size * sizeof(X_TYPE));
+        C[i] = (X_TYPE*)malloc(kernal.size * sizeof(X_TYPE));
     }
 
   /*======================================================================*/
@@ -34,63 +33,56 @@ int main( int argc, char *argv[] )  {
   /*======================================================================*/
 
   /* initialize the arrays */
-  initialize_matrix_2D(A, B, C, ROWS, COLUMNS);
+  initialize_matrix_2D(A, B, C, kernal.size, kernal.size);
 
   // THIS IS NEW !!!!!!!
   auto sensor = pmt::rapl::Rapl::Create();
+  auto start = sensor->Read();
+  auto end = sensor->Read();
 
   /* Simple matrix multiplication */
   /*==============================*/
   if (true == simple)
   {
-    //Start the PMT "sensor"
-    auto start = sensor->Read();
+    kernal.algorithm = "simple";
 
-    simple_matrix_multiply(A, B, C, ROWS, COLUMNS);
+    //Read from the PMT "sensor"
+    start = sensor->Read();
+
+    simple_matrix_multiply(A, B, C, kernal.size, kernal.size);
     
-    //End the PMT "sensor"
-    auto end = sensor->Read();
-
-    /// SORRY FOR THE CPP !!!!! BUT WE ARE JUST PRINTING!!!!
-    std::cout << "ALGO: simple"<< std::endl;
-    std::cout << "PRECISION: "<< sizeof (X_TYPE) <<" bytes"<< std::endl;
-    std::cout << "SIZE: " << N <<std::endl;
-    std::cout << "(RAPL) CPU_TIME: " << pmt::PMT::seconds(start, end) << " s"<< std::endl;
-    std::cout << "(RAPL) CPU_JOULES: " << pmt::PMT::joules(start, end) << " J" << std::endl;
-    std::cout << "(RAPL) CPU_WATTS: " << pmt::PMT::watts(start, end) << " W" << std::endl;
-
-
+    //Read from the PMT "sensor"
+    end = sensor->Read();
   }
 
   /* OpenMP parallel matrix multiplication */
   /*=======================================*/
   if (true == openmp)
   {
-    //Start the PMT "sensor"
-    auto start = sensor->Read();
+    kernal.algorithm = "openmp";
 
-    openmp_matrix_multiply(A, B, C, ROWS, COLUMNS);
-    
-    //End the PMT "sensor"
-    auto end = sensor->Read();
+    //Read from the PMT "sensor"
+    start = sensor->Read();
 
-    /// SORRY FOR THE CPP !!!!! BUT WE ARE JUST PRINTING!!!!
-    std::cout << "ALGO: openmp"<< std::endl;
-    std::cout << "PRECISION: "<< sizeof (X_TYPE) <<" bytes"<< std::endl;
-    std::cout << "OMP_THREADS: "<< omp_get_max_threads() << std::endl;
-    std::cout << "SIZE: " << N <<std::endl;
-    std::cout << "(RAPL) CPU_TIME: " << pmt::PMT::seconds(start, end) << " s"<< std::endl;
-    std::cout << "(RAPL) CPU_JOULES: " << pmt::PMT::joules(start, end) << " J" << std::endl;
-    std::cout << "(RAPL) CPU_WATTS: " << pmt::PMT::watts(start, end) << " W" << std::endl;
+    openmp_matrix_multiply(A, B, C, kernal.size, kernal.size);
+
+    //Read from the PMT "sensor"
+    end = sensor->Read();
 
   }
+
+    kernal.rapl_time = pmt::PMT::seconds(start, end);
+    kernal.rapl_power = pmt::PMT::watts(start, end);
+    kernal.rapl_energy = pmt::PMT::joules(start, end);
+
+    kernal.print_pmt_rapl_info();
 
   /*======================================================================*/
   /*                 END of Section of the code that matters!!!           */
   /*======================================================================*/
 
   /* deallocate the arrays */
-  for (int i=0; i<ROWS; i++)
+  for (int i=0; i<kernal.size; i++)
   {
     free(A[i]);
     free(B[i]);
