@@ -5,43 +5,16 @@
 #include "../helper.h" // local helper header to clean up code
 #include <pmt.h> // needed for PMT
 #include <pmt/Rapl.h> // needed for RAPL
-#include<iostream> // needed for CPP IO ... cout, endl etc etc
-
-
-__global__ void simple_matrix_multiply(X_TYPE* D_A, X_TYPE* D_B, X_TYPE* D_C, int ROWS, int COLUMNS){
-    
-    int local_COLUMN = threadIdx.x + blockIdx.x * blockDim.x;
-		int local_ROW = threadIdx.y + blockIdx.y * blockDim.y;
-		int local_index = local_COLUMN + local_ROW * ROWS; // Right now this only works for symetric matricies
-		int tmp = 0;  
-    
-    if(local_ROW < ROWS && local_COLUMN < COLUMNS){
-			for(int k=0; k<COLUMNS; k++){
-				tmp += D_A[local_ROW * ROWS + k] * D_B[k * COLUMNS + local_COLUMN];
-			}
-			D_C[local_index] = tmp;
-		}
-}
+#include <iostream> // needed for CPP IO ... cout, endl etc etc
+#include "kernals.h"
 
 
 int main( int argc, char *argv[] )  {
 
-    printf("X_TYPE size is (%d) bytes \n",sizeof (X_TYPE));
-
-
-  int ROWS;
-  int COLUMNS;
-  int N;
-
-  /* DUMB bools needed for the argument parsing logic */
-  bool openmp = false;
-  bool simple = true;
-  bool sanity_check = false;
-  
   /* VERY DUMB Argument Parsers */
-  N = parse_arguments(argc, argv, &simple, &openmp, &sanity_check);
-  ROWS = N;
-  COLUMNS = N;
+  int N = parse_arguments(argc, argv, &simple, &openmp, &sanity_check);
+  int ROWS = N;
+  int COLUMNS = N;
 
   /* declare the arrays...  better to do it as 1D arrays for CUDA */
 
@@ -60,7 +33,7 @@ int main( int argc, char *argv[] )  {
 
   double start = omp_get_wtime();  
 
-  initialize_matrices(A, B, C, ROWS, COLUMNS);
+  initialize_matrix_1D(A, B, C, ROWS, COLUMNS);
     
   double end = omp_get_wtime(); 
   printf("Init TIME: %f sec\n",(end-start));
