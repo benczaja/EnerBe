@@ -5,41 +5,12 @@
 #include <pmt.h> // needed for PMT
 #include <pmt/Rapl.h> // needed for RAPL
 #include <iostream> // needed for CPP IO ... cout, endl etc etc
-
-
-void simple_axpy(int n, X_TYPE a, X_TYPE * x, X_TYPE * y){
-
-    printf("(Simple) saxpy of Array of size (%d)\n",n);
-
-    for(int i=0; i<n; i++){
-        y[i] = a * x[i] + y[i];
-    }
-}
-
-void openmp_axpy(int n, X_TYPE a, X_TYPE * x, X_TYPE * y){
-    int num_threads = omp_get_max_threads();
-
-    printf("(OpenMP) saxpy of Array of size (%d)\n",n);
-    printf("Using %d Threads\n", num_threads);
-    #pragma omp parallel for
-    for(int i=0; i<n; i++){
-        y[i] = a * x[i] + y[i];
-    }
-}
-
+#include "kernals.h"
 
 int main( int argc, char *argv[] )  {
 
-    printf("X_TYPE size is (%d) bytes \n",sizeof (X_TYPE));
-
-    int N;
-    /* DUMB bools needed for the argument parsing logic */
-    bool openmp = false;
-    bool simple = true;
-    bool sanity_check = false;
-    
     /* VERY DUMB Argument Parsers */
-    N = parse_arguments(argc, argv, &simple, &openmp, &sanity_check);
+    int N = parse_arguments(argc, argv, &simple, &openmp, &sanity_check);
 
     X_TYPE *sx; /* n is an array of N integers */
     X_TYPE *sy; /* n is an array of N integers */
@@ -55,19 +26,21 @@ int main( int argc, char *argv[] )  {
     if (true == simple)
     {
 
-    //Start the PMT "sensor"
-    auto start = sensor->Read();
+        //Start the PMT "sensor"
+        auto start = sensor->Read();
     
-    simple_axpy(N, 2.0, sx, sy);
+        simple_axpy(N, 2.0, sx, sy);
 
-    //End the PMT "sensor"
-    auto end = sensor->Read();
+        //End the PMT "sensor"
+        auto end = sensor->Read();
 
-    /// SORRY FOR THE CPP !!!!! BUT WE ARE JUST PRINTING!!!!
-    std::cout << "SIZE: " << N <<std::endl;
-    std::cout << "RAPL) CPU_TIME: " << pmt::PMT::seconds(start, end) << " s"<< std::endl;
-    std::cout << "RAPL) CPU_JOULES: " << pmt::PMT::joules(start, end) << " J" << std::endl;
-    std::cout << "RAPL) CPU_WATTS: " << pmt::PMT::watts(start, end) << " W" << std::endl;
+        std::cout << "CLASS: axpy" << std::endl;
+        std::cout << "ALGO: simple" << std::endl;
+        std::cout << "PRECISION: "<< sizeof (X_TYPE) <<" bytes" << std::endl;
+        std::cout << "SIZE: " << N <<std::endl;
+        std::cout << "(RAPL) CPU_TIME: " << pmt::PMT::seconds(start, end) << " s"<< std::endl;
+        std::cout << "(RAPL) CPU_JOULES: " << pmt::PMT::joules(start, end) << " J" << std::endl;
+        std::cout << "(RAPL) CPU_WATTS: " << pmt::PMT::watts(start, end) << " W" << std::endl;
 
     }
 
@@ -76,19 +49,23 @@ int main( int argc, char *argv[] )  {
     if (true == openmp)
     {
 
-    //Start the PMT "sensor"
-    auto start = sensor->Read();
+        //Start the PMT "sensor"
+        auto start = sensor->Read();
 
-    openmp_axpy(N, 2.0, sx, sy);
+        openmp_axpy(N, 2.0, sx, sy);
     
-    //End the PMT "sensor"
-    auto end = sensor->Read();
+        //End the PMT "sensor"
+        auto end = sensor->Read();
 
-    /// SORRY FOR THE CPP !!!!! BUT WE ARE JUST PRINTING!!!!
-    std::cout << "SIZE: " << N <<std::endl;
-    std::cout << "RAPL) CPU_TIME: " << pmt::PMT::seconds(start, end) << " s"<< std::endl;
-    std::cout << "RAPL) CPU_JOULES: " << pmt::PMT::joules(start, end) << " J" << std::endl;
-    std::cout << "RAPL) CPU_WATTS: " << pmt::PMT::watts(start, end) << " W" << std::endl;
+        /// SORRY FOR THE CPP !!!!! BUT WE ARE JUST PRINTING!!!!
+        std::cout << "CLASS: axpy" << std::endl;
+        std::cout << "ALGO: openmp" << std::endl;
+        std::cout << "PRECISION: "<< sizeof (X_TYPE) <<" bytes" << std::endl;
+        std::cout << "OMP_THREADS: "<< omp_get_max_threads() << std::endl;
+        std::cout << "SIZE: " << N <<std::endl;
+        std::cout << "(RAPL) CPU_TIME: " << pmt::PMT::seconds(start, end) << " s"<< std::endl;
+        std::cout << "(RAPL) CPU_JOULES: " << pmt::PMT::joules(start, end) << " J" << std::endl;
+        std::cout << "(RAPL) CPU_WATTS: " << pmt::PMT::watts(start, end) << " W" << std::endl;
 
     }
 

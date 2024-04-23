@@ -6,62 +6,17 @@
 #include <pmt.h> // needed for PMT
 #include <pmt/Rapl.h> // needed for RAPL
 #include <iostream> // needed for CPP IO ... cout, endl etc etc
-
-
-void simple_matrix_multiply(X_TYPE** A, X_TYPE** B, X_TYPE** C, int ROWS, int COLUMNS){
-    
-    printf("(Simple) Matix Multiplication of 2D matricies of equal sizes (%d, %d)\n",ROWS,COLUMNS);
-
-    for(int i=0;i<ROWS;i++)
-    {
-        for(int j=0;j<COLUMNS;j++)
-        {
-            for(int k=0;k<COLUMNS;k++)
-            {
-                C[i][j] += A[i][k]*B[k][j];
-            }
-        }
-    }
-}
-
-void openmp_matrix_multiply(X_TYPE** A, X_TYPE** B, X_TYPE** C, int ROWS, int COLUMNS){
-    
-    int num_threads = omp_get_max_threads();
-    
-    printf("(OpenMP) Matix Multiplication of 2D matricies of equal sizes (%d, %d)\n",ROWS,COLUMNS);
-    printf("Using %d Threads\n", num_threads);
-    
-    #pragma omp parallel for 
-    for (int i = 0; i < ROWS; ++i) 
-    {
-        for (int j = 0; j < COLUMNS; ++j) 
-        {
-            for (int k = 0; k < COLUMNS; ++k) 
-            {
-                C[i][j] = C[i][j] + A[i][k] * B[k][j];
-            }
-        }
-    }
-}
-
+#include "kernals.h"
 
 int main( int argc, char *argv[] )  {
 
-    printf("X_TYPE size is (%d) bytes \n",sizeof (X_TYPE));
-
-  int ROWS;
-  int COLUMNS;
-  int N;
-
-  /* DUMB bools needed for the argument parsing logic */
-  bool openmp = false;
-  bool simple = true;
-  bool sanity_check = false;
+  double time_taken=0;
   
   /* VERY DUMB Argument Parsers */
-  N = parse_arguments(argc, argv, &simple, &openmp, &sanity_check);
-  ROWS = N;
-  COLUMNS = N;
+  int N = parse_arguments(argc, argv, &simple, &openmp, &sanity_check);
+  int ROWS = N;
+  int COLUMNS = N;
+
   /* declare the arrays */
   X_TYPE** A = (X_TYPE**)malloc(ROWS * sizeof( X_TYPE* ));
   X_TYPE** B = (X_TYPE**)malloc(ROWS * sizeof( X_TYPE* ));
@@ -79,10 +34,10 @@ int main( int argc, char *argv[] )  {
   /*======================================================================*/
 
   /* initialize the arrays */
-  initialize_matrices(A, B, C, ROWS, COLUMNS);
+  initialize_matrix_2D(A, B, C, ROWS, COLUMNS);
 
-    // THIS IS NEW !!!!!!!
-    auto sensor = pmt::rapl::Rapl::Create();
+  // THIS IS NEW !!!!!!!
+  auto sensor = pmt::rapl::Rapl::Create();
 
   /* Simple matrix multiplication */
   /*==============================*/
@@ -97,6 +52,8 @@ int main( int argc, char *argv[] )  {
     auto end = sensor->Read();
 
     /// SORRY FOR THE CPP !!!!! BUT WE ARE JUST PRINTING!!!!
+    std::cout << "ALGO: simple"<< std::endl;
+    std::cout << "PRECISION: "<< sizeof (X_TYPE) <<" bytes"<< std::endl;
     std::cout << "SIZE: " << N <<std::endl;
     std::cout << "(RAPL) CPU_TIME: " << pmt::PMT::seconds(start, end) << " s"<< std::endl;
     std::cout << "(RAPL) CPU_JOULES: " << pmt::PMT::joules(start, end) << " J" << std::endl;
@@ -118,6 +75,9 @@ int main( int argc, char *argv[] )  {
     auto end = sensor->Read();
 
     /// SORRY FOR THE CPP !!!!! BUT WE ARE JUST PRINTING!!!!
+    std::cout << "ALGO: openmp"<< std::endl;
+    std::cout << "PRECISION: "<< sizeof (X_TYPE) <<" bytes"<< std::endl;
+    std::cout << "OMP_THREADS: "<< omp_get_max_threads() << std::endl;
     std::cout << "SIZE: " << N <<std::endl;
     std::cout << "(RAPL) CPU_TIME: " << pmt::PMT::seconds(start, end) << " s"<< std::endl;
     std::cout << "(RAPL) CPU_JOULES: " << pmt::PMT::joules(start, end) << " J" << std::endl;

@@ -3,64 +3,18 @@
 #include <omp.h> // needed for OpenMP 
 #include <time.h> // needed for clock() and CLOCKS_PER_SEC etc
 #include "../helper.h" // local helper header to clean up code
-
-
-void simple_matrix_multiply(X_TYPE** A, X_TYPE** B, X_TYPE** C, int ROWS, int COLUMNS){
-    
-    printf("(Simple) Matix Multiplication of 2D matricies of equal sizes (%d, %d)\n",ROWS,COLUMNS);
-
-    for(int i=0;i<ROWS;i++)
-    {
-        for(int j=0;j<COLUMNS;j++)
-        {
-            for(int k=0;k<COLUMNS;k++)
-            {
-                C[i][j] += A[i][k]*B[k][j];
-            }
-        }
-    }
-}
-
-void openmp_matrix_multiply(X_TYPE** A, X_TYPE** B, X_TYPE** C, int ROWS, int COLUMNS){
-    
-    int num_threads = omp_get_max_threads();
-    
-    printf("(OpenMP) Matix Multiplication of 2D matricies of equal sizes (%d, %d)\n",ROWS,COLUMNS);
-    printf("Using %d Threads\n", num_threads);
-    
-    #pragma omp parallel for 
-    for (int i = 0; i < ROWS; ++i) 
-    {
-        for (int j = 0; j < COLUMNS; ++j) 
-        {
-            for (int k = 0; k < COLUMNS; ++k) 
-            {
-                C[i][j] = C[i][j] + A[i][k] * B[k][j];
-            }
-        }
-    }
-}
+#include "kernals.h"
 
 
 int main( int argc, char *argv[] )  {
     
-    printf("X_TYPE size is (%d) bytes \n",sizeof (X_TYPE));
-
-  int ROWS;
-  int COLUMNS;
-  int N;
-
   double time_taken=0;
   
-  /* DUMB bools needed for the argument parsing logic */
-  bool openmp = false;
-  bool simple = true;
-  bool sanity_check = false;
-  
   /* VERY DUMB Argument Parsers */
-  N = parse_arguments(argc, argv, &simple, &openmp, &sanity_check);
-  ROWS = N;
-  COLUMNS = N;
+  int N = parse_arguments(argc, argv, &simple, &openmp, &sanity_check);
+  int ROWS = N;
+  int COLUMNS = N;
+
   /* declare the arrays */
   X_TYPE** A = (X_TYPE**)malloc(ROWS * sizeof( X_TYPE* ));
   X_TYPE** B = (X_TYPE**)malloc(ROWS * sizeof( X_TYPE* ));
@@ -78,7 +32,7 @@ int main( int argc, char *argv[] )  {
   /*======================================================================*/
 
   /* initialize the arrays */
-  initialize_matrices(A, B, C, ROWS, COLUMNS);
+  initialize_matrix_2D(A, B, C, ROWS, COLUMNS);
 
   /* Simple matrix multiplication */
   /*==============================*/
@@ -92,11 +46,12 @@ int main( int argc, char *argv[] )  {
     t = clock() - t; // stop the clock
 
     time_taken = ((double)t)/CLOCKS_PER_SEC; // convert to seconds (and long to double)
+    
+    printf("ALGO: simple\n");
+    printf("PRECISION: %d bytes \n",sizeof (X_TYPE));
     printf("SIZE: %d \n",ROWS);
     printf("TIME: %f s\n",time_taken);
   }
-
-
 
   /* OpenMP parallel matrix multiplication */
   /*=======================================*/
@@ -109,6 +64,10 @@ int main( int argc, char *argv[] )  {
     
     double end = omp_get_wtime(); 
     time_taken = (end-start);
+
+    printf("ALGO: openmp\n");
+    printf("PRECISION: %d bytes \n",sizeof (X_TYPE));
+    printf("OMP_THREADS: %d\n",omp_get_max_threads());
     printf("SIZE: %d \n",ROWS);
     printf("TIME: %f s\n",time_taken);    
   }

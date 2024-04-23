@@ -11,20 +11,12 @@ typedef double X_TYPE;
 typedef float X_TYPE;
 #endif
 
-void initialize_matrices(X_TYPE** A, X_TYPE** B, X_TYPE** C, int ROWS, int COLUMNS){
-    for (int i = 0 ; i < ROWS ; i++)
-    {
-        for (int j = 0 ; j < COLUMNS ; j++)
-        {
-            A[i][j] = (X_TYPE) rand() / RAND_MAX ;
-            B[i][j] = (X_TYPE) rand() / RAND_MAX ;
-            C[i][j] = 0.0 ;
-        }
-    }
-}
+/* DUMB bools needed for the argument parsing logic */
+bool openmp = false;
+bool simple = false;
+bool sanity_check = false;
 
-
-void initialize_matrices(X_TYPE* A, X_TYPE* B, X_TYPE* C, int ROWS, int COLUMNS){
+void initialize_matrix_1D(X_TYPE* A, X_TYPE* B, X_TYPE* C, int ROWS, int COLUMNS){
     // Do this in Parallel with OpenMP
     // Needs a seperate seed per thread as rand() is obtaining a mutex and therefore locking each thread.
     unsigned int globalSeed = clock();  
@@ -38,6 +30,21 @@ void initialize_matrices(X_TYPE* A, X_TYPE* B, X_TYPE* C, int ROWS, int COLUMNS)
         }
 }
 
+void initialize_matrix_2D(X_TYPE** A, X_TYPE** B, X_TYPE** C, int ROWS, int COLUMNS){
+    for (int i = 0 ; i < ROWS ; i++)
+    {
+        for (int j = 0 ; j < COLUMNS ; j++)
+        {
+            A[i][j] = (X_TYPE) rand() / RAND_MAX ;
+            B[i][j] = (X_TYPE) rand() / RAND_MAX ;
+            C[i][j] = 0.0 ;
+        }
+    }
+}
+
+
+
+
 
 void print_saxpy_usage()
 {
@@ -48,9 +55,9 @@ void print_saxpy_usage()
     fprintf(stderr, "\t-h    Display help\n");
 }
 
-void print_mat_mul_usage()
+void print_xgemm_usage()
 {
-    fprintf(stderr, "mat_mul (matrix size) [-s|-p|-h]\n");
+    fprintf(stderr, "xgemm (matrix size) [-s|-p|-h]\n");
     fprintf(stderr, "\t      Invoke simple implementation of matrix multiplication\n");
     fprintf(stderr, "\t-s    Invoke simple implementation of matrix multiplication\n");
     fprintf(stderr, "\t-p    Invoke parallel (OpenMP) implementation of matrix multiplication\n");
@@ -76,16 +83,17 @@ bool isNumber(char number[])
 int parse_arguments(size_t count, char*  args[], bool *simple, bool *openmp, bool *sanity_check) {
     int N;
     if (count == 1){
-        printf("I need (arraysize) as an argument ..... Exiting.\n");
+        printf("I need an alogrithm and problem size as an argument.\nSee what I accept: ./dgemm -h \n");
+
         exit (1);
     }
     for(int i=0; i<count; ++i)
         {   
-            if (! strcmp("-s", args[i]))
+            if (! strcmp("--simple", args[i]))
             {
                 *simple = true;
             }
-            else if (! strcmp("-p", args[i]))
+            else if (! strcmp("--openmp", args[i]))
             {
                 *openmp = true;
                 *simple = false;
@@ -96,9 +104,9 @@ int parse_arguments(size_t count, char*  args[], bool *simple, bool *openmp, boo
                 {
                 print_saxpy_usage();
                 }
-                else if (strstr(args[0],"mat_mul"))
+                else if (strstr(args[0],"gemm"))
                 {
-                print_mat_mul_usage();
+                print_xgemm_usage();
                 }
                 exit (1);
             }
@@ -110,7 +118,7 @@ int parse_arguments(size_t count, char*  args[], bool *simple, bool *openmp, boo
         }
         /* Dumb logic to make sure an array size was passed */
     if (! sanity_check){
-        printf("I need (arraysize) as an argument ..... Exiting.\n");
+        printf("I need an alogrithm and problem size as an argument.\nSee what I accept: ./dgemm -h \n");
         exit (1);
 
     }
