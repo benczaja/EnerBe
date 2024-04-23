@@ -4,6 +4,10 @@ import os
 import subprocess
 import re 
 import pandas as pd
+import json
+import argparse
+
+
 
 # define the global regex for a number
 number = r'[+-]?((\d+\.\d*)|(\.\d+)|(\d+))([eE][+-]?\d+)?'
@@ -72,7 +76,7 @@ def log_results(result,cluster=False):
     return(results_file)
 
 
-def benchmark(application, size, args=None, env_var=None,cluster=False):
+def execute(application, size, args=None, env_var=None,cluster=False):
 
     nan = float('nan')
     result_size = nan
@@ -105,13 +109,15 @@ def benchmark(application, size, args=None, env_var=None,cluster=False):
         name = env_var.split("=")[0]
         value = env_var.split("=")[1]
         os.environ[name] = value
+        print("CMD: " + executable + " " + str(size) + " " + str(args))
         output = subprocess.run([executable, str(size), str(args)], capture_output=True).stdout.decode("utf-8")
     else:
+        print("CMD: " + executable + " " + str(size) + " " + str(args))
         output = subprocess.run([executable, str(size), str(args)], capture_output=True).stdout.decode("utf-8")
-        
+    
 
     # regex the results:
-    if ("pmt" in application) & ("gpu" in application):
+    if ("pmt" in application) & (("cuda" in application) | ("hip" in application)):
         gpu_time_pattern = r'GPU_TIME:\s(?P<rgtime>' + number + r')\ss'
         gpu_watt_pattern = r'GPU_WATTS:\s(?P<rgwatt>' + number + r')\sW'
         gpu_joule_pattern = r'GPU_JOULES:\s(?P<rgjoule>' + number + r')\sJ'
@@ -228,34 +234,60 @@ def benchmark(application, size, args=None, env_var=None,cluster=False):
     log_results(result,cluster)
 
 
+def read_config():
+    f = open('bench_config.json')
+    config = json.load(f)
+    return(config)
+
+def create_jobscript(config):
+
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+
+
+    job_string_text = "#!/bin/bash\n\n"
+
+    job_string_text += "#SBATCH --partition=" + config['sbatch_data']['partition'] + "\n"
+    job_string_text += "#SBATCH --nodes=" + config['sbatch_data']['nodes'] + "\n"
+    job_string_text += "#SBATCH --ntasks=" + config['sbatch_data']['ntasks'] + "\n"
+    job_string_text += "#SBATCH --cpus-per-task=" + config['sbatch_data']['cpus-per-task'] + "\n"
+    job_string_text += "#SBATCH --time=" + config['sbatch_data']['time'] + "\n"
+
+    if config['sbatch_data']['has_gpus']:
+        job_string_text += "#SBATCH --gpus-per-node=" + config['sbatch_data']['gpus-per-node'] + "\n"
+
+    job_string_text += "\n"
+
+    job_string_text += "module purge\n"
+    for module in config["modules"]:
+        job_string_text += "module load " + module + "\n"
+    job_string_text += "\n"
+
+    job_string_text += script_dir + "/benchmarker.py"
+
+
+    f = open(config['sbatch_data']["script_name"], "w")
+    f.write(job_string_text)
+    f.close()
+
+def benchmark(config):
+
+    for application in config['case_info']['applications']:
+        for size in range(config['case_info']['size_min'], config['case_info']['size_max'], config['case_info']['size_step']):
+            execute(application, size, cluster=config['case_info']['sbatch_job'])
+
 if __name__ == "__main__":
 
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--jobscript", help="Create a Jobscript based off info from 'bench_config.json'",action="store_true")
+    args = parser.parse_args()
 
-    applications = [
-        "sgemm_pmt_gpu",
-        "dgemm_pmt_gpu",
-        #"saxpy",
-        #"daxpy",
-        ]
-    
-    matrix_sizes = range(0,40000,1000)
-    #args = ["-s", "-p"]
-    args = ["-s"]
-    env_vars = []
-    #    "OMP_NUM_THREADS=2",
-    #    "OMP_NUM_THREADS=4",
-    #    "OMP_NUM_THREADS=8",
-    #    "OMP_NUM_THREADS=16",
-    #    "OMP_NUM_THREADS=32",
-    #    ]
-    
-    for application in applications:
-        for size in matrix_sizes: 
-            for arg in args:
-                if arg.count("s"):
-                    benchmark(application, size, arg,cluster=True)
-                else:
-                    for var in env_vars:
-                        benchmark(application, size, arg, var,cluster=True)
+    config = read_config()
+
+    if args.jobscript:
+        create_jobscript(config)
+    else:
+        benchmark(config)
+
+
 
 
