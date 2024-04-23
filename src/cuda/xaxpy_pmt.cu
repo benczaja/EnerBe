@@ -5,66 +5,27 @@
 #include <pmt.h> // needed for PMT
 #include <pmt/Rapl.h> // needed for RAPL
 #include <iostream> // needed for CPP IO ... cout, endl etc etc
-
-
-void simple_axpy(int n, X_TYPE a, X_TYPE * x, X_TYPE * y){
-
-    printf("(Simple) saxpy of Array of size (%d)\n",n);
-
-    for(int i=0; i<n; i++){
-        y[i] = a * x[i] + y[i];
-    }
-}
-
-void openmp_axpy(int n, X_TYPE a, X_TYPE * x, X_TYPE * y){
-    int num_threads = omp_get_max_threads();
-
-    printf("(OpenMP) saxpy of Array of size (%d)\n",n);
-    printf("Using %d Threads\n", num_threads);
-    #pragma omp parallel for
-    for(int i=0; i<n; i++){
-        y[i] = a * x[i] + y[i];
-    }
-}
-
-__global__ void gpu_axpy(int n, X_TYPE a, X_TYPE * x, X_TYPE * y) {
-    
-    int tid = blockIdx.x * blockDim.x + threadIdx.x;
-    
-    // Handling arbitrary vector size
-    if (tid < n){
-        y[tid] = a * x[tid] + y[tid];
-    }
-}
-
-
-
-
+#include "kernals.h"
 
 int main( int argc, char *argv[] )  {
 
-    printf("X_TYPE size is (%d) bytes \n",sizeof (X_TYPE));
+    kernal kernal;
+    kernal.name = "axpy";
 
-    int N;
-    /* DUMB bools needed for the argument parsing logic */
-    bool openmp = false;
-    bool simple = true;
-    bool sanity_check = false;
-    
     /* VERY DUMB Argument Parsers */
-    N = parse_arguments(argc, argv, &simple, &openmp, &sanity_check);
+    kernal.size = parse_arguments(argc, argv, &simple, &openmp, &sanity_check);
 
     X_TYPE *d_sx; /* n is an array of N integers */
     X_TYPE *d_sy; /* n is an array of N integers */
 
     X_TYPE a = 2.0;
     // Allocate Host memory 
-    X_TYPE* sx = (X_TYPE*)malloc(N * sizeof(X_TYPE));
-    X_TYPE* sy = (X_TYPE*)malloc(N * sizeof(X_TYPE));
+    X_TYPE* sx = (X_TYPE*)malloc(kernal.size * sizeof(X_TYPE));
+    X_TYPE* sy = (X_TYPE*)malloc(kernal.size * sizeof(X_TYPE));
 
     // Allocate device memory 
-    cudaMalloc((void**)&d_sx, sizeof(X_TYPE) * N);
-    cudaMalloc((void**)&d_sy, sizeof(X_TYPE) * N);
+    cudaMalloc((void**)&d_sx, sizeof(X_TYPE) * kernal.size);
+    cudaMalloc((void**)&d_sy, sizeof(X_TYPE) * kernal.size);
 
     // THIS IS NEW !!!!!!!
     auto GPUsensor = pmt::nvml::NVML::Create();
@@ -72,51 +33,35 @@ int main( int argc, char *argv[] )  {
 
     /* Simple saxpy */
     /*==============================*/
-    if (true == simple)
-    {
+    kernal.algorithm = "simple_gpu";
+    cudaGetDevice(&kernal.gpuid);  
 
-        int block_size = 512;
-        int grid_size = ((N + block_size) / block_size);
-        
-        //Start the PMT "sensor"
-        auto GPUstart = GPUsensor->Read(); // READING the GPU via NVML
-        auto CPUstart = CPUsensor->Read(); // READING the CPU via RAPL
-        
-        // Transfer data from host to device memory
-        cudaMemcpy(d_sx, sx, sizeof(X_TYPE) * N, cudaMemcpyHostToDevice);
-        cudaMemcpy(d_sy, sy, sizeof(X_TYPE) * N, cudaMemcpyHostToDevice);
-
-        gpu_axpy<<<grid_size,block_size>>>(N, a, d_sx, d_sy);
-
-        cudaMemcpy(sy, d_sy, sizeof(X_TYPE) * N, cudaMemcpyDeviceToHost);
-
-        //Start the PMT "sensor"
-        auto GPUend = GPUsensor->Read();
-        auto CPUend = CPUsensor->Read();
-
-        std::cout << "SIZE: " << N << std::endl;
-        std::cout << "(RAPL) CPU_TIME: " << pmt::PMT::seconds(CPUstart, CPUend) << " | (NVML) GPU_TIME: " << pmt::PMT::seconds(GPUstart, GPUend) << " s"<< std::endl;
-        std::cout << "(RAPL) CPU_JOULES: " << pmt::PMT::joules(CPUstart, CPUend) << " | (NVML) GPU_JOULES: " << pmt::PMT::joules(GPUstart, GPUend) << " J"<< std::endl;
-        std::cout << "(RAPL) CPU_WATTS: " << pmt::PMT::watts(CPUstart, CPUend) << " | (NVML) GPU_WATTS: " << pmt::PMT::watts(GPUstart, GPUend) << " W"<< std::endl;
-        std::cout << "Total TIME: " << (pmt::PMT::seconds(CPUstart, CPUend) + pmt::PMT::seconds(GPUstart, GPUend))*0.5 << " s"<< std::endl;
-        std::cout << "Total JOULES: " << (pmt::PMT::joules(CPUstart, CPUend) + pmt::PMT::joules(GPUstart, GPUend)) << " J"<< std::endl;
-        std::cout << "Total WATTS: " << (pmt::PMT::watts(CPUstart, CPUend) + pmt::PMT::watts(GPUstart, GPUend)) << " W"<< std::endl;
+    int block_size = 512;
+    int grid_size = ((kernal.size + block_size) / block_size);
     
-    }
-    /* OpenMP parallel saxpy */
-    /*==============================*/
-    if (true == openmp)
-    {
-
-    // omp_get_wtime needed here because clock will sum up time for all threads
-    double start = omp_get_wtime();  
-
-    openmp_axpy(N, 2.0, sx, sy);
+    //Start the PMT "sensor"
+    auto GPUstart = GPUsensor->Read(); // READING the GPU via NVML
+    auto CPUstart = CPUsensor->Read(); // READING the CPU via RAPL
     
-    double end = omp_get_wtime(); 
-    printf("TIME: %f sec\n",(end-start));
+    // Transfer data from host to device memory
+    cudaMemcpy(d_sx, sx, sizeof(X_TYPE) * kernal.size, cudaMemcpyHostToDevice);
+    cudaMemcpy(d_sy, sy, sizeof(X_TYPE) * kernal.size, cudaMemcpyHostToDevice);
+    
+    gpu_axpy<<<grid_size,block_size>>>(kernal.size, a, d_sx, d_sy);
+    
+    cudaMemcpy(sy, d_sy, sizeof(X_TYPE) * kernal.size, cudaMemcpyDeviceToHost);
+    
+    //Start the PMT "sensor"
+    auto GPUend = GPUsensor->Read();
+    auto CPUend = CPUsensor->Read();
 
-    }
+    kernal.rapl_time = pmt::PMT::seconds(CPUstart, CPUend);
+    kernal.rapl_power = pmt::PMT::watts(CPUstart, CPUend);
+    kernal.rapl_energy = pmt::PMT::joules(CPUstart, CPUend);
 
+    kernal.nvml_time = pmt::PMT::seconds(GPUstart, GPUend);
+    kernal.nvml_power = pmt::PMT::watts(GPUstart, GPUend);
+    kernal.nvml_energy = pmt::PMT::joules(GPUstart, GPUend);
 
+    kernal.print_pmt_nvml_info();
 }

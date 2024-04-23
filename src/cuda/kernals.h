@@ -1,4 +1,15 @@
 
+__global__ void gpu_axpy(int n, X_TYPE a, X_TYPE * x, X_TYPE * y) {
+    
+    int tid = blockIdx.x * blockDim.x + threadIdx.x;
+    
+    // Handling arbitrary vector size
+    if (tid < n){
+        y[tid] = a * x[tid] + y[tid];
+    }
+}
+
+
 __global__ void simple_matrix_multiply(X_TYPE* D_A, X_TYPE* D_B, X_TYPE* D_C, int ROWS, int COLUMNS){
     
     int local_COLUMN = threadIdx.x + blockIdx.x * blockDim.x;

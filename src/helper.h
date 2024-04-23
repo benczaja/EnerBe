@@ -19,8 +19,12 @@ class kernal {
     std::string name;
     std::string algorithm;
     
+    int omp_threads = omp_get_max_threads();
+    int gpuid = 99;
+
     double size = sizeof(X_TYPE);
     double time = 0.0;
+
     double rapl_time = 0.0;
     double nvml_time = 0.0;
     double rocm_time = 0.0;
@@ -37,7 +41,8 @@ class kernal {
         std::cout << "NAME: " << name << std::endl;
         std::cout << "ALGO: "<< algorithm << std::endl;
         std::cout << "PRECISION: "<< sizeof (X_TYPE) <<" bytes"<< std::endl;
-        std::cout << "OMP_THREADS: "<< omp_get_max_threads() << std::endl;
+        std::cout << "OMP_THREADS: "<< omp_threads << std::endl;
+        std::cout << "GPU ID: "<< gpuid << std::endl;
         std::cout << "SIZE: " << size << std::endl;
         std::cout << "TIME: " << time << " s"<< std::endl;
     } 
@@ -46,7 +51,8 @@ class kernal {
         std::cout << "NAME: " << name << std::endl;
         std::cout << "ALGO: "<< algorithm << std::endl;
         std::cout << "PRECISION: "<< sizeof (X_TYPE) <<" bytes"<< std::endl;
-        std::cout << "OMP_THREADS: "<< omp_get_max_threads() << std::endl;
+        std::cout << "OMP_THREADS: "<< omp_threads << std::endl;
+        std::cout << "GPU ID: "<< gpuid << std::endl;
         std::cout << "SIZE: " << size << std::endl;
         std::cout << "(RAPL) CPU_TIME: " << rapl_time << " s"<< std::endl;
         std::cout << "(RAPL) CPU_WATTS: " << rapl_power << " W" << std::endl;
@@ -57,11 +63,15 @@ class kernal {
         std::cout << "NAME: " << name << std::endl;
         std::cout << "ALGO: "<< algorithm << std::endl;
         std::cout << "PRECISION: "<< sizeof (X_TYPE) <<" bytes"<< std::endl;
-        std::cout << "OMP_THREADS: "<< omp_get_max_threads() << std::endl;
+        std::cout << "OMP_THREADS: "<< omp_threads << std::endl;
+        std::cout << "GPU ID: "<< gpuid << std::endl;
         std::cout << "SIZE: " << size <<std::endl;
-        std::cout << "(RAPL) CPU_TIME: " << rapl_time << " s"<< std::endl;
-        std::cout << "(RAPL) CPU_WATTS: " << rapl_power << " W" << std::endl;
-        std::cout << "(RAPL) CPU_JOULES: " << rapl_energy << " J" << std::endl;
+        std::cout << "(RAPL) CPU_TIME: " << rapl_time << " | (NVML) GPU_TIME: " << nvml_time << " s"<< std::endl;
+        std::cout << "(RAPL) CPU_WATTS: " << rapl_power << " | (NVML) GPU_WATTS: " << nvml_power << " W"<< std::endl;
+        std::cout << "(RAPL) CPU_JOULES: " << rapl_energy << " | (NVML) GPU_JOULES: " << nvml_energy << " J"<< std::endl;
+        std::cout << "Total TIME: " << rapl_time + nvml_time << " s"<< std::endl;
+        std::cout << "Total WATTS: " << rapl_power + nvml_power << " W"<< std::endl;
+        std::cout << "Total JOULES: " << rapl_energy + nvml_energy << " J"<< std::endl;
     } 
 };
 

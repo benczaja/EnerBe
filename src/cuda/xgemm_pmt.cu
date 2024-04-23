@@ -11,29 +11,29 @@
 
 int main( int argc, char *argv[] )  {
 
-  /* VERY DUMB Argument Parsers */
-  int N = parse_arguments(argc, argv, &simple, &openmp, &sanity_check);
-  int ROWS = N;
-  int COLUMNS = N;
+  kernal kernal;
+  kernal.name = "xgemm";
 
+  /* VERY DUMB Argument Parsers */
+  kernal.size = parse_arguments(argc, argv, &simple, &openmp, &sanity_check);
   /* declare the arrays...  better to do it as 1D arrays for CUDA */
 
   // First allocated them on the host (CPU)
-    X_TYPE* A = (X_TYPE*)malloc((ROWS * COLUMNS) * sizeof(X_TYPE));
-    X_TYPE* B = (X_TYPE*)malloc((ROWS * COLUMNS) * sizeof(X_TYPE));
-    X_TYPE* C = (X_TYPE*)malloc((ROWS * COLUMNS) * sizeof(X_TYPE));
+    X_TYPE* A = (X_TYPE*)malloc((kernal.size * kernal.size) * sizeof(X_TYPE));
+    X_TYPE* B = (X_TYPE*)malloc((kernal.size * kernal.size) * sizeof(X_TYPE));
+    X_TYPE* C = (X_TYPE*)malloc((kernal.size * kernal.size) * sizeof(X_TYPE));
 
   // Then Allocate them on the GPUs
   X_TYPE* D_A;
   X_TYPE* D_B;
   X_TYPE* D_C;
-  cudaMalloc((void**)&D_A, sizeof( X_TYPE ) * (ROWS * COLUMNS));
-  cudaMalloc((void**)&D_B, sizeof( X_TYPE ) * (ROWS * COLUMNS));
-  cudaMalloc((void**)&D_C, sizeof( X_TYPE ) * (ROWS * COLUMNS));
+  cudaMalloc((void**)&D_A, sizeof( X_TYPE ) * (kernal.size * kernal.size));
+  cudaMalloc((void**)&D_B, sizeof( X_TYPE ) * (kernal.size * kernal.size));
+  cudaMalloc((void**)&D_C, sizeof( X_TYPE ) * (kernal.size * kernal.size));
 
   double start = omp_get_wtime();  
 
-  initialize_matrix_1D(A, B, C, ROWS, COLUMNS);
+  initialize_matrix_1D(A, B, C, kernal.size, kernal.size);
     
   double end = omp_get_wtime(); 
   printf("Init TIME: %f sec\n",(end-start));
@@ -48,35 +48,42 @@ int main( int argc, char *argv[] )  {
 
   /* Simple matrix multiplication */
   /*==============================*/
+  kernal.algorithm = "simple_gpu";
+  cudaGetDevice(&kernal.gpuid);  	
+  
     int block_size = 512;
-    int grid_size = ((ROWS + block_size) / block_size);
+    int grid_size = ((kernal.size + block_size) / block_size);
     
     //Start the PMT "sensor"
     auto GPUstart = GPUsensor->Read(); // READING the GPU via NVML
     auto CPUstart = CPUsensor->Read(); // READING the CPU via RAPL
 
     // Transfer data from host to device memory
-    cudaMemcpy(D_A, A, sizeof(X_TYPE) * (ROWS * COLUMNS), cudaMemcpyHostToDevice);
-    cudaMemcpy(D_B, B, sizeof(X_TYPE) * (ROWS * COLUMNS), cudaMemcpyHostToDevice);
+    cudaMemcpy(D_A, A, sizeof(X_TYPE) * (kernal.size * kernal.size), cudaMemcpyHostToDevice);
+    cudaMemcpy(D_B, B, sizeof(X_TYPE) * (kernal.size * kernal.size), cudaMemcpyHostToDevice);
     
-    simple_matrix_multiply<<<grid_size,block_size>>>(D_A, D_B, D_C, ROWS, COLUMNS);
+    simple_matrix_multiply<<<grid_size,block_size>>>(D_A, D_B, D_C, kernal.size, kernal.size);
 
    // Transfer data from device to host memory
-    cudaMemcpy(C, D_C, sizeof(X_TYPE) * (ROWS * COLUMNS), cudaMemcpyDeviceToHost);
+    cudaMemcpy(C, D_C, sizeof(X_TYPE) * (kernal.size * kernal.size), cudaMemcpyDeviceToHost);
 
 
     //Start the PMT "sensor"
     auto GPUend = GPUsensor->Read();
     auto CPUend = CPUsensor->Read();
 
-    std::cout << "SIZE: " << N << std::endl;
-    std::cout << "(RAPL) CPU_TIME: " << pmt::PMT::seconds(CPUstart, CPUend) << " | (NVML) GPU_TIME: " << pmt::PMT::seconds(GPUstart, GPUend) << " s"<< std::endl;
-    std::cout << "(RAPL) CPU_JOULES: " << pmt::PMT::joules(CPUstart, CPUend) << " | (NVML) GPU_JOULES: " << pmt::PMT::joules(GPUstart, GPUend) << " J"<< std::endl;
-    std::cout << "(RAPL) CPU_WATTS: " << pmt::PMT::watts(CPUstart, CPUend) << " | (NVML) GPU_WATTS: " << pmt::PMT::watts(GPUstart, GPUend) << " W"<< std::endl;
-    std::cout << "Total TIME: " << (pmt::PMT::seconds(CPUstart, CPUend) + pmt::PMT::seconds(GPUstart, GPUend))*0.5 << " s"<< std::endl;
-    std::cout << "Total JOULES: " << (pmt::PMT::joules(CPUstart, CPUend) + pmt::PMT::joules(GPUstart, GPUend)) << " J"<< std::endl;
-    std::cout << "Total WATTS: " << (pmt::PMT::watts(CPUstart, CPUend) + pmt::PMT::watts(GPUstart, GPUend)) << " W"<< std::endl;
-    
+    kernal.rapl_time = pmt::PMT::seconds(CPUstart, CPUend);
+    kernal.rapl_power = pmt::PMT::watts(CPUstart, CPUend);
+    kernal.rapl_energy = pmt::PMT::joules(CPUstart, CPUend);
+
+    kernal.nvml_time = pmt::PMT::seconds(GPUstart, GPUend);
+    kernal.nvml_power = pmt::PMT::watts(GPUstart, GPUend);
+    kernal.nvml_energy = pmt::PMT::joules(GPUstart, GPUend);
+
+
+    kernal.print_pmt_nvml_info();
+
+
   /*======================================================================*/
   /*                 END of Section of the code that matters!!!           */
   /*======================================================================*/

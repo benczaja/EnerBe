@@ -3,63 +3,34 @@
 #include <omp.h> // needed for OpenMP 
 #include <time.h> // needed for clock() and CLOCKS_PER_SEC etc
 #include "../helper.h" // local helper header to clean up code
-
-
-
-__global__ void simple_matrix_multiply(X_TYPE* D_A, X_TYPE* D_B, X_TYPE* D_C, int ROWS, int COLUMNS){
-    
-    int local_COLUMN = threadIdx.x + blockIdx.x * blockDim.x;
-		int local_ROW = threadIdx.y + blockIdx.y * blockDim.y;
-		int local_index = local_COLUMN + local_ROW * ROWS; // Right now this only works for symetric matricies
-		int tmp = 0;  
-    
-    if(local_ROW < ROWS && local_COLUMN < COLUMNS){
-			for(int k=0; k<COLUMNS; k++){
-				tmp += D_A[local_ROW * ROWS + k] * D_B[k * COLUMNS + local_COLUMN];
-			}
-			D_C[local_index] = tmp;
-		}
-}
-
+#include "kernals.h"
 
 int main( int argc, char *argv[] )  {
 
-    printf("X_TYPE size is (%d) bytes \n",sizeof (X_TYPE));
-
-
-  int ROWS;
-  int COLUMNS;
-  int N;
+  kernal kernal;
+  kernal.name = "xgemm";
   clock_t t; // declare clock_t (long type)
 
-  /* DUMB bools needed for the argument parsing logic */
-  bool openmp = false;
-  bool simple = true;
-  bool sanity_check = false;
-  
   /* VERY DUMB Argument Parsers */
-  N = parse_arguments(argc, argv, &simple, &openmp, &sanity_check);
-  ROWS = N;
-  COLUMNS = N;
+  kernal.size = parse_arguments(argc, argv, &simple, &openmp, &sanity_check);
 
   /* declare the arrays...  better to do it as 1D arrays for CUDA */
-
   // First allocated them on the host (CPU)
-    X_TYPE* A = (X_TYPE*)malloc((ROWS * COLUMNS) * sizeof(X_TYPE));
-    X_TYPE* B = (X_TYPE*)malloc((ROWS * COLUMNS) * sizeof(X_TYPE));
-    X_TYPE* C = (X_TYPE*)malloc((ROWS * COLUMNS) * sizeof(X_TYPE));
+  X_TYPE* A = (X_TYPE*)malloc((kernal.size * kernal.size) * sizeof(X_TYPE));
+  X_TYPE* B = (X_TYPE*)malloc((kernal.size * kernal.size) * sizeof(X_TYPE));
+  X_TYPE* C = (X_TYPE*)malloc((kernal.size * kernal.size) * sizeof(X_TYPE));
 
   // Then Allocate them on the GPUs
   X_TYPE* D_A;
   X_TYPE* D_B;
   X_TYPE* D_C;
-  cudaMalloc((void**)&D_A, sizeof( X_TYPE ) * (ROWS * COLUMNS));
-  cudaMalloc((void**)&D_B, sizeof( X_TYPE ) * (ROWS * COLUMNS));
-  cudaMalloc((void**)&D_C, sizeof( X_TYPE ) * (ROWS * COLUMNS));
+  cudaMalloc((void**)&D_A, sizeof( X_TYPE ) * (kernal.size * kernal.size));
+  cudaMalloc((void**)&D_B, sizeof( X_TYPE ) * (kernal.size * kernal.size));
+  cudaMalloc((void**)&D_C, sizeof( X_TYPE ) * (kernal.size * kernal.size));
 
   double start = omp_get_wtime();  
 
-  initialize_matrices(A, B, C, ROWS, COLUMNS);
+  initialize_matrix_1D(A, B, C, kernal.size, kernal.size);
     
   double end = omp_get_wtime(); 
   printf("Init TIME: %f s\n",(end-start));
@@ -71,25 +42,28 @@ int main( int argc, char *argv[] )  {
 
   /* Simple matrix multiplication */
   /*==============================*/
+    kernal.algorithm = "simple_gpu";
+    cudaGetDevice(&kernal.gpuid);  	
+
     int block_size = 512;
-    int grid_size = ((ROWS + block_size) / block_size);
+    int grid_size = ((kernal.size + block_size) / block_size);
     
     t = clock(); // start the clock
 
     // Transfer data from host to device memory
-    cudaMemcpy(D_A, A, sizeof(X_TYPE) * (ROWS * COLUMNS), cudaMemcpyHostToDevice);
-    cudaMemcpy(D_B, B, sizeof(X_TYPE) * (ROWS * COLUMNS), cudaMemcpyHostToDevice);
+    cudaMemcpy(D_A, A, sizeof(X_TYPE) * (kernal.size * kernal.size), cudaMemcpyHostToDevice);
+    cudaMemcpy(D_B, B, sizeof(X_TYPE) * (kernal.size * kernal.size), cudaMemcpyHostToDevice);
     
-    simple_matrix_multiply<<<grid_size,block_size>>>(D_A, D_B, D_C, ROWS, COLUMNS);
+    simple_matrix_multiply<<<grid_size,block_size>>>(D_A, D_B, D_C, kernal.size, kernal.size);
 
    // Transfer data from device to host memory
-    cudaMemcpy(C, D_C, sizeof(X_TYPE) * (ROWS * COLUMNS), cudaMemcpyDeviceToHost);
+    cudaMemcpy(C, D_C, sizeof(X_TYPE) * (kernal.size * kernal.size), cudaMemcpyDeviceToHost);
 
     t = clock() - t; // stop the clock
 
-    double time_taken = ((double)t)/CLOCKS_PER_SEC; // convert to seconds (and long to double)
-    printf("GPU Compute Time: %f s\n",time_taken);
+    kernal.time = ((double)t)/CLOCKS_PER_SEC; // convert to seconds (and long to double)
 
+    kernal.print_info();
   /*======================================================================*/
   /*                 END of Section of the code that matters!!!           */
   /*======================================================================*/
