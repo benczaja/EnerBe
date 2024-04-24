@@ -34,7 +34,7 @@ int main( int argc, char *argv[] )  {
         //Read from the PMT "sensor"
         start = sensor->Read();
     
-        simple_axpy(N, 2.0, sx, sy);
+        simple_axpy(kernal.size, 2.0, sx, sy);
 
         //Read from the PMT "sensor"
         end = sensor->Read();
@@ -49,7 +49,7 @@ int main( int argc, char *argv[] )  {
         //Read from the PMT "sensor"
         auto start = sensor->Read();
 
-        openmp_axpy(N, 2.0, sx, sy);
+        openmp_axpy(kernal.size, 2.0, sx, sy);
     
         //Read from the PMT "sensor"
         end = sensor->Read();
