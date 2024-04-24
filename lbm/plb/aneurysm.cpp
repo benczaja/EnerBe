@@ -41,7 +41,8 @@
 
 #include "palabos3D.h"
 #include "palabos3D.hh"
-
+#include <pmt.h> // needed for PMT
+#include <pmt/Rapl.h> // needed for RAPL
 
 using namespace plb;
 using namespace std;
