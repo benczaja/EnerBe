@@ -46,7 +46,6 @@ def log_results(result,cluster=False):
     data['Sockets'] = sockets
     data['Cores_per_socket'] = cores_per_socket
 
-
     # get DEVICE information
     #NVIDIA
     try:
@@ -74,8 +73,7 @@ def log_results(result,cluster=False):
         data.to_csv(results_file,sep=',',index=False)
     else:
         data.to_csv(results_file,sep=',',index=False)
-
-    return(results_file)
+    print("Wrote results to " + results_file)
 
 
 def get_regex(config):
@@ -207,8 +205,6 @@ def get_regex(config):
     "GPU_power": [gpu_result_watt],
     }
 
-    print(cpu_result_time, gpu_result_time)
-
     return(result)
 
 def run(config):
@@ -230,7 +226,6 @@ def run(config):
 
     CMD = []
     CMD = config['sbatch_data']['launcher'] + " " + executable
-    print(args)
     for arg in args:
         CMD += " " + str(arg)
     print("Running this command ...")
