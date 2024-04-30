@@ -17,10 +17,8 @@ if(ENABLE_MPI)
 endif()
 
 if(ENABLE_PMT)
-  find_package(pmt)
-  target_link_libraries(aneurysm pmt)
+    target_link_libraries(aneurysm pmt)
 endif()
-
 
 ###############################################################################
 
@@ -85,9 +83,20 @@ else()
 endif()
 
 if(ENABLE_POSIX)
-    message("Enabling POSIX")
-    add_definitions(-DPLB_USE_POSIX)
+message("Enabling POSIX")
+add_definitions(-DPLB_USE_POSIX)
 endif()
+
+option(ENABLE_PMT "Enable PMT" OFF)
+if(ENABLE_PMT)
+    message("Enabling PMT")
+    message(STATUS "Looking for pmt")
+    find_library(PMT_LIBRARY NAMES pmt)
+    if (PMT_LIBRARY)
+        message(STATUS "Looking for pmt - found")
+    endif()
+endif()
+
 
 if(APPLE)
     add_definitions(-DPLB_MAC_OS_X)
@@ -118,4 +127,7 @@ add_executable(${EXECUTABLE_NAME} "./${EXECUTABLE_NAME}.cpp")
 target_link_libraries(${EXECUTABLE_NAME} palabos)
 if(ENABLE_MPI)
     target_link_libraries(${EXECUTABLE_NAME} ${MPI_CXX_LIBRARIES})
+endif()
+if(ENABLE_PMT)
+    target_link_libraries(${EXECUTABLE_NAME} pmt)
 endif()

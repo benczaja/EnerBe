@@ -364,6 +364,12 @@ void run ()
     global::timer("iteration").start();
 
     pcout << "Running " << numIter << " iteration." << endl;
+
+    // Start PMT sensor
+    //std::unique_ptr<pmt::PMT> sensor = pmt::rapl::RAPL::Create();
+    auto sensor = pmt::rapl::Rapl::Create();
+    auto start = sensor->Read();
+
     // Collision and streaming iterations.
     for(int i = 0; i < numIter; ++i)
     {
@@ -381,6 +387,20 @@ void run ()
     double elapsed = global::timer("iteration").stop();
     pcout << "Elapsed: " << elapsed << " seconds" << endl;
     pcout << "Performance: " << (T)numFluidCells * (T)numIter / elapsed * 1.e-6 << " MLUPS" << endl;
+
+
+    auto end = sensor->Read();
+
+    pcout << "NAME: " << "Palabos_anerusym" << endl;
+    pcout << "ALGO: "<< "LBM" << endl;
+    pcout << "PRECISION: "<< sizeof (double) <<" bytes"<< endl;
+    pcout << "OMP_THREADS: "<< 1 << endl;
+    pcout << "GPU ID: "<< 99 << endl;
+    pcout << "SIZE: " << numFluidCells << endl;
+    pcout << "(RAPL) CPU_TIME: " << pmt::PMT::seconds(start, end) << " s"<< endl;
+    pcout << "(RAPL) CPU_WATTS: " << pmt::PMT::watts(start, end) << " W" << endl;
+    pcout << "(RAPL) CPU_JOULES: " << pmt::PMT::joules(start, end) << " J" << endl;
+
 
     Box3D measureBox(lattice->getBoundingBox());
     measureBox.z0=measureBox.z1=(plint)inletZpos;
