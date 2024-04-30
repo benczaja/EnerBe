@@ -2,11 +2,12 @@
 
 import os
 import subprocess
+from subprocess import Popen, PIPE
 import re 
 import pandas as pd
 import json
 import argparse
-
+import pdb
 
 
 # define the global regex for a number
@@ -22,6 +23,7 @@ def log_results(result,cluster=False):
         results_file = results_dir + "/results_" + jobid +".csv"
     else:
         results_file = results_dir + "/results_tmp.csv"
+
 
     data = pd.DataFrame(result)
 
@@ -76,7 +78,7 @@ def log_results(result,cluster=False):
     return(results_file)
 
 
-def execute(application, size, args=None, env_var=None,cluster=False):
+def get_regex(config):
 
     nan = float('nan')
     result_size = nan
@@ -87,34 +89,10 @@ def execute(application, size, args=None, env_var=None,cluster=False):
     gpu_result_watt = nan 
     gpu_result_joule = nan 
 
-    print("Running...\nApplication: " + application +
-          " Size: " + str(size) +
-          " Args: " + str(args) +
-          " Vars: " + str(env_var) 
-          )
-    
-    # get the path of this python script
-    script_dir = os.path.dirname(os.path.realpath(__file__))
-    bin_dir = script_dir.replace("scripts","bin")
-    executable = bin_dir + "/" + application
+    with open("run.out", "r") as text_file:
+        output = text_file.read()
 
-    if not os.path.isfile(executable):
-        print("Executable....")
-        print(executable)
-        print("DOES NOT EXIST")
-        exit(1)
-
-    # call the executable:
-    if env_var:
-        name = env_var.split("=")[0]
-        value = env_var.split("=")[1]
-        os.environ[name] = value
-        print("CMD: " + executable + " " + str(size) + " " + str(args))
-        output = subprocess.run([executable, str(size), str(args)], capture_output=True).stdout.decode("utf-8")
-    else:
-        print("CMD: " + executable + " " + str(size) + " " + str(args))
-        output = subprocess.run([executable, str(size), str(args)], capture_output=True).stdout.decode("utf-8")
-    
+    application = config['case_info']['application']
 
     # regex the results:
     if ("pmt" in application) & (("cuda" in application) | ("hip" in application)):
@@ -217,9 +195,9 @@ def execute(application, size, args=None, env_var=None,cluster=False):
 
     # save the results
     result = {
-    "Name": [application],
-    "Args": [args],
-    "env_var": [env_var],
+    "Name": config['case_info']['application'],
+    "Args": config['case_info']['args'],
+    "env_vars": config['case_info']['env_vars'],
     "Size": [result_size],
     "CPU_time": [cpu_result_time],
     "GPU_time": [gpu_result_time],
@@ -231,7 +209,44 @@ def execute(application, size, args=None, env_var=None,cluster=False):
 
     print(cpu_result_time, gpu_result_time)
 
-    log_results(result,cluster)
+    return(result)
+
+def run(config):
+
+    application = config['case_info']['application'][0]
+    
+    args = config['case_info']['args']
+
+    # get the path of this python script
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    bin_dir = script_dir.replace("scripts","bin")
+    executable = bin_dir + "/" + application
+
+    if not os.path.isfile(executable):
+        print("Executable....")
+        print(executable)
+        print("DOES NOT EXIST")
+        exit(1)
+
+    CMD = []
+    CMD = config['sbatch_data']['launcher'] + " " + executable
+    print(args)
+    for arg in args:
+        CMD += " " + str(arg)
+    print("Running this command ...")
+    print("CMD: " + CMD)
+    process = Popen(CMD.split(" "), stdout=PIPE, stderr=PIPE)
+
+    output, error = process.communicate()
+    output = output.decode('utf-8').strip()
+    error = error.decode('ISO-8859-1').strip()
+
+    with open("run.out", "w") as text_file:
+        text_file.write(output)
+    with open("run.err", "w") as text_file:
+        text_file.write(error)
+    
+    #return(output)
 
 
 def read_config():
@@ -271,9 +286,11 @@ def create_jobscript(config):
 
 def benchmark(config):
 
-    for application in config['case_info']['applications']:
-        for size in range(config['case_info']['size_min'], config['case_info']['size_max'], config['case_info']['size_step']):
-            execute(application, size, cluster=config['case_info']['sbatch_job'])
+    run(config)
+    result = get_regex(config)
+    log_results(result,config['case_info']['sbatch_job'])
+
+
 
 if __name__ == "__main__":
 

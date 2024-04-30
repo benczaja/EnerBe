@@ -3,25 +3,25 @@
         "2023",
         "foss/2023a",
         "CUDA/12.1.1",
-        "SciPy-bundle/2023.07-gfbf-2023a"
+        "pmt/1.2.0-GCCcore-12.3.0"
     ],
     "sbatch_data": {
         "script_name": "EnerBe.sbatch.sh",
-        "partition": "gpu_sw",
+        "partition": "rome",
         "nodes": "1",
-        "ntasks": "1",
-        "cpus-per-task": "72",
+        "ntasks": "128",
+        "cpus-per-task": "1",
         "time": "00:30:00",
-        "has_gpus": true,
-        "gpus-per-node": "4",
-        "launcher": "bash"
+        "has_gpus": false,
+        "gpus-per-node": "1",
+        "launcher": "mpirun -np 128"
     },
     "case_info":{
-        "applications": [
-            "sgemm_pmt_cuda",
-            "dgemm_pmt_cuda"
+        "application": [
+            "aneurysm_pmt"
             ],
-        "args": [],
+        "args":  ["/home/benjamic/EnerBe/bin/input_1_node.xml"],
+        "env_vars": [" "],
         "size_min": 10,
         "size_max": 40000,
         "size_step": 1000,
