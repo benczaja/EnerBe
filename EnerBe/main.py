@@ -101,12 +101,17 @@ class BenchMarker:
                 print("DOES NOT EXIST")
                 exit(1)
 
-            CMD = []
-            CMD = self.sbatch_data['launcher'] + " " + executable
-            for arg in args:
-                CMD += " " + str(arg)
+            # some dumb logic to encorperate no launcher
+            if self.sbatch_data['launcher'] == "bash":
+                CMD = executable
+            else:
+                CMD = self.sbatch_data['launcher'] + " " + executable
+
+            for arg in self.case_info['args']:
+                CMD += " " + arg
+
             print("Running this command ...")
-            print("CMD: " + CMD)
+            print(CMD.split(" "))
             process = Popen(CMD.split(" "), stdout=PIPE, stderr=PIPE)
 
             output, error = process.communicate()
