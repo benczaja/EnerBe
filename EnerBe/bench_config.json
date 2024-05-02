@@ -1,0 +1,30 @@
+{
+    "modules": [
+        "2023",
+        "foss/2023a",
+        "CUDA/12.1.1",
+        "pmt/1.2.0-GCCcore-12.3.0"
+    ],
+    "sbatch_data": {
+        "script_name": "EnerBe.sbatch.sh",
+        "partition": "rome",
+        "nodes": "1",
+        "ntasks": "128",
+        "cpus-per-task": "1",
+        "time": "00:30:00",
+        "has_gpus": false,
+        "gpus-per-node": "1",
+        "launcher": "mpirun -np 128"
+    },
+    "case_info":{
+        "application": [
+            "aneurysm_pmt"
+            ],
+        "args":  ["/home/benjamic/EnerBe/bin/input_1_node.xml"],
+        "env_vars": [" "],
+        "size_min": 10,
+        "size_max": 40000,
+        "size_step": 1000,
+        "sbatch_job": true
+    }
+}
