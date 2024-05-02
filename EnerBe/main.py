@@ -92,12 +92,7 @@ class BenchMarker:
 
             args = self.case_info['args']
 
-            # get the path of this python script
-
             bin_dir = self.EnerBe_root_dir + "/bin"
-            print(bin_dir)            
-            exit(1)
-            bin_dir = script_dir.split("/") + "/../bin" # this is a dirty solution
             executable = bin_dir + "/" + application
 
             if not os.path.isfile(executable):
