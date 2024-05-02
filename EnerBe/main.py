@@ -318,7 +318,34 @@ class BenchMarker:
             else:
                 out_data.to_csv(results_file,sep=',',index=False)
             print("Wrote results to " + results_file)
-            
+        
+        def append_results(self,temp_result_csvs):
+
+            results_dir = os.path.dirname(os.path.realpath(temp_result_csvs[0])) + "/"
+
+            count = 0 
+            for filename in temp_result_csvs:
+                try:
+                    data_tmp = pd.read_csv(filename)
+
+                    if count ==0:
+                        data = data_tmp
+                        count += 1
+                    else:
+                        data = pd.concat([data_tmp, data],ignore_index=True)
+                        data = data.sort_values(by='NAME')
+                        count += 1
+                    print("Appending... " + filename)
+
+                except FileNotFoundError:
+                    print(FileNotFoundError)
+
+            if "tmp_results" in results_dir:
+                data.to_csv(results_dir + "results.csv",sep=',',index=False)
+                print("All .csvs appended to: \n" + results_dir + "results.csv")
+            else:
+                "tmp_results directory not found"
+                exit(1)
 
 
 if __name__ == "__main__":
@@ -327,8 +354,10 @@ if __name__ == "__main__":
     parser.add_argument("-j","--jobscript", help="Create a Jobscript based off info from 'bench_config.json'",action="store_true")
     parser.add_argument("-r","--run", help="Run the Benchmark",action="store_true")
     parser.add_argument("-c","--config", help="Pass specific .json config to script",type=str)
+    parser.add_argument("-a","--append",metavar='N', type=str, nargs='*', help="Append multiple tmp_results.csv together")
     args = parser.parse_args()
-
+    nargs=2,
+    metavar=('newfile', 'oldfile'),
 
     benchmarker = BenchMarker()
 
@@ -339,8 +368,13 @@ if __name__ == "__main__":
         config = __file__.replace("main.py","bench_config.json")
         benchmarker.read_config(config)
         
+    
     if args.jobscript:
         benchmarker.write_jobscript()
+        exit(0)
+    if args.append:
+        csvs = args.append
+        benchmarker.append_results(csvs)
         exit(0)
 
     if args.run:
