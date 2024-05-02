@@ -13,8 +13,7 @@ int main( int argc, char *argv[] )  {
     kernal.name = "axpy";
 
     /* VERY DUMB Argument Parsers */
-    kernal.size = parse_arguments(argc, argv, &simple, &openmp, &sanity_check);
-
+    kernal.size = parse_arguments(argc, argv);
     X_TYPE *sx; /* n is an array of N integers */
     X_TYPE *sy; /* n is an array of N integers */
 
@@ -25,7 +24,7 @@ int main( int argc, char *argv[] )  {
     auto sensor = pmt::rapl::Rapl::Create();
     auto start = sensor->Read();
     auto end = sensor->Read();
-        
+    
     /* Simple saxpy */
     /*==============================*/
     if (true == simple)
