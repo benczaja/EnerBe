@@ -12,7 +12,7 @@ int main( int argc, char *argv[] )  {
   kernal.name = "xgemm";
   
   /* VERY DUMB Argument Parsers */
-  kernal.size = parse_arguments(argc, argv, &simple, &openmp, &sanity_check);
+  kernal.size = parse_arguments(argc, argv);
 
   /* declare the arrays */
   X_TYPE** A = (X_TYPE**)malloc(kernal.size * sizeof( X_TYPE* ));
@@ -38,6 +38,7 @@ int main( int argc, char *argv[] )  {
   if (true == simple)
   {
     kernal.algorithm = "simple";
+    kernal.omp_threads = 1;
     clock_t t; // declare clock_t (long type)
     t = clock(); // start the clock
     

@@ -30,6 +30,7 @@ int main( int argc, char *argv[] )  {
     if (true == simple)
     {
         kernal.algorithm = "simple";
+        kernal.omp_threads = 1;
         //Read from the PMT "sensor"
         start = sensor->Read();
     

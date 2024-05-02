@@ -10,7 +10,7 @@ int main( int argc, char *argv[] )  {
     kernal.name = "axpy";
 
     /* VERY DUMB Argument Parsers */
-    kernal.size = parse_arguments(argc, argv, &simple, &openmp, &sanity_check);
+    kernal.size = parse_arguments(argc, argv);
 
     X_TYPE *sx; /* n is an array of N integers */
     X_TYPE *sy; /* n is an array of N integers */
@@ -23,6 +23,7 @@ int main( int argc, char *argv[] )  {
     if (true == simple)
     {
         kernal.algorithm = "simple";
+        kernal.omp_threads = 1;
         clock_t t; // declare clock_t (long type)
         t = clock(); // start the clock
     
