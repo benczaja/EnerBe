@@ -1,8 +1,10 @@
 import json
 import argparse
 import os
+import subprocess
 from subprocess import Popen, PIPE
-import re 
+import re
+import pandas as pd
 
 
 class BenchMarker:
@@ -11,13 +13,21 @@ class BenchMarker:
         '''
         def __init__(self):
                 
-                self.number = r'[+-]?((\d+\.\d*)|(\.\d+)|(\d+))([eE][+-]?\d+)?'
+                # One REGEX to rule them all
+                self.regex_number = r'[+-]?((\d+\.\d*)|(\.\d+)|(\d+))([eE][+-]?\d+)?'
 
+                # These will be picked up by the config
                 self.modules = []
-
                 self.sbatch_data = {}
                 self.case_info = {}
-                self.log = {}
+
+                # These will be picked up when running the applications                
+                self.arch_info = {
+                    "CPU_NAME": [float('nan')],
+                    "Sockets": [float('nan')],
+                    "Sockets": [float('nan')],
+                    "GPU_NAME": [float('nan')],
+                }
                 self.results = {
                     "NAME": [float('nan')],
                     "ALGO": [float('nan')],
@@ -123,18 +133,16 @@ class BenchMarker:
                 output = text_file.read()
 
             application = self.case_info['application'][0]
-            number = self.number
-
 
             # regex the results:
             if ("pmt" in application) & (("cuda" in application) | ("hip" in application)):
-                gpu_time_pattern = r'GPU_TIME:\s(?P<rgtime>' + number + r')\ss'
-                gpu_watt_pattern = r'GPU_WATTS:\s(?P<rgwatt>' + number + r')\sW'
-                gpu_joule_pattern = r'GPU_JOULES:\s(?P<rgjoule>' + number + r')\sJ'
+                gpu_time_pattern = r'GPU_TIME:\s(?P<rgtime>' + self.regex_number + r')\ss'
+                gpu_watt_pattern = r'GPU_WATTS:\s(?P<rgwatt>' + self.regex_number + r')\sW'
+                gpu_joule_pattern = r'GPU_JOULES:\s(?P<rgjoule>' + self.regex_number + r')\sJ'
 
-                cpu_time_pattern = r'CPU_TIME:\s(?P<rctime>' + number + r')\s'
-                cpu_watt_pattern = r'CPU_WATTS:\s(?P<rcwatt>' + number + r')\s'
-                cpu_joule_pattern = r'CPU_JOULES:\s(?P<rcjoule>' + number + r')\s'
+                cpu_time_pattern = r'CPU_TIME:\s(?P<rctime>' + self.regex_number + r')\s'
+                cpu_watt_pattern = r'CPU_WATTS:\s(?P<rcwatt>' + self.regex_number + r')\s'
+                cpu_joule_pattern = r'CPU_JOULES:\s(?P<rcjoule>' + self.regex_number + r')\s'
 
                 try:
                     x = re.search(gpu_time_pattern, output,re.MULTILINE)
@@ -186,9 +194,9 @@ class BenchMarker:
 
 
             elif ("pmt" in application):
-                cpu_time_pattern = r'CPU_TIME:\s(?P<rctime>' + number + r')\ss'
-                cpu_watt_pattern = r'CPU_WATTS:\s(?P<rcwatt>' + number + r')\sW'
-                cpu_joule_pattern = r'CPU_JOULES:\s(?P<rcjoule>' + number + r')\sJ'
+                cpu_time_pattern = r'CPU_TIME:\s(?P<rctime>' + self.regex_number + r')\ss'
+                cpu_watt_pattern = r'CPU_WATTS:\s(?P<rcwatt>' + self.regex_number + r')\sW'
+                cpu_joule_pattern = r'CPU_JOULES:\s(?P<rcjoule>' + self.regex_number + r')\sJ'
 
                 try:
                     x = re.search(cpu_time_pattern, output,re.MULTILINE)
@@ -214,12 +222,12 @@ class BenchMarker:
                     print("Could not find REGEX match for CPU_JOULES: in output")
                     exit(1)
             else:
-                time_pattern = r'TIME:\s(?P<rtime>' + number + r')\ss'
+                time_pattern = r'TIME:\s(?P<rtime>' + self.regex_number + r')\ss'
                 x = re.search(time_pattern, output,re.MULTILINE)
                 cpu_result_time = x['rtime']
 
             # regex the results:
-            size_pattern = r'SIZE:\s(?P<rsize>' + number + r')\s'
+            size_pattern = r'SIZE:\s(?P<rsize>' + self.regex_number + r')\s'
             name_pattern = r'NAME:\s(?P<rname>\w*)'
             algo_pattern = r'ALGO:\s(?P<ralgo>\w*)'
             precision_pattern = r'PRECISION:\s(?P<rprecision>\d*)\sbytes'
@@ -246,6 +254,71 @@ class BenchMarker:
             self.results["CPU_power"] = [cpu_result_watt]
             self.results["GPU_power"] = [gpu_result_watt]
 
+        def get_architecture(self):
+
+        
+            #get CPU information
+            output = subprocess.check_output(['lscpu']).decode("utf-8")
+        
+            pattern = r'^Model\sname:\s*(?P<cpuname>.*)'
+            x = re.search(pattern, output,re.MULTILINE)
+            self.arch_info['CPU_NAME'] = x['cpuname']
+        
+            pattern = r'Core\(s\) per socket:\s*(?P<cps>.*)'
+            x = re.search(pattern, output,re.MULTILINE)
+            self.arch_info['Cores_per_socket'] = x['cps']
+        
+            pattern = r'Socket\(s\):\s*(?P<sockets>.*)'
+            x = re.search(pattern, output,re.MULTILINE)
+            self.arch_info['Sockets'] = x['sockets']
+        
+            # get DEVICE information
+            #NVIDIA
+            try:
+                output = subprocess.check_output(['nvidia-smi', '--query-gpu=name', '--format=csv,noheader']).decode("utf-8")
+                self.arch_info["GPU_NAME"] = output.split("\n")[0]
+                
+            except:
+                # AMD
+                try:
+                    output = subprocess.check_output(['rocm-smi', '--showproductname']).decode("utf-8")
+        
+                    pattern = r'Card series:\s*(?P<gpuname>.*)'
+                    x = re.search(pattern, output,re.MULTILINE)
+                    self.arch_info["GPU_NAME"] = x['gpuname']
+        
+                except:
+                    self.arch_info["GPU_NAME"] = float("nan")
+
+
+
+        def to_csv(self):
+            
+            results_dir = __file__.replace("main.py","tmp_results")
+
+            if not os.path.exists(results_dir):
+                os.mkdir(results_dir)
+
+            if self.case_info["sbatch_job"]:
+                jobid = os.environ['SLURM_JOB_ID']
+                results_file = results_dir + "/results_" + jobid +".csv"
+            else:
+                results_file = results_dir + "/results_tmp.csv"
+
+            out_data = self.results
+            out_data.update(self.arch_info)
+            
+            out_data = pd.DataFrame(out_data)
+            
+            if os.path.isfile(results_file):
+                data_tmp = pd.read_csv(results_file)
+                out_data = pd.concat([data_tmp, out_data],ignore_index=True)
+                out_data = out_data.sort_values(by='NAME')
+                out_data.to_csv(results_file,sep=',',index=False)
+            else:
+                out_data.to_csv(results_file,sep=',',index=False)
+            print("Wrote results to " + results_file)
+            
 
 
 if __name__ == "__main__":
@@ -273,7 +346,10 @@ if __name__ == "__main__":
     if args.run:
 
         #benchmarker.run()
+
         benchmarker.get_regex()
-        print(benchmarker.results)
+        benchmarker.get_architecture()
+        benchmarker.to_csv()
+
         
         #EnerBe.log_results()
