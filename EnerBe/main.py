@@ -16,6 +16,7 @@ class BenchMarker:
                 # One REGEX to rule them all
                 self.regex_number = r'[+-]?((\d+\.\d*)|(\.\d+)|(\d+))([eE][+-]?\d+)?'
 
+                self.EnerBe_root_dir = "/".join(os.path.dirname(os.path.realpath(__file__)).split("/")[:-1])
                 # These will be picked up by the config
                 self.modules = []
                 self.sbatch_data = {}
@@ -42,6 +43,7 @@ class BenchMarker:
                     "CPU_power": [float('nan')],
                     "GPU_power": [float('nan')],
                 }
+                
 
         def read_config(self, config_file_name):
                 """
@@ -91,9 +93,11 @@ class BenchMarker:
             args = self.case_info['args']
 
             # get the path of this python script
-            script_dir = os.path.dirname(os.path.realpath(__file__))
 
-            bin_dir = script_dir + "/../bin" # this is a dirty solution
+            bin_dir = self.EnerBe_root_dir + "/bin"
+            print(bin_dir)            
+            exit(1)
+            bin_dir = script_dir.split("/") + "/../bin" # this is a dirty solution
             executable = bin_dir + "/" + application
 
             if not os.path.isfile(executable):
