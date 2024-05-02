@@ -303,7 +303,7 @@ class BenchMarker:
                 jobid = os.environ['SLURM_JOB_ID']
                 results_file = results_dir + "/results_" + jobid +".csv"
             else:
-                results_file = results_dir + "/results_tmp.csv"
+                results_file = results_dir + "/tmp_results.csv"
 
             out_data = self.results
             out_data.update(self.arch_info)
@@ -311,14 +311,13 @@ class BenchMarker:
             out_data = pd.DataFrame(out_data)
             
             if os.path.isfile(results_file):
-                data_tmp = pd.read_csv(results_file)
-                out_data = pd.concat([data_tmp, out_data],ignore_index=True)
-                out_data = out_data.sort_values(by='NAME')
-                out_data.to_csv(results_file,sep=',',index=False)
-            else:
-                out_data.to_csv(results_file,sep=',',index=False)
+                print("Moving existing tmp_results to tmp_results.OLD.csv")
+                subprocess.check_output(["mv",results_file, results_file.replace(".csv", ".OLD.csv")])
+            
+            out_data.to_csv(results_file,sep=',',index=False)
             print("Wrote results to " + results_file)
-        
+
+
         def append_results(self,temp_result_csvs):
 
             results_dir = os.path.dirname(os.path.realpath(temp_result_csvs[0])) + "/"
@@ -379,11 +378,7 @@ if __name__ == "__main__":
 
     if args.run:
 
-        #benchmarker.run()
-
+        benchmarker.run()
         benchmarker.get_regex()
         benchmarker.get_architecture()
         benchmarker.to_csv()
-
-        
-        #EnerBe.log_results()
