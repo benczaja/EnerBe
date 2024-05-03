@@ -391,7 +391,7 @@ if __name__ == "__main__":
     if args.plot:
 
         plotter = Plotter()
-        plotter.load_data(benchmarker.EnerBe_root_dir + "/results/results.csv")
+        plotter.load_data(benchmarker.EnerBe_root_dir + "/tmp_results/results.csv")
         #Maybe a good place to apply masks to the data
         #plotter.plot_data  = plotter.plot_data[plotter.plot_data['NAME'] == "dgemm_pmt"]
         plotter.GPU_TPE_plot(x="SIZE",hue="GPU_NAME")
