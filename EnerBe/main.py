@@ -6,6 +6,8 @@ from subprocess import Popen, PIPE
 import re
 import pandas as pd
 
+from plot import Plotter
+
 
 class BenchMarker:
         '''
@@ -78,12 +80,16 @@ class BenchMarker:
                 job_string_text += "module load " + module + "\n"
             job_string_text += "\n"
 
-            job_string_text += "benchmarker.py"
+            job_string_text += "python " + os.path.dirname(os.path.realpath(__file__)) + "/main.py --run"
 
+            batch_file = os.path.dirname(os.path.realpath(__file__)) + "/" + self.sbatch_data["script_name"]
 
-            f = open(self.sbatch_data["script_name"], "w")
+            f = open(batch_file, "w")
             f.write(job_string_text)
             f.close()
+
+            print("Wrote Jobscript: ")
+            print(batch_file)
 
         
         def run(self):
@@ -111,7 +117,7 @@ class BenchMarker:
                 CMD += " " + arg
 
             print("Running this command ...")
-            print(CMD.split(" "))
+            print(CMD)
             process = Popen(CMD.split(" "), stdout=PIPE, stderr=PIPE)
 
             output, error = process.communicate()
@@ -355,10 +361,11 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("-j","--jobscript", help="Create a Jobscript based off info from 'bench_config.json'",action="store_true")
-    parser.add_argument("-r","--run", help="Run the Benchmark",action="store_true")
     parser.add_argument("-c","--config", help="Pass specific .json config to script",type=str)
     parser.add_argument("--concatonate",metavar='N', type=str, nargs='*', help="Concatonate multiple tmp_results.csv together")
+    parser.add_argument("-j","--jobscript", help="Create a Jobscript based off info from 'bench_config.json'",action="store_true")
+    parser.add_argument("-p","--plot", help="Plot the Benchmark",action="store_true")
+    parser.add_argument("-r","--run", help="Run the Benchmark",action="store_true")
 
     args = parser.parse_args()
 
@@ -380,6 +387,14 @@ if __name__ == "__main__":
         csvs = args.concatonate
         benchmarker.concatonate_csvs(csvs)
         exit(0)
+
+    if args.plot:
+
+        plotter = Plotter()
+        plotter.load_data(benchmarker.EnerBe_root_dir + "/results/results.csv")
+        #Maybe a good place to apply masks to the data
+        #plotter.plot_data  = plotter.plot_data[plotter.plot_data['NAME'] == "dgemm_pmt"]
+        plotter.GPU_TPE_plot(x="SIZE",hue="GPU_NAME")
 
     if args.run:
 
