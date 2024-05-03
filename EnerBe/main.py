@@ -322,7 +322,7 @@ class BenchMarker:
             print("Wrote results to " + results_file)
 
 
-        def append_results(self,temp_result_csvs):
+        def concatonate_csvs(self,temp_result_csvs):
 
             results_dir = os.path.dirname(os.path.realpath(temp_result_csvs[0])) + "/"
 
@@ -354,13 +354,14 @@ class BenchMarker:
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
+
     parser.add_argument("-j","--jobscript", help="Create a Jobscript based off info from 'bench_config.json'",action="store_true")
     parser.add_argument("-r","--run", help="Run the Benchmark",action="store_true")
     parser.add_argument("-c","--config", help="Pass specific .json config to script",type=str)
-    parser.add_argument("-a","--append",metavar='N', type=str, nargs='*', help="Append multiple tmp_results.csv together")
+    parser.add_argument("--concatonate",metavar='N', type=str, nargs='*', help="Concatonate multiple tmp_results.csv together")
+
     args = parser.parse_args()
-    nargs=2,
-    metavar=('newfile', 'oldfile'),
+
 
     benchmarker = BenchMarker()
 
@@ -375,9 +376,9 @@ if __name__ == "__main__":
     if args.jobscript:
         benchmarker.write_jobscript()
         exit(0)
-    if args.append:
-        csvs = args.append
-        benchmarker.append_results(csvs)
+    if args.concatonate:
+        csvs = args.concatonate
+        benchmarker.concatonate_csvs(csvs)
         exit(0)
 
     if args.run:
