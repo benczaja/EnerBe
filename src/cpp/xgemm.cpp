@@ -37,16 +37,23 @@ int main( int argc, char *argv[] )  {
   /*==============================*/
   if (true == simple)
   {
+
+    clock_t t; // declare clock_t (long type)
     kernal.algorithm = "simple";
     kernal.omp_threads = 1;
-    clock_t t; // declare clock_t (long type)
-    t = clock(); // start the clock
-    
-    simple_matrix_multiply(A, B, C, kernal.size, kernal.size);
-    
-    t = clock() - t; // stop the clock
+    do {
+      
+      kernal.start = double(clock());
+      simple_matrix_multiply(A, B, C, kernal.size, kernal.size);
+      kernal.end = double(clock());
 
-    kernal.time = ((double)t)/CLOCKS_PER_SEC; // convert to seconds (and long to double)
+      kernal.times[kernal.N_runs] =  (kernal.end - kernal.start)/CLOCKS_PER_SEC;
+      kernal.N_runs ++;
+
+    }while (kernal.time < kernal.max_time && kernal.N_runs < kernal.max_runs);
+
+    kernal.calculate_stats();
+
   }
 
   /* OpenMP parallel matrix multiplication */
@@ -54,15 +61,18 @@ int main( int argc, char *argv[] )  {
   if (true == openmp)
   {
     kernal.algorithm = "openmp";
-
     // omp_get_wtime needed here because clock will sum up time for all threads
-    double start = omp_get_wtime();  
+    do {
+      kernal.start = omp_get_wtime();  
+      openmp_matrix_multiply(A, B, C, kernal.size, kernal.size);
+      kernal.end = omp_get_wtime(); 
 
-    openmp_matrix_multiply(A, B, C, kernal.size, kernal.size);
-    
-    double end = omp_get_wtime(); 
-    kernal.time = (end-start);
-  
+      kernal.times[kernal.N_runs] += kernal.end - kernal.start;
+      kernal.N_runs ++;
+
+    }while (kernal.time < kernal.max_time && kernal.N_runs < kernal.max_runs);
+
+    kernal.calculate_stats();
   }
 
   kernal.print_info();

@@ -5,6 +5,7 @@
 #include <iostream> // needed for CPP IO ... cout, endl etc etc
 #include <stdbool.h> // needed for bool usage
 #include <omp.h> // needed for OpenMP 
+#include <math.h>
 
 #ifdef USE_DOUBLE
 typedef double X_TYPE;
@@ -21,9 +22,22 @@ class kernal {
     
     int omp_threads = omp_get_max_threads();
     int gpuid = 99;
+    int N_gpus = 0;
+    int MPI_ranks = 0;
+    int N_runs = 0;
+    int max_runs = 20;
 
+
+    double start = 0.0;
+    double end = 0.0;
+    double max_time = 600.0;
     double size = sizeof(X_TYPE);
     double time = 0.0;
+    double time_var = 0.0;
+    double time_std = 0.0;
+
+    // Devil horns
+    double sign_of_the_beast = 0.0;
 
     double rapl_time = 0.0;
     double nvml_time = 0.0;
@@ -37,14 +51,56 @@ class kernal {
     double nvml_energy = 0.0;
     double rocm_energy = 0.0;
 
+    double rapl_time_var = 0.0;
+    double nvml_time_var = 0.0;
+    double rocm_time_var = 0.0;
+    double rapl_time_std = 0.0;
+    double nvml_time_std = 0.0;
+    double rocm_time_std = 0.0;
+
+    double rapl_power_var = 0.0;
+    double nvml_power_var = 0.0;
+    double rocm_power_var = 0.0;
+    double rapl_power_std = 0.0;
+    double nvml_power_std = 0.0;
+    double rocm_power_std = 0.0;
+
+    double rapl_energy_var = 0.0;
+    double nvml_energy_var = 0.0;
+    double rocm_energy_var = 0.0;
+
+    double rapl_energy_std = 0.0;
+    double nvml_energy_std = 0.0;
+    double rocm_energy_std = 0.0;
+
+
+
+    double times[20] =  {sign_of_the_beast};
+
+    double rapl_times[20] =  {sign_of_the_beast};
+    double rapl_powers[20] = {sign_of_the_beast};
+    double rapl_energys[20] = {sign_of_the_beast};
+
+    double nvml_times[20] =  {sign_of_the_beast};
+    double nvml_powers[20] = {sign_of_the_beast};
+    double nvml_energys[20] = {sign_of_the_beast};
+
+    double rocm_times[20] =  {sign_of_the_beast};
+    double rocm_powers[20] = {sign_of_the_beast};
+    double rocm_energys[20] = {sign_of_the_beast};
+
     void print_info() { 
         std::cout << "NAME: " << name << std::endl;
         std::cout << "ALGO: "<< algorithm << std::endl;
         std::cout << "PRECISION: "<< sizeof (X_TYPE) <<" bytes"<< std::endl;
         std::cout << "OMP_THREADS: "<< omp_threads << std::endl;
+        std::cout << "MPI_RANKS: "<< MPI_ranks << std::endl;
+        std::cout << "NGPUs: "<< N_gpus << std::endl;
         std::cout << "GPU ID: "<< gpuid << std::endl;
         std::cout << "SIZE: " << size << std::endl;
         std::cout << "TIME: " << time << " s"<< std::endl;
+        std::cout << "TIME_std: " << time_std << " s"<< std::endl;
+        std::cout << "NRUNS: " << N_runs << std::endl;
     } 
 
     void print_pmt_rapl_info() { 
@@ -52,11 +108,18 @@ class kernal {
         std::cout << "ALGO: "<< algorithm << std::endl;
         std::cout << "PRECISION: "<< sizeof (X_TYPE) <<" bytes"<< std::endl;
         std::cout << "OMP_THREADS: "<< omp_threads << std::endl;
+        std::cout << "MPI_RANKS: "<< MPI_ranks << std::endl;
+        std::cout << "NGPUs: "<< N_gpus << std::endl;
         std::cout << "GPU ID: "<< gpuid << std::endl;
         std::cout << "SIZE: " << size << std::endl;
         std::cout << "(RAPL) CPU_TIME: " << rapl_time << " s"<< std::endl;
+        std::cout << "(RAPL) CPU_TIME_std: " << rapl_time_std << " s"<< std::endl;
         std::cout << "(RAPL) CPU_WATTS: " << rapl_power << " W" << std::endl;
+        std::cout << "(RAPL) CPU_WATTS_std: " << rapl_power_std << " W" << std::endl;
         std::cout << "(RAPL) CPU_JOULES: " << rapl_energy << " J" << std::endl;
+        std::cout << "(RAPL) CPU_JOULES_std: " << rapl_energy_std << " J" << std::endl;
+        std::cout << "NRUNS: " << N_runs << std::endl;
+
     } 
 
     void print_pmt_nvml_info() { 
@@ -64,6 +127,8 @@ class kernal {
         std::cout << "ALGO: "<< algorithm << std::endl;
         std::cout << "PRECISION: "<< sizeof (X_TYPE) <<" bytes"<< std::endl;
         std::cout << "OMP_THREADS: "<< omp_threads << std::endl;
+        std::cout << "MPI_RANKS: "<< MPI_ranks << std::endl;
+        std::cout << "NGPUs: "<< N_gpus << std::endl;
         std::cout << "GPU ID: "<< gpuid << std::endl;
         std::cout << "SIZE: " << size <<std::endl;
         std::cout << "(RAPL) CPU_TIME: " << rapl_time << " | (NVML) GPU_TIME: " << nvml_time << " s"<< std::endl;
@@ -73,6 +138,111 @@ class kernal {
         std::cout << "Total WATTS: " << rapl_power + nvml_power << " W"<< std::endl;
         std::cout << "Total JOULES: " << rapl_energy + nvml_energy << " J"<< std::endl;
     } 
+
+    void calculate_stats(){
+        
+        double sum_time = 0.0;
+        double sum_rapl_time = 0.0;
+        double sum_nvml_time = 0.0;
+        double sum_rocm_time = 0.0;
+
+        double sum_energy = 0.0;
+        double sum_rapl_energy = 0.0;
+        double sum_nvml_energy = 0.0;
+        double sum_rocm_energy = 0.0;
+
+        double sum_power = 0.0;
+        double sum_rapl_power = 0.0;
+        double sum_nvml_power = 0.0;
+        double sum_rocm_power = 0.0;
+
+        for(int i=0; i<N_runs ;i++){
+            sum_time += times[i];
+
+            sum_rapl_time   += rapl_times[i];
+            sum_rapl_power  += rapl_powers[i];
+            sum_rapl_energy += rapl_energys[i];
+
+            sum_nvml_time   += nvml_times[i];
+            sum_nvml_power  += nvml_powers[i];
+            sum_nvml_energy += nvml_energys[i];
+
+            sum_rocm_time   += rocm_times[i];
+            sum_rocm_power  += rocm_powers[i];
+            sum_rocm_energy += rocm_energys[i];
+
+        }
+        time = sum_time/double(N_runs);
+
+        rapl_time = sum_rapl_time/double(N_runs);
+        nvml_time = sum_nvml_time/double(N_runs);
+        rocm_time = sum_rocm_time/double(N_runs);
+
+        rapl_power = sum_rapl_power/double(N_runs);
+        nvml_power = sum_nvml_power/double(N_runs);
+        rocm_power = sum_rocm_power/double(N_runs);
+
+        rapl_energy = sum_rapl_energy/double(N_runs);
+        nvml_energy = sum_nvml_energy/double(N_runs);
+        rocm_energy = sum_rocm_energy/double(N_runs);
+
+        double values = 0;
+        double rapl_time_values = 0;
+        double nvml_time_values = 0;
+        double rocm_time_values = 0;
+
+        double rapl_power_values = 0;
+        double nvml_power_values = 0;
+        double rocm_power_values = 0;
+
+        double rapl_energy_values = 0;
+        double nvml_energy_values = 0;
+        double rocm_energy_values = 0;
+        for(int i = 0; i < N_runs; i++) {
+            values += pow(times[i] - time, 2);
+
+            rapl_time_values += pow(rapl_times[i] - rapl_time, 2);
+            nvml_time_values += pow(nvml_times[i] - nvml_time, 2);
+            rocm_time_values += pow(rocm_times[i] - rocm_time, 2);
+
+            rapl_power_values += pow(rapl_powers[i] - rapl_power, 2);
+            nvml_power_values += pow(nvml_powers[i] - nvml_power, 2);
+            rocm_power_values += pow(rocm_powers[i] - rocm_power, 2);
+
+            rapl_energy_values += pow(rapl_energys[i] - rapl_energy, 2);
+            nvml_energy_values += pow(nvml_energys[i] - nvml_energy, 2);
+            rocm_energy_values += pow(rocm_energys[i] - rocm_energy, 2);
+        }
+    
+        // variance is the square of standard deviation
+        time_var = values /double(N_runs);
+
+        rapl_time_var = rapl_time_values /double(N_runs);
+        nvml_time_var = nvml_time_values /double(N_runs);
+        rocm_time_var = rocm_time_values /double(N_runs);
+
+        rapl_power_var = rapl_power_values /double(N_runs);
+        nvml_power_var = nvml_power_values /double(N_runs);
+        rocm_power_var = rocm_power_values /double(N_runs);
+
+        rapl_energy_var = rapl_energy_values /double(N_runs);
+        nvml_energy_var = nvml_energy_values /double(N_runs);
+        rocm_energy_var = rocm_energy_values /double(N_runs);
+        // calculating standard deviation by finding square root
+        // of variance
+        time_std = sqrt(time_var);
+
+        rapl_time_std   = sqrt(rapl_time_var);
+        nvml_time_std   = sqrt(nvml_time_var);
+        rocm_time_std   = sqrt(rocm_time_var);
+        rapl_power_std  = sqrt(rapl_power_var);
+        nvml_power_std  = sqrt(nvml_power_var);
+        rocm_power_std  = sqrt(rocm_power_var);
+        rapl_energy_std = sqrt(rapl_energy_var);
+        nvml_energy_std = sqrt(nvml_energy_var);
+        rocm_energy_std = sqrt(rocm_energy_var);
+    }
+
 };
 
 
@@ -114,18 +284,16 @@ void initialize_matrix_2D(X_TYPE** A, X_TYPE** B, X_TYPE** C, int ROWS, int COLU
 void print_saxpy_usage()
 {
     fprintf(stderr, "saxpy (array size) [-s|-p|-h]\n");
-    fprintf(stderr, "\t      Invoke simple implementation of Saxpy (Single precision A X plus Y)\n");
-    fprintf(stderr, "\t-s    Invoke simple implementation of Saxpy (Single precision A X plus Y)\n");
-    fprintf(stderr, "\t-p    Invoke parallel (OpenMP) implementation of Saxpy (Single precision A X plus Y)\n");
+    fprintf(stderr, "\t--simple    Invoke simple implementation of Saxpy (Single precision A X plus Y)\n");
+    fprintf(stderr, "\t--openmp    Invoke parallel (OpenMP) implementation of Saxpy (Single precision A X plus Y)\n");
     fprintf(stderr, "\t-h    Display help\n");
 }
 
 void print_xgemm_usage()
 {
     fprintf(stderr, "xgemm (matrix size) [-s|-p|-h]\n");
-    fprintf(stderr, "\t      Invoke simple implementation of matrix multiplication\n");
-    fprintf(stderr, "\t-s    Invoke simple implementation of matrix multiplication\n");
-    fprintf(stderr, "\t-p    Invoke parallel (OpenMP) implementation of matrix multiplication\n");
+    fprintf(stderr, "\t--simple    Invoke simple implementation of matrix multiplication\n");
+    fprintf(stderr, "\t--openmp    Invoke parallel (OpenMP) implementation of matrix multiplication\n");
     fprintf(stderr, "\t-h    Display help\n");
 }
 
@@ -145,7 +313,7 @@ bool isNumber(char number[])
     return true;
 }
 
-int parse_arguments(size_t count, char*  args[], bool *simple, bool *openmp, bool *sanity_check) {
+int parse_arguments(size_t count, char*  args[]) {
     int N;
     if (count == 1){
         printf("I need an alogrithm and problem size as an argument.\nSee what I accept: ./dgemm -h \n");
@@ -156,12 +324,12 @@ int parse_arguments(size_t count, char*  args[], bool *simple, bool *openmp, boo
         {   
             if (! strcmp("--simple", args[i]))
             {
-                *simple = true;
+                simple = true;
             }
             else if (! strcmp("--openmp", args[i]))
             {
-                *openmp = true;
-                *simple = false;
+                openmp = true;
+                simple = false;
             }
             else if (!strcmp("-h", args[i]))
             {
@@ -178,14 +346,17 @@ int parse_arguments(size_t count, char*  args[], bool *simple, bool *openmp, boo
             else if (isNumber(args[i]))
             {
               sscanf(args[i],"%d", &N);
-              *sanity_check = true;
+              sanity_check = true;
             }
         }
         /* Dumb logic to make sure an array size was passed */
     if (! sanity_check){
         printf("I need an alogrithm and problem size as an argument.\nSee what I accept: ./dgemm -h \n");
         exit (1);
-
+    }
+    if (! openmp && ! simple){
+        printf("I need an alogrithm and problem size as an argument.\nSee what I accept: ./dgemm -h \n");
+        exit (1);
     }
     return (N);
 }
