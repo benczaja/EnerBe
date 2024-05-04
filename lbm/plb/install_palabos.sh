@@ -23,7 +23,7 @@ cd ../
 
 tar -xzvf aneurysm.stl.tgz
 
-cp aneurysm ../../../../../bin/
+cp aneurysm ../../../../../bin/aneurysm_pmt
 cp aneurysm.stl ../../../../../bin/
 
 cd ../../../../../

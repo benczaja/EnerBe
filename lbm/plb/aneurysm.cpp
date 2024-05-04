@@ -391,15 +391,27 @@ void run ()
 
     auto end = sensor->Read();
 
+    int nranks = 0;
+    MPI_Comm_size(MPI_COMM_WORLD, &nranks);
+
     pcout << "NAME: " << "Palabos_anerusym" << endl;
     pcout << "ALGO: "<< "LBM" << endl;
     pcout << "PRECISION: "<< sizeof (double) <<" bytes"<< endl;
-    pcout << "OMP_THREADS: "<< 1 << endl;
-    pcout << "GPU ID: "<< 99 << endl;
+    pcout << "OMP_THREADS: "<< 1 << std::endl;
+    pcout << "MPI_RANKS: "<< nranks << std::endl;
+    pcout << "NGPUs: "<< 0 << std::endl;
+    pcout << "GPU ID: "<< 99 << std::endl;
     pcout << "SIZE: " << numFluidCells << endl;
     pcout << "(RAPL) CPU_TIME: " << pmt::PMT::seconds(start, end) << " s"<< endl;
+    pcout << "(RAPL) CPU_TIME_var: " << 0.0 << " s^2"<< endl;
+    pcout << "(RAPL) CPU_TIME_std: " << 0.0 << " s"<< endl;
     pcout << "(RAPL) CPU_WATTS: " << pmt::PMT::watts(start, end) << " W" << endl;
+    pcout << "(RAPL) CPU_WATTS_var: " << 0.0 << " W^2" << endl;
+    pcout << "(RAPL) CPU_WATTS_std: " << 0.0 << " W" << endl;
     pcout << "(RAPL) CPU_JOULES: " << pmt::PMT::joules(start, end) << " J" << endl;
+    pcout << "(RAPL) CPU_JOULES_var: " << 0.0 << " J^2" << endl;
+    pcout << "(RAPL) CPU_JOULES_std: " << 0.0 << " J" << endl;
+    pcout << "NRUNS: " << 1 << endl;
 
 
     Box3D measureBox(lattice->getBoundingBox());

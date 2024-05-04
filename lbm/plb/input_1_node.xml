@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 
 <geometry>
-    <mesh> aneurysm.stl </mesh>
+    <mesh> /home/benjamic/EnerBe/bin/aneurysm.stl </mesh>
     <!-- Inlet diameter (m). This parameter has no impact on the simulation,
          and is only used to display the Reynolds number. -->
     <inletDiameter> 0.012 </inletDiameter>
@@ -37,7 +37,7 @@
 </numerics>
 
 <simulation>
-    <numIter>  800 </numIter>
+    <numIter>  8 </numIter>
     <epsilon>  1.e-1  </epsilon>
 
     <doImages>           False   </doImages>
