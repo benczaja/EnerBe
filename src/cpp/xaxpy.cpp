@@ -20,34 +20,39 @@ int main( int argc, char *argv[] )  {
 
     /* Simple saxpy */
     /*==============================*/
-    if (true == simple)
-    {
-        kernal.algorithm = "simple";
-        kernal.omp_threads = 1;
-        clock_t t; // declare clock_t (long type)
-        t = clock(); // start the clock
-    
-        simple_axpy(kernal.size, 2.0, sx, sy);
-    
-        t = clock() - t; // stop the clock    
-        kernal.time = ((double)t)/CLOCKS_PER_SEC; // convert to seconds (and long to double)
-    }
+  if (true == simple)
+  {
+    clock_t t; // declare clock_t (long type)
+    kernal.algorithm = "simple";
+    kernal.omp_threads = 1;
+    do {
+      
+      kernal.start = double(clock());
+      simple_axpy(kernal.size, 2.0, sx, sy);
+      kernal.end = double(clock());
 
+      kernal.times[kernal.N_runs] =  (kernal.end - kernal.start)/CLOCKS_PER_SEC;
+      kernal.N_runs ++;
+
+    }while (kernal.time < kernal.max_time && kernal.N_runs < kernal.max_runs);
+    kernal.calculate_stats();
+  }
     /* OpenMP parallel saxpy */
     /*==============================*/
-    if (true == openmp)
-    {
-        kernal.algorithm = "openmp";
-        // omp_get_wtime needed here because clock will sum up time for all threads
-        double start = omp_get_wtime();  
-
-        openmp_axpy(kernal.size, 2.0, sx, sy);
-    
-        double end = omp_get_wtime();
-
-        kernal.time = end-start;
-    }
-    kernal.print_info();
+  if (true == openmp)
+  {
+    kernal.algorithm = "openmp";
+    // omp_get_wtime needed here because clock will sum up time for all threads
+    do {
+      kernal.start = omp_get_wtime();  
+      openmp_axpy(kernal.size, 2.0, sx, sy);
+      kernal.end = omp_get_wtime(); 
+      kernal.times[kernal.N_runs] += kernal.end - kernal.start;
+      kernal.N_runs ++;
+    }while (kernal.time < kernal.max_time && kernal.N_runs < kernal.max_runs);
+    kernal.calculate_stats();
+  }
+  kernal.print_info();
     free(sx);
     free(sy);
 }

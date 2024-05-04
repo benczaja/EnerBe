@@ -132,11 +132,16 @@ class kernal {
         std::cout << "GPU ID: "<< gpuid << std::endl;
         std::cout << "SIZE: " << size <<std::endl;
         std::cout << "(RAPL) CPU_TIME: " << rapl_time << " | (NVML) GPU_TIME: " << nvml_time << " s"<< std::endl;
+        std::cout << "(RAPL) CPU_TIME_std: " << rapl_time_std << " | (NVML) GPU_TIME_std: " << nvml_time_std << " s"<< std::endl;
         std::cout << "(RAPL) CPU_WATTS: " << rapl_power << " | (NVML) GPU_WATTS: " << nvml_power << " W"<< std::endl;
+        std::cout << "(RAPL) CPU_WATTS_std: " << rapl_power_std << " | (NVML) GPU_WATTS_std: " << nvml_power_std << " W"<< std::endl;
         std::cout << "(RAPL) CPU_JOULES: " << rapl_energy << " | (NVML) GPU_JOULES: " << nvml_energy << " J"<< std::endl;
+        std::cout << "(RAPL) CPU_JOULES_std: " << rapl_energy_std << " | (NVML) GPU_JOULES_std: " << nvml_energy_std << " J"<< std::endl;
         std::cout << "Total TIME: " << rapl_time + nvml_time << " s"<< std::endl;
         std::cout << "Total WATTS: " << rapl_power + nvml_power << " W"<< std::endl;
         std::cout << "Total JOULES: " << rapl_energy + nvml_energy << " J"<< std::endl;
+        std::cout << "NRUNS: " << N_runs << std::endl;
+
     } 
 
     void calculate_stats(){

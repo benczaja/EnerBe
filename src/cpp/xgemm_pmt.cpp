@@ -48,21 +48,15 @@ int main( int argc, char *argv[] )  {
     kernal.omp_threads = 1;
     //Read from the PMT "sensor"
     do {
-    start = sensor->Read();
-
-    simple_matrix_multiply(A, B, C, kernal.size, kernal.size);
-    
-    //Read from the PMT "sensor"
-    end = sensor->Read();
-
-    kernal.rapl_times[kernal.N_runs] = pmt::PMT::seconds(start, end);
-    kernal.rapl_powers[kernal.N_runs] = pmt::PMT::watts(start, end);
-    kernal.rapl_energys[kernal.N_runs] = pmt::PMT::joules(start, end);
-
-    kernal.N_runs ++;
-
+      start = sensor->Read();
+      simple_matrix_multiply(A, B, C, kernal.size, kernal.size);
+      //Read from the PMT "sensor"
+      end = sensor->Read();
+      kernal.rapl_times[kernal.N_runs] = pmt::PMT::seconds(start, end);
+      kernal.rapl_powers[kernal.N_runs] = pmt::PMT::watts(start, end);
+      kernal.rapl_energys[kernal.N_runs] = pmt::PMT::joules(start, end);
+      kernal.N_runs ++;
     }while (kernal.time < kernal.max_time && kernal.N_runs < kernal.max_runs);
-
     kernal.calculate_stats();
   }
 
@@ -71,15 +65,18 @@ int main( int argc, char *argv[] )  {
   if (true == openmp)
   {
     kernal.algorithm = "openmp";
-
-    //Read from the PMT "sensor"
-    start = sensor->Read();
-
-    openmp_matrix_multiply(A, B, C, kernal.size, kernal.size);
-
-    //Read from the PMT "sensor"
-    end = sensor->Read();
-
+    do{
+      //Read from the PMT "sensor"
+      start = sensor->Read();
+      openmp_matrix_multiply(A, B, C, kernal.size, kernal.size);
+      //Read from the PMT "sensor"
+      end = sensor->Read();
+      kernal.rapl_times[kernal.N_runs] = pmt::PMT::seconds(start, end);
+      kernal.rapl_powers[kernal.N_runs] = pmt::PMT::watts(start, end);
+      kernal.rapl_energys[kernal.N_runs] = pmt::PMT::joules(start, end);
+      kernal.N_runs ++;
+    }while (kernal.time < kernal.max_time && kernal.N_runs < kernal.max_runs);
+    kernal.calculate_stats();
   }
     kernal.print_pmt_rapl_info();
 

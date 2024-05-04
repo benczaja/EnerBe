@@ -37,25 +37,18 @@ int main( int argc, char *argv[] )  {
   /*==============================*/
   if (true == simple)
   {
-
     clock_t t; // declare clock_t (long type)
     kernal.algorithm = "simple";
     kernal.omp_threads = 1;
     do {
-      
       kernal.start = double(clock());
       simple_matrix_multiply(A, B, C, kernal.size, kernal.size);
       kernal.end = double(clock());
-
       kernal.times[kernal.N_runs] =  (kernal.end - kernal.start)/CLOCKS_PER_SEC;
       kernal.N_runs ++;
-
     }while (kernal.time < kernal.max_time && kernal.N_runs < kernal.max_runs);
-
     kernal.calculate_stats();
-
   }
-
   /* OpenMP parallel matrix multiplication */
   /*=======================================*/
   if (true == openmp)
@@ -66,15 +59,11 @@ int main( int argc, char *argv[] )  {
       kernal.start = omp_get_wtime();  
       openmp_matrix_multiply(A, B, C, kernal.size, kernal.size);
       kernal.end = omp_get_wtime(); 
-
       kernal.times[kernal.N_runs] += kernal.end - kernal.start;
       kernal.N_runs ++;
-
     }while (kernal.time < kernal.max_time && kernal.N_runs < kernal.max_runs);
-
     kernal.calculate_stats();
   }
-
   kernal.print_info();
 
   /*======================================================================*/

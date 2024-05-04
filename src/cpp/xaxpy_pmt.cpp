@@ -31,15 +31,20 @@ int main( int argc, char *argv[] )  {
     {
         kernal.algorithm = "simple";
         kernal.omp_threads = 1;
-        //Read from the PMT "sensor"
-        start = sensor->Read();
-    
-        simple_axpy(kernal.size, 2.0, sx, sy);
 
-        //Read from the PMT "sensor"
-        end = sensor->Read();
-
-    }
+        do {
+            //Read from the PMT "sensor"
+            start = sensor->Read();
+            simple_axpy(kernal.size, 2.0, sx, sy);
+            //Read from the PMT "sensor"
+            end = sensor->Read();
+            kernal.rapl_times[kernal.N_runs] = pmt::PMT::seconds(start, end);
+            kernal.rapl_powers[kernal.N_runs] = pmt::PMT::watts(start, end);
+            kernal.rapl_energys[kernal.N_runs] = pmt::PMT::joules(start, end);
+            kernal.N_runs ++;
+        }while (kernal.time < kernal.max_time && kernal.N_runs < kernal.max_runs);
+    kernal.calculate_stats();
+  }
 
     /* OpenMP parallel saxpy */
     /*==============================*/
@@ -47,18 +52,18 @@ int main( int argc, char *argv[] )  {
     {
         kernal.algorithm = "openmp";
         //Read from the PMT "sensor"
-        auto start = sensor->Read();
-
-        openmp_axpy(kernal.size, 2.0, sx, sy);
-    
-        //Read from the PMT "sensor"
-        end = sensor->Read();
-    }
-
-    kernal.rapl_time = pmt::PMT::seconds(start, end);
-    kernal.rapl_power = pmt::PMT::watts(start, end);
-    kernal.rapl_energy = pmt::PMT::joules(start, end);
-
+        do {
+            auto start = sensor->Read();
+            openmp_axpy(kernal.size, 2.0, sx, sy);
+            //Read from the PMT "sensor"
+            end = sensor->Read();
+            kernal.rapl_times[kernal.N_runs] = pmt::PMT::seconds(start, end);
+            kernal.rapl_powers[kernal.N_runs] = pmt::PMT::watts(start, end);
+            kernal.rapl_energys[kernal.N_runs] = pmt::PMT::joules(start, end);
+            kernal.N_runs ++;
+        }while (kernal.time < kernal.max_time && kernal.N_runs < kernal.max_runs);
+    kernal.calculate_stats();
+  }
     kernal.print_pmt_rapl_info();   
 
     free(sx);
