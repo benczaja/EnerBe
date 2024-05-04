@@ -16,13 +16,16 @@ class BenchMarker:
         def __init__(self):
                 
                 # One REGEX to rule them all
-                self.regex_number = r'[+-]?((\d+\.\d*)|(\.\d+)|(\d+))([eE][+-]?\d+)?'
+                self.regex_number = '[+-]?((\d+\.\d*)|(\.\d+)|(\d+))([eE][+-]?\d+)?'
 
                 self.EnerBe_root_dir = "/".join(os.path.dirname(os.path.realpath(__file__)).split("/")[:-1])
                 # These will be picked up by the config
                 self.modules = []
                 self.sbatch_data = {}
                 self.case_info = {}
+
+                self.tmp_out_file = "run.out"
+                self.tmp_err_file = "run.err"
 
                 # These will be picked up when running the applications                
                 self.arch_info = {
@@ -36,14 +39,35 @@ class BenchMarker:
                     "ALGO": [float('nan')],
                     "PRECISION": [float('nan')],
                     "OMP_THREADS": [float('nan')],
+                    "MPI_RANKS": [float('nan')],
+                    "NGPUs": [float('nan')],
                     "GPU ID": [float('nan')],
                     "SIZE": [float('nan')],
-                    "CPU_time": [float('nan')],
-                    "GPU_time": [float('nan')],
-                    "CPU_energy": [float('nan')],
-                    "GPU_energy": [float('nan')],
-                    "CPU_power": [float('nan')],
-                    "GPU_power": [float('nan')],
+                    
+                    "CPU_TIME": [float('nan')],
+                    "CPU_TIME_var": [float('nan')],
+                    "CPU_TIME_std": [float('nan')],
+                    
+                    "GPU_TIME": [float('nan')],
+                    "GPU_TIME_var": [float('nan')],
+                    "GPU_TIME_std": [float('nan')],
+                    
+                    "CPU_JOULES": [float('nan')],
+                    "CPU_JOULES_var": [float('nan')],
+                    "CPU_JOULES_std": [float('nan')],
+                    
+                    "GPU_JOULES": [float('nan')],
+                    "GPU_JOULES_var": [float('nan')],
+                    "GPU_JOULES_std": [float('nan')],
+
+                    "CPU_WATTS": [float('nan')],
+                    "CPU_WATTS_var": [float('nan')],
+                    "CPU_WATTS_std": [float('nan')],
+
+                    "GPU_WATTS": [float('nan')],
+                    "GPU_WATTS_var": [float('nan')],
+                    "GPU_WATTS_std": [float('nan')],
+                    "NRUNS": [float('nan')],
                 }
                 
 
@@ -124,125 +148,78 @@ class BenchMarker:
             output = output.decode('ISO-8859-1').strip()
             error = error.decode('ISO-8859-1').strip()
 
-            with open("run.out", "w") as text_file:
+            with open(self.tmp_out_file, "w") as text_file:
                 text_file.write(output)
-            with open("run.err", "w") as text_file:
+            with open(self.tmp_err_file, "w") as text_file:
                 text_file.write(error)
 
         def get_regex(self):
         
-            nan = float('nan')
-            cpu_result_time = nan
-            cpu_result_watt = nan 
-            cpu_result_joule = nan 
-            gpu_result_time = nan
-            gpu_result_watt = nan 
-            gpu_result_joule = nan 
-
-            with open("run.out", "r") as text_file:
+            with open(self.tmp_out_file, "r") as text_file:
                 output = text_file.read()
 
             application = self.case_info['application'][0]
 
             # regex the results:
             if ("pmt" in application) & (("cuda" in application) | ("hip" in application)):
-                gpu_time_pattern = r'GPU_TIME:\s(?P<rgtime>' + self.regex_number + r')\ss'
-                gpu_watt_pattern = r'GPU_WATTS:\s(?P<rgwatt>' + self.regex_number + r')\sW'
-                gpu_joule_pattern = r'GPU_JOULES:\s(?P<rgjoule>' + self.regex_number + r')\sJ'
 
-                cpu_time_pattern = r'CPU_TIME:\s(?P<rctime>' + self.regex_number + r')\s'
-                cpu_watt_pattern = r'CPU_WATTS:\s(?P<rcwatt>' + self.regex_number + r')\s'
-                cpu_joule_pattern = r'CPU_JOULES:\s(?P<rcjoule>' + self.regex_number + r')\s'
-
-                try:
-                    x = re.search(gpu_time_pattern, output,re.MULTILINE)
-                    gpu_result_time = x['rgtime']
-                except TypeError as error:
-                    print(error)
-                    print("Could not find REGEX match for GPU_TIME: in output")
-                    exit(1)
-
-                try:
-                    x = re.search(gpu_watt_pattern, output,re.MULTILINE)
-                    gpu_result_watt = x['rgwatt']
-                except TypeError as error:
-                    print(error)
-                    print("Could not find REGEX match for GPU_WATTS: in output")
-                    exit(1)
-
-                try:
-                    x = re.search(gpu_joule_pattern, output,re.MULTILINE)
-                    gpu_result_joule = x['rgjoule']
-                except TypeError as error:
-                    print(error)
-                    print("Could not find REGEX match for GPU_JOULES: in output")
-                    exit(1)
-
-                try:
-                    x = re.search(cpu_time_pattern, output,re.MULTILINE)
-                    cpu_result_time = x['rctime']
-                except TypeError as error:
-                    print(error)
-                    print("Could not find REGEX match for CPU_TIME: in output")
-                    exit(1)
-
-                try:
-                    x = re.search(cpu_watt_pattern, output,re.MULTILINE)
-                    cpu_result_watt = x['rcwatt']
-                except TypeError as error:
-                    print(error)
-                    print("Could not find REGEX match for CPU_WATTS: in output")
-                    exit(1)
-
-                try:
-                    x = re.search(cpu_joule_pattern, output,re.MULTILINE)
-                    cpu_result_joule = x['rcjoule']
-                except TypeError as error:
-                    print(error)
-                    print("Could not find REGEX match for CPU_JOULES: in output")
-                    exit(1)
-
+                device_types = ["CPU_", "GPU_"] # I am sorry for the _    
+                patterns = [
+                    "TIME",
+                    "TIME_var",
+                    "TIME_std",
+                    "WATTS", 
+                    "WATTS_var", 
+                    "WATTS_std", 
+                    "JOULES",
+                    "JOULES_var",
+                    "JOULES_std"
+                ]
 
             elif ("pmt" in application):
-                cpu_time_pattern = r'CPU_TIME:\s(?P<rctime>' + self.regex_number + r')\ss'
-                cpu_watt_pattern = r'CPU_WATTS:\s(?P<rcwatt>' + self.regex_number + r')\sW'
-                cpu_joule_pattern = r'CPU_JOULES:\s(?P<rcjoule>' + self.regex_number + r')\sJ'
-
-                try:
-                    x = re.search(cpu_time_pattern, output,re.MULTILINE)
-                    cpu_result_time = x['rctime']
-                except TypeError as error:
-                    print(error)
-                    print("Could not find REGEX match for CPU_TIME: in output")
-                    exit(1)
-
-                try:
-                    x = re.search(cpu_watt_pattern, output,re.MULTILINE)
-                    cpu_result_watt = x['rcwatt']
-                except TypeError as error:
-                    print(error)
-                    print("Could not find REGEX match for CPU_WATTS: in output")
-                    exit(1)
-
-                try:
-                    x = re.search(cpu_joule_pattern, output,re.MULTILINE)
-                    cpu_result_joule = x['rcjoule']
-                except TypeError as error:
-                    print(error)
-                    print("Could not find REGEX match for CPU_JOULES: in output")
-                    exit(1)
+                device_types = ["CPU_"]  # I am sorry for the _ 
+                patterns = [
+                    "TIME",
+                    "TIME_var",
+                    "TIME_std",
+                    "WATTS", 
+                    "WATTS_var", 
+                    "WATTS_std", 
+                    "JOULES",
+                    "JOULES_var",
+                    "JOULES_std"
+                ]
             else:
-                time_pattern = r'TIME:\s(?P<rtime>' + self.regex_number + r')\ss'
-                x = re.search(time_pattern, output,re.MULTILINE)
-                cpu_result_time = x['rtime']
+                device_types = ["TOTAL_"] 
+                patterns = [
+                    "TIME",
+                    "TIME_var",
+                    "TIME_std",
+                ]
+            
+            for device_type in device_types:
+                for pattern in patterns:
+                    tmp_string =  device_type + pattern + ":\s(?P<group>" + self.regex_number + ")\s"
+                    tmp_string = f'({tmp_string})'
+
+                    try:
+                        x = re.search(tmp_string, output,re.MULTILINE)
+                        self.results[device_type + pattern] = [x['group']]
+                    except TypeError as error:
+                        print(error)
+                        print("Could not find REGEX match for "+ device_type + pattern +": in " + self.tmp_out_file)
+                        exit(1)
 
             # regex the results:
-            size_pattern = r'SIZE:\s(?P<rsize>' + self.regex_number + r')\s'
             name_pattern = r'NAME:\s(?P<rname>\w*)'
             algo_pattern = r'ALGO:\s(?P<ralgo>\w*)'
             precision_pattern = r'PRECISION:\s(?P<rprecision>\d*)\sbytes'
             omp_threads_pattern = r'OMP\_THREADS:\s(?P<romp_threads>\d*)\s'
+            mpi_ranks_pattern = r'MPI\_RANKS:\s(?P<rmpi_ranks>\d*)\s'
+            ngpus_pattern = r'NGPUs:\s(?P<rngpus>\d*)\s'
             gpu_id_pattern = r'GPU\sID:\s(?P<rgpu_id>\d*)\s'
+            size_pattern = r'SIZE:\s(?P<rsize>' + self.regex_number + r')\s'
+            nruns_pattern = r'NRUNS:\s(?P<rnruns>' + self.regex_number + r')'
 
             x = re.search(name_pattern, output,re.MULTILINE)
             self.results['NAME'] = [x['rname']]
@@ -252,17 +229,17 @@ class BenchMarker:
             self.results['PRECISION'] = [x['rprecision']]
             x = re.search(omp_threads_pattern, output,re.MULTILINE)
             self.results['OMP_THREADS'] = [x['romp_threads']]
+            x = re.search(mpi_ranks_pattern, output,re.MULTILINE)
+            self.results['MPI_RANKS'] = [x['rmpi_ranks']]
+            x = re.search(ngpus_pattern, output,re.MULTILINE)
+            self.results['NGPUs'] = [x['rngpus']]
             x = re.search(gpu_id_pattern, output,re.MULTILINE)
-            self.results['GPU_ID'] = [x['rgpu_id']]
+            self.results['GPU ID'] = [x['rgpu_id']]
             x = re.search(size_pattern, output,re.MULTILINE)
             self.results['SIZE'] = [x['rsize']]
+            x = re.search(nruns_pattern, output,re.MULTILINE)
+            self.results['NRUNS'] = [x['rnruns']]
             
-            self.results["CPU_time"] = [cpu_result_time]
-            self.results["GPU_time"] = [gpu_result_time]
-            self.results["CPU_energy"] = [cpu_result_joule]
-            self.results["GPU_energy"] = [gpu_result_joule]
-            self.results["CPU_power"] = [cpu_result_watt]
-            self.results["GPU_power"] = [gpu_result_watt]
 
         def get_architecture(self):
 
@@ -400,5 +377,7 @@ if __name__ == "__main__":
 
         benchmarker.run()
         benchmarker.get_regex()
+
+        print(benchmarker.results)
         benchmarker.get_architecture()
         benchmarker.to_csv()
