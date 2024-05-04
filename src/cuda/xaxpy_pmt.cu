@@ -13,7 +13,7 @@ int main( int argc, char *argv[] )  {
     kernal.name = "axpy";
 
     /* VERY DUMB Argument Parsers */
-    kernal.size = parse_arguments(argc, argv, &simple, &openmp, &sanity_check);
+    kernal.size = parse_arguments(argc, argv);
 
     X_TYPE *d_sx; /* n is an array of N integers */
     X_TYPE *d_sy; /* n is an array of N integers */
@@ -30,18 +30,26 @@ int main( int argc, char *argv[] )  {
     // THIS IS NEW !!!!!!!
     auto GPUsensor = pmt::nvml::NVML::Create();
     auto CPUsensor = pmt::rapl::Rapl::Create();
+    //Start the PMT "sensor"
+    auto GPUstart = GPUsensor->Read(); 
+    auto CPUstart = CPUsensor->Read(); 
+    auto GPUend = GPUsensor->Read(); 
+    auto CPUend = CPUsensor->Read(); 
 
     /* Simple saxpy */
     /*==============================*/
+    if (true ==simple){
     kernal.algorithm = "simple_gpu";
     cudaGetDevice(&kernal.gpuid);  
 
     int block_size = 512;
     int grid_size = ((kernal.size + block_size) / block_size);
+
+    do {
     
     //Start the PMT "sensor"
-    auto GPUstart = GPUsensor->Read(); // READING the GPU via NVML
-    auto CPUstart = CPUsensor->Read(); // READING the CPU via RAPL
+    GPUstart = GPUsensor->Read(); // READING the GPU via NVML
+    CPUstart = CPUsensor->Read(); // READING the CPU via RAPL
     
     // Transfer data from host to device memory
     cudaMemcpy(d_sx, sx, sizeof(X_TYPE) * kernal.size, cudaMemcpyHostToDevice);
@@ -51,17 +59,20 @@ int main( int argc, char *argv[] )  {
     
     cudaMemcpy(sy, d_sy, sizeof(X_TYPE) * kernal.size, cudaMemcpyDeviceToHost);
     
-    //Start the PMT "sensor"
-    auto GPUend = GPUsensor->Read();
-    auto CPUend = CPUsensor->Read();
+    //END the PMT "sensor"
+    GPUend = GPUsensor->Read();
+    CPUend = CPUsensor->Read();
 
-    kernal.rapl_time = pmt::PMT::seconds(CPUstart, CPUend);
-    kernal.rapl_power = pmt::PMT::watts(CPUstart, CPUend);
-    kernal.rapl_energy = pmt::PMT::joules(CPUstart, CPUend);
+    kernal.rapl_times[kernal.N_runs] = pmt::PMT::seconds(CPUstart, CPUend);
+    kernal.rapl_powers[kernal.N_runs] = pmt::PMT::watts(CPUstart, CPUend);
+    kernal.rapl_energys[kernal.N_runs] = pmt::PMT::joules(CPUstart, CPUend);
 
-    kernal.nvml_time = pmt::PMT::seconds(GPUstart, GPUend);
-    kernal.nvml_power = pmt::PMT::watts(GPUstart, GPUend);
-    kernal.nvml_energy = pmt::PMT::joules(GPUstart, GPUend);
-
+    kernal.nvml_times[kernal.N_runs] = pmt::PMT::seconds(GPUstart, GPUend);
+    kernal.nvml_powers[kernal.N_runs] = pmt::PMT::watts(GPUstart, GPUend);
+    kernal.nvml_energys[kernal.N_runs] = pmt::PMT::joules(GPUstart, GPUend);
+    kernal.N_runs ++;
+    }while (kernal.time < kernal.max_time && kernal.N_runs < kernal.max_runs);
+    kernal.calculate_stats();
+  }
     kernal.print_pmt_nvml_info();
 }

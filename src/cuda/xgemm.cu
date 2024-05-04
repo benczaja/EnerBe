@@ -12,7 +12,7 @@ int main( int argc, char *argv[] )  {
   clock_t t; // declare clock_t (long type)
 
   /* VERY DUMB Argument Parsers */
-  kernal.size = parse_arguments(argc, argv, &simple, &openmp, &sanity_check);
+  kernal.size = parse_arguments(argc, argv);
 
   /* declare the arrays...  better to do it as 1D arrays for CUDA */
   // First allocated them on the host (CPU)
@@ -29,17 +29,15 @@ int main( int argc, char *argv[] )  {
   cudaMalloc((void**)&D_C, sizeof( X_TYPE ) * (kernal.size * kernal.size));
 
   double start = omp_get_wtime();  
-
   initialize_matrix_1D(A, B, C, kernal.size, kernal.size);
-    
   double end = omp_get_wtime(); 
   printf("Init TIME: %f s\n",(end-start));
-
 
   /*======================================================================*/
   /*                START of Section of the code that matters!!!          */
   /*======================================================================*/
-
+if (true == simple)
+  {
   /* Simple matrix multiplication */
   /*==============================*/
     kernal.algorithm = "simple_gpu";
@@ -48,22 +46,25 @@ int main( int argc, char *argv[] )  {
     int block_size = 512;
     int grid_size = ((kernal.size + block_size) / block_size);
     
-    t = clock(); // start the clock
+    do {
+      kernal.start = double(clock()); // start the clock
 
-    // Transfer data from host to device memory
-    cudaMemcpy(D_A, A, sizeof(X_TYPE) * (kernal.size * kernal.size), cudaMemcpyHostToDevice);
-    cudaMemcpy(D_B, B, sizeof(X_TYPE) * (kernal.size * kernal.size), cudaMemcpyHostToDevice);
-    
-    simple_matrix_multiply<<<grid_size,block_size>>>(D_A, D_B, D_C, kernal.size, kernal.size);
+      // Transfer data from host to device memory
+      cudaMemcpy(D_A, A, sizeof(X_TYPE) * (kernal.size * kernal.size), cudaMemcpyHostToDevice);
+      cudaMemcpy(D_B, B, sizeof(X_TYPE) * (kernal.size * kernal.size), cudaMemcpyHostToDevice);
 
-   // Transfer data from device to host memory
-    cudaMemcpy(C, D_C, sizeof(X_TYPE) * (kernal.size * kernal.size), cudaMemcpyDeviceToHost);
+      simple_matrix_multiply<<<grid_size,block_size>>>(D_A, D_B, D_C, kernal.size, kernal.size);
 
-    t = clock() - t; // stop the clock
+      // Transfer data from device to host memory
+      cudaMemcpy(C, D_C, sizeof(X_TYPE) * (kernal.size * kernal.size), cudaMemcpyDeviceToHost);
 
-    kernal.time = ((double)t)/CLOCKS_PER_SEC; // convert to seconds (and long to double)
-
-    kernal.print_info();
+      kernal.end = double(clock()); // stop the clock
+      kernal.times[kernal.N_runs] =  (kernal.end - kernal.start)/CLOCKS_PER_SEC;
+      kernal.N_runs ++;
+    }while (kernal.time < kernal.max_time && kernal.N_runs < kernal.max_runs);
+    kernal.calculate_stats();
+  }
+  kernal.print_info();
   /*======================================================================*/
   /*                 END of Section of the code that matters!!!           */
   /*======================================================================*/

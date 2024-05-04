@@ -6,12 +6,13 @@
 
 
 int main( int argc, char *argv[] )  {
-
+    
+    clock_t t; // declare clock_t (long type)
     kernal kernal;
     kernal.name = "axpy";
 
     /* VERY DUMB Argument Parsers */
-    kernal.size = parse_arguments(argc, argv, &simple, &openmp, &sanity_check);
+    kernal.size = parse_arguments(argc, argv);
 
     X_TYPE *d_sx; /* n is an array of N integers */
     X_TYPE *d_sy; /* n is an array of N integers */
@@ -31,8 +32,11 @@ int main( int argc, char *argv[] )  {
     cudaGetDevice(&kernal.gpuid);  
     int block_size = 512;
     int grid_size = ((kernal.size + block_size) / block_size);
-    clock_t t; // declare clock_t (long type)
-    t = clock(); // start the clock
+
+if (true == simple)
+  {
+    do{
+    kernal.start = double(clock()); // start the clock
 
     // Transfer data from host to device memory
     cudaMemcpy(d_sx, sx, sizeof(X_TYPE) * kernal.size, cudaMemcpyHostToDevice);
@@ -42,11 +46,13 @@ int main( int argc, char *argv[] )  {
 
     cudaMemcpy(sy, d_sy, sizeof(X_TYPE) * kernal.size, cudaMemcpyDeviceToHost);
     
-    t = clock() - t; // stop the clock    
-    
-    kernal.time = ((double)t)/CLOCKS_PER_SEC; // convert to seconds (and long to double)
-
-    kernal.print_info();
+    kernal.end = double(clock()); // stop the clock
+      kernal.times[kernal.N_runs] =  (kernal.end - kernal.start)/CLOCKS_PER_SEC;
+      kernal.N_runs ++;
+    }while (kernal.time < kernal.max_time && kernal.N_runs < kernal.max_runs);
+    kernal.calculate_stats();
+  }
+  kernal.print_info();
 
     cudaFree(d_sx);
     cudaFree(d_sy);

@@ -15,7 +15,7 @@ int main( int argc, char *argv[] )  {
   kernal.name = "xgemm";
 
   /* VERY DUMB Argument Parsers */
-  kernal.size = parse_arguments(argc, argv, &simple, &openmp, &sanity_check);
+  kernal.size = parse_arguments(argc, argv);
   /* declare the arrays...  better to do it as 1D arrays for CUDA */
 
   // First allocated them on the host (CPU)
@@ -38,9 +38,14 @@ int main( int argc, char *argv[] )  {
   double end = omp_get_wtime(); 
   printf("Init TIME: %f sec\n",(end-start));
 
-    // THIS IS NEW !!!!!!!
+  // THIS IS NEW !!!!!!!
   auto GPUsensor = pmt::nvml::NVML::Create();
   auto CPUsensor = pmt::rapl::Rapl::Create();
+  //Start the PMT "sensor"
+  auto GPUstart = GPUsensor->Read(); 
+  auto CPUstart = CPUsensor->Read(); 
+  auto GPUend = GPUsensor->Read(); 
+  auto CPUend = CPUsensor->Read(); 
 
   /*======================================================================*/
   /*                START of Section of the code that matters!!!          */
@@ -48,15 +53,17 @@ int main( int argc, char *argv[] )  {
 
   /* Simple matrix multiplication */
   /*==============================*/
-  kernal.algorithm = "simple_gpu";
-  cudaGetDevice(&kernal.gpuid);  	
+    if (true ==simple){
+    kernal.algorithm = "simple_gpu";
+    cudaGetDevice(&kernal.gpuid);  	
   
     int block_size = 512;
     int grid_size = ((kernal.size + block_size) / block_size);
     
+    do {
     //Start the PMT "sensor"
-    auto GPUstart = GPUsensor->Read(); // READING the GPU via NVML
-    auto CPUstart = CPUsensor->Read(); // READING the CPU via RAPL
+    GPUstart = GPUsensor->Read(); // READING the GPU via NVML
+    CPUstart = CPUsensor->Read(); // READING the CPU via RAPL
 
     // Transfer data from host to device memory
     cudaMemcpy(D_A, A, sizeof(X_TYPE) * (kernal.size * kernal.size), cudaMemcpyHostToDevice);
@@ -68,19 +75,25 @@ int main( int argc, char *argv[] )  {
     cudaMemcpy(C, D_C, sizeof(X_TYPE) * (kernal.size * kernal.size), cudaMemcpyDeviceToHost);
 
 
-    //Start the PMT "sensor"
-    auto GPUend = GPUsensor->Read();
-    auto CPUend = CPUsensor->Read();
+    //END the PMT "sensor"
+    GPUend = GPUsensor->Read();
+    CPUend = CPUsensor->Read();
 
-    kernal.rapl_time = pmt::PMT::seconds(CPUstart, CPUend);
-    kernal.rapl_power = pmt::PMT::watts(CPUstart, CPUend);
-    kernal.rapl_energy = pmt::PMT::joules(CPUstart, CPUend);
+    //END the PMT "sensor"
+    GPUend = GPUsensor->Read();
+    CPUend = CPUsensor->Read();
 
-    kernal.nvml_time = pmt::PMT::seconds(GPUstart, GPUend);
-    kernal.nvml_power = pmt::PMT::watts(GPUstart, GPUend);
-    kernal.nvml_energy = pmt::PMT::joules(GPUstart, GPUend);
+    kernal.rapl_times[kernal.N_runs] = pmt::PMT::seconds(CPUstart, CPUend);
+    kernal.rapl_powers[kernal.N_runs] = pmt::PMT::watts(CPUstart, CPUend);
+    kernal.rapl_energys[kernal.N_runs] = pmt::PMT::joules(CPUstart, CPUend);
 
-
+    kernal.nvml_times[kernal.N_runs] = pmt::PMT::seconds(GPUstart, GPUend);
+    kernal.nvml_powers[kernal.N_runs] = pmt::PMT::watts(GPUstart, GPUend);
+    kernal.nvml_energys[kernal.N_runs] = pmt::PMT::joules(GPUstart, GPUend);
+    kernal.N_runs ++;
+    }while (kernal.time < kernal.max_time && kernal.N_runs < kernal.max_runs);
+    kernal.calculate_stats();
+  }
     kernal.print_pmt_nvml_info();
 
 
