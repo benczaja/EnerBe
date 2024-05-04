@@ -43,6 +43,10 @@ class BenchMarker:
                     "NGPUs": [float('nan')],
                     "GPU ID": [float('nan')],
                     "SIZE": [float('nan')],
+
+                    "TOTAL_TIME": [float('nan')],
+                    "TOTAL_TIME_var": [float('nan')],
+                    "TOTAL_TIME_std": [float('nan')],
                     
                     "CPU_TIME": [float('nan')],
                     "CPU_TIME_var": [float('nan')],
@@ -377,7 +381,5 @@ if __name__ == "__main__":
 
         benchmarker.run()
         benchmarker.get_regex()
-
-        print(benchmarker.results)
         benchmarker.get_architecture()
         benchmarker.to_csv()
