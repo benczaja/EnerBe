@@ -132,7 +132,11 @@ class BenchMarker:
                 batch_file = batch_file.replace(".sh", "." + input_parameter + ".sh")
 
                 print("Launching Jobscript: ")
-                output = subprocess.check_output(['sbatch', batch_file]).decode("utf-8")
+                output = subprocess.check_output([
+                    'sbatch',
+                    '--output='+self.EnerBe_log_dir +"/slurm."+input_parameter+".out",
+                    '--error='+self.EnerBe_log_dir +"/slurm."+input_parameter+".err",
+                    batch_file]).decode("utf-8")
                 print(batch_file)
 
 
