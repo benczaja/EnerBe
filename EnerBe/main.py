@@ -19,6 +19,7 @@ class BenchMarker:
                 self.regex_number = '[+-]?((\d+\.\d*)|(\.\d+)|(\d+))([eE][+-]?\d+)?'
 
                 self.EnerBe_root_dir = "/".join(os.path.dirname(os.path.realpath(__file__)).split("/")[:-1])
+                self.EnerBe_log_dir = self.EnerBe_root_dir + "/" + "log"
                 # These will be picked up by the config
                 self.modules = []
                 self.sbatch_data = {}
@@ -73,7 +74,7 @@ class BenchMarker:
                     "GPU_WATTS_std": [float('nan')],
                     "NRUNS": [float('nan')],
                 }
-                
+        
 
         def read_config(self, config_file_name):
                 """
@@ -89,42 +90,60 @@ class BenchMarker:
 
                 f.close()
 
+
         def write_jobscript(self):
 
-            job_string_text = "#!/bin/bash\n\n"
-            job_string_text += "#SBATCH --partition=" + self.sbatch_data['partition'] + "\n"
-            job_string_text += "#SBATCH --nodes=" + self.sbatch_data['nodes'] + "\n"
-            job_string_text += "#SBATCH --ntasks=" + self.sbatch_data['ntasks'] + "\n"
-            job_string_text += "#SBATCH --cpus-per-task=" + self.sbatch_data['cpus-per-task'] + "\n"
-            job_string_text += "#SBATCH --time=" + self.sbatch_data['time'] + "\n"
+            input_parameters = self.case_info["input_parameters"]
 
-            if self.sbatch_data['has_gpus']:
-                job_string_text += "#SBATCH --gpus-per-node=" + self.sbatch_data['gpus-per-node'] + "\n"
+            for input_parameter in input_parameters:
 
-            job_string_text += "\n"
+                job_string_text = "#!/bin/bash\n\n"
+                job_string_text += "#SBATCH --partition=" + self.sbatch_data['partition'] + "\n"
+                job_string_text += "#SBATCH --nodes=" + self.sbatch_data['nodes'] + "\n"
+                job_string_text += "#SBATCH --ntasks=" + self.sbatch_data['ntasks'] + "\n"
+                job_string_text += "#SBATCH --cpus-per-task=" + self.sbatch_data['cpus-per-task'] + "\n"
+                job_string_text += "#SBATCH --time=" + self.sbatch_data['time'] + "\n"
 
-            job_string_text += "module purge\n"
-            for module in self.modules:
-                job_string_text += "module load " + module + "\n"
-            job_string_text += "\n"
+                if self.sbatch_data['has_gpus']:
+                    job_string_text += "#SBATCH --gpus-per-node=" + self.sbatch_data['gpus-per-node'] + "\n"
 
-            job_string_text += "python " + os.path.dirname(os.path.realpath(__file__)) + "/main.py --run"
+                job_string_text += "\n"
 
-            batch_file = os.path.dirname(os.path.realpath(__file__)) + "/" + self.sbatch_data["script_name"]
+                job_string_text += "module purge\n"
+                for module in self.modules:
+                    job_string_text += "module load " + module + "\n"
+                job_string_text += "\n"
 
-            f = open(batch_file, "w")
-            f.write(job_string_text)
-            f.close()
+                job_string_text += "python " + os.path.dirname(os.path.realpath(__file__)) + "/main.py --run " + input_parameter
 
-            print("Wrote Jobscript: ")
-            print(batch_file)
+                batch_file = os.path.dirname(os.path.realpath(__file__)) + "/" + self.sbatch_data["script_name"]
+
+                batch_file = batch_file.replace(".sh", "." + input_parameter + ".sh")
+
+                f = open(batch_file, "w")
+                f.write(job_string_text)
+                f.close()
+
+        def launch_jobscript(self):
+
+            for input_parameter in self.case_info["input_parameters"]:
+        
+                batch_file = os.path.dirname(os.path.realpath(__file__)) + "/" + self.sbatch_data["script_name"]
+                batch_file = batch_file.replace(".sh", "." + input_parameter + ".sh")
+
+                print("Launching Jobscript: ")
+                output = subprocess.check_output(['sbatch', batch_file]).decode("utf-8")
+                print(batch_file)
+
+
 
         
-        def run(self):
+        def run(self,param):
+
+            if not os.path.exists(self.EnerBe_log_dir):
+                os.mkdir(self.EnerBe_log_dir)
 
             application = self.case_info['application'][0]
-
-            args = self.case_info['args']
 
             bin_dir = self.EnerBe_root_dir + "/bin"
             executable = bin_dir + "/" + application
@@ -144,6 +163,8 @@ class BenchMarker:
             for arg in self.case_info['args']:
                 CMD += " " + arg
 
+            CMD += " " + param
+
             print("Running this command ...")
             print(CMD)
             process = Popen(CMD.split(" "), stdout=PIPE, stderr=PIPE)
@@ -152,14 +173,18 @@ class BenchMarker:
             output = output.decode('ISO-8859-1').strip()
             error = error.decode('ISO-8859-1').strip()
 
-            with open(self.tmp_out_file, "w") as text_file:
+            self.tmp_out_file = self.tmp_out_file.replace(".out", "." + param + ".out")
+            self.tmp_err_file = self.tmp_err_file.replace(".out", "." + param + ".err")
+
+            print("logging out/err to " + self.EnerBe_log_dir)
+            with open(self.EnerBe_log_dir + "/" +self.tmp_out_file, "w") as text_file:
                 text_file.write(output)
-            with open(self.tmp_err_file, "w") as text_file:
+            with open(self.EnerBe_log_dir + "/" + self.tmp_err_file, "w") as text_file:
                 text_file.write(error)
 
         def get_regex(self):
         
-            with open(self.tmp_out_file, "r") as text_file:
+            with open(self.EnerBe_log_dir + "/" + self.tmp_out_file, "r") as text_file:
                 output = text_file.read()
 
             application = self.case_info['application'][0]
@@ -290,10 +315,10 @@ class BenchMarker:
             if not os.path.exists(results_dir):
                 os.mkdir(results_dir)
 
-            if self.case_info["sbatch_job"]:
+            try:                
                 jobid = os.environ['SLURM_JOB_ID']
                 results_file = results_dir + "/results_" + jobid +".csv"
-            else:
+            except:
                 results_file = results_dir + "/tmp_results.csv"
 
             out_data = self.results
@@ -338,15 +363,16 @@ class BenchMarker:
                 exit(1)
 
 
+
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
 
     parser.add_argument("-c","--config", help="Pass specific .json config to script",type=str)
     parser.add_argument("--concatonate",metavar='N', type=str, nargs='*', help="Concatonate multiple tmp_results.csv together")
-    parser.add_argument("-j","--jobscript", help="Create a Jobscript based off info from 'bench_config.json'",action="store_true")
+    parser.add_argument("-s","--sbatch", help="Create aand submit Jobscript based off info from 'bench_config.json'",action="store_true")
     parser.add_argument("-p","--plot", help="Plot the Benchmark",action="store_true")
-    parser.add_argument("-r","--run", help="Run the Benchmark",action="store_true")
+    parser.add_argument("-r","--run", help="Run the Benchmark",type=str)
 
     args = parser.parse_args()
 
@@ -361,9 +387,11 @@ if __name__ == "__main__":
         benchmarker.read_config(config)
         
     
-    if args.jobscript:
+    if args.sbatch:
         benchmarker.write_jobscript()
+        benchmarker.launch_jobscript()
         exit(0)
+
     if args.concatonate:
         csvs = args.concatonate
         benchmarker.concatonate_csvs(csvs)
@@ -379,7 +407,8 @@ if __name__ == "__main__":
 
     if args.run:
 
-        benchmarker.run()
+        benchmarker.run(args.run)
         benchmarker.get_regex()
         benchmarker.get_architecture()
         benchmarker.to_csv()
+
