@@ -19,7 +19,7 @@ class BenchMarker:
                 self.regex_number = '[+-]?((\d+\.\d*)|(\.\d+)|(\d+))([eE][+-]?\d+)?'
 
                 self.EnerBe_root_dir = "/".join(os.path.dirname(os.path.realpath(__file__)).split("/")[:-1])
-                self.EnerBe_log_dir = self.EnerBe_root_dir + "/" + "log"
+                self.EnerBe_log_dir = self.EnerBe_root_dir + "/EnerBe/" + "log"
                 # These will be picked up by the config
                 self.modules = []
                 self.sbatch_data = {}
@@ -96,6 +96,7 @@ class BenchMarker:
             input_parameters = self.case_info["input_parameters"]
 
             for input_parameter in input_parameters:
+                tmp_idx = input_parameters.index(input_parameter)
 
                 job_string_text = "#!/bin/bash\n\n"
                 job_string_text += "#SBATCH --partition=" + self.sbatch_data['partition'] + "\n"
@@ -116,9 +117,9 @@ class BenchMarker:
 
                 job_string_text += "python " + os.path.dirname(os.path.realpath(__file__)) + "/main.py --run " + input_parameter
 
-                batch_file = os.path.dirname(os.path.realpath(__file__)) + "/" + self.sbatch_data["script_name"]
 
-                batch_file = batch_file.replace(".sh", "." + input_parameter + ".sh")
+                batch_file = os.path.dirname(os.path.realpath(__file__)) + "/" + self.sbatch_data["script_name"]
+                batch_file = batch_file.replace(".sh", "." + str(tmp_idx) + ".sh")
 
                 f = open(batch_file, "w")
                 f.write(job_string_text)
@@ -127,15 +128,18 @@ class BenchMarker:
         def launch_jobscript(self):
 
             for input_parameter in self.case_info["input_parameters"]:
-        
+                tmp_idx = self.case_info["input_parameters"].index(input_parameter)
+
+
                 batch_file = os.path.dirname(os.path.realpath(__file__)) + "/" + self.sbatch_data["script_name"]
-                batch_file = batch_file.replace(".sh", "." + input_parameter + ".sh")
+                batch_file = batch_file.replace(".sh", "." + str(tmp_idx) + ".sh")
 
                 print("Launching Jobscript: ")
                 output = subprocess.check_output([
                     'sbatch',
-                    '--output='+self.EnerBe_log_dir +"/slurm."+input_parameter+".out",
-                    '--error='+self.EnerBe_log_dir +"/slurm."+input_parameter+".err",
+                    '-a 1-' + self.sbatch_data['num_jobs'],
+                    '--output='+self.EnerBe_log_dir +"/slurm."+str(tmp_idx)+".out",
+                    '--error='+self.EnerBe_log_dir +"/slurm."+str(tmp_idx)+".err",
                     batch_file]).decode("utf-8")
                 print(batch_file)
 
@@ -146,6 +150,8 @@ class BenchMarker:
 
             if not os.path.exists(self.EnerBe_log_dir):
                 os.mkdir(self.EnerBe_log_dir)
+
+            tmp_idx = self.case_info['input_parameters'].index(param)
 
             application = self.case_info['application'][0]
 
@@ -164,21 +170,21 @@ class BenchMarker:
             else:
                 CMD = self.sbatch_data['launcher'] + " " + executable
 
-            for arg in self.case_info['args']:
-                CMD += " " + arg
-
+            if len(self.case_info['args']) >0:
+                for arg in self.case_info['args']:
+                    CMD += " " + arg
             CMD += " " + param
 
             print("Running this command ...")
-            print(CMD)
+            print(CMD.split(" "))
             process = Popen(CMD.split(" "), stdout=PIPE, stderr=PIPE)
 
             output, error = process.communicate()
             output = output.decode('ISO-8859-1').strip()
             error = error.decode('ISO-8859-1').strip()
 
-            self.tmp_out_file = self.tmp_out_file.replace(".out", "." + param + ".out")
-            self.tmp_err_file = self.tmp_err_file.replace(".out", "." + param + ".err")
+            self.tmp_out_file = self.tmp_out_file.replace(".out", "." + str(tmp_idx) + ".out")
+            self.tmp_err_file = self.tmp_err_file.replace(".err", "." + str(tmp_idx) + ".err")
 
             print("logging out/err to " + self.EnerBe_log_dir)
             with open(self.EnerBe_log_dir + "/" +self.tmp_out_file, "w") as text_file:
@@ -404,10 +410,10 @@ if __name__ == "__main__":
     if args.plot:
 
         plotter = Plotter()
-        plotter.load_data(benchmarker.EnerBe_root_dir + "/tmp_results/results.csv")
+        plotter.load_data(benchmarker.EnerBe_root_dir + "/EnerBe/tmp_results/results.csv")
         #Maybe a good place to apply masks to the data
-        #plotter.plot_data  = plotter.plot_data[plotter.plot_data['NAME'] == "dgemm_pmt"]
-        plotter.GPU_TPE_plot(x="SIZE",hue="GPU_NAME")
+        plotter.plot_data  = plotter.plot_data[plotter.plot_data['NAME'] == "xgemm"]
+        plotter.GPU_TPE_plot(x="SIZE",hue="GPU_NAME",title="xgemm")
 
     if args.run:
 

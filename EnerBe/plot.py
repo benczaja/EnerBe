@@ -18,6 +18,7 @@ class Plotter():
         title = kwargs.get('title', None)
 
         plot_data = self.plot_data
+        print("Plotting Name: " + plot_data["NAME"].unique())
 
         if sort_by:
             plot_data = plot_data.sort_values(by=sort_by)
@@ -51,9 +52,9 @@ class Plotter():
         
         f, (ax1, ax2, ax3) = plt.subplots(3, 1, sharex=True, figsize=(8, 10))
 
-        sns.lineplot(x=x, y="GPU_time",  hue=hue, style=style,  data=plot_data, ax=ax1)
-        sns.lineplot(x=x, y="GPU_power", hue=hue, style=style,  data=plot_data, ax=ax2,legend=False)
-        sns.lineplot(x=x, y="GPU_energy",hue=hue, style=style,  data=plot_data, ax=ax3,legend=False)
+        sns.lineplot(x=x, y="GPU_TIME",  hue=hue, style=style,  data=plot_data, ax=ax1)
+        sns.lineplot(x=x, y="GPU_WATTS", hue=hue, style=style,  data=plot_data, ax=ax2,legend=False)
+        sns.lineplot(x=x, y="GPU_JOULES",hue=hue, style=style,  data=plot_data, ax=ax3,legend=False)
 
         ax1.set_ylabel("GPU Time (s)")
         ax2.set_ylabel("GPU Power (W)")
