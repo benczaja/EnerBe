@@ -74,11 +74,6 @@ int main( int argc, char *argv[] )  {
    // Transfer data from device to host memory
     cudaMemcpy(C, D_C, sizeof(X_TYPE) * (kernal.size * kernal.size), cudaMemcpyDeviceToHost);
 
-
-    //END the PMT "sensor"
-    GPUend = GPUsensor->Read();
-    CPUend = CPUsensor->Read();
-
     //END the PMT "sensor"
     GPUend = GPUsensor->Read();
     CPUend = CPUsensor->Read();
@@ -90,6 +85,7 @@ int main( int argc, char *argv[] )  {
     kernal.nvml_times[kernal.N_runs] = pmt::PMT::seconds(GPUstart, GPUend);
     kernal.nvml_powers[kernal.N_runs] = pmt::PMT::watts(GPUstart, GPUend);
     kernal.nvml_energys[kernal.N_runs] = pmt::PMT::joules(GPUstart, GPUend);
+
     kernal.N_runs ++;
     }while (kernal.time < kernal.max_time && kernal.N_runs < kernal.max_runs);
     kernal.calculate_stats();
