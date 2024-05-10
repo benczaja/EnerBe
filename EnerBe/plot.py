@@ -46,6 +46,7 @@ class Plotter():
         title = kwargs.get('title', None)
 
         plot_data = self.plot_data
+        plot_data["PRECISION"] = plot_data["PRECISION"]*8 
 
         if sort_by:
             plot_data = plot_data.sort_values(by=sort_by)
