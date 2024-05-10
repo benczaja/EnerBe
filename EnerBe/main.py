@@ -24,6 +24,7 @@ class BenchMarker:
                 self.EnerBe_sbatch_dir = self.EnerBe_root_dir + "/EnerBe/" + "sbatch"
                 # These will be picked up by the config
                 self.modules = []
+                self.misc_commands = []
                 self.sbatch_data = {}
                 self.case_info = {}
 
@@ -89,6 +90,7 @@ class BenchMarker:
                 self.modules = config['modules']
                 self.sbatch_data = config['sbatch_data']
                 self.case_info = config['case_info']
+                self.misc_commands = config['misc_commands']
 
                 f.close()
 
@@ -113,12 +115,18 @@ class BenchMarker:
                 job_string_text += "#SBATCH --cpus-per-task=" + self.sbatch_data['cpus-per-task'] + "\n"
                 job_string_text += "#SBATCH --time=" + self.sbatch_data['time'] + "\n"
 
+                if self.sbatch_data['constraint']:
+                    job_string_text += "#SBATCH --constraint=" + self.sbatch_data['constraint'] + "\n"
                 if self.sbatch_data['has_gpus']:
                     job_string_text += "#SBATCH --gpus-per-node=" + self.sbatch_data['gpus-per-node'] + "\n"
+                if self.sbatch_data['exclusive']:
+                    job_string_text += "#SBATCH --exclusive"
 
                 job_string_text += "\n"
 
-                job_string_text += "module purge\n"
+                for command in self.misc_commands:
+                    job_string_text += command + "\n"
+
                 for module in self.modules:
                     job_string_text += "module load " + module + "\n"
                 job_string_text += "\n"
