@@ -7,61 +7,34 @@
 #include <pmt.h> // needed for PMT
 #include <pmt/Rapl.h> // needed for RAPL
 #include <pmt/ROCM.h> // needed for PMT
-#include<iostream> // needed for CPP IO ... cout, endl etc etc
-
-
-
-__global__ void simple_matrix_multiply(X_TYPE* D_A, X_TYPE* D_B, X_TYPE* D_C, int ROWS, int COLUMNS){
-    
-    int local_COLUMN = threadIdx.x + blockIdx.x * blockDim.x;
-		int local_ROW = threadIdx.y + blockIdx.y * blockDim.y;
-		int local_index = local_COLUMN + local_ROW * ROWS; // Right now this only works for symetric matricies
-		int tmp = 0;  
-    
-    if(local_ROW < ROWS && local_COLUMN < COLUMNS){
-			for(int k=0; k<COLUMNS; k++){
-				tmp += D_A[local_ROW * ROWS + k] * D_B[k * COLUMNS + local_COLUMN];
-			}
-			D_C[local_index] = tmp;
-		}
-}
-
+#include <iostream> // needed for CPP IO ... cout, endl etc etc
+#include "kernals.h"
 
 int main( int argc, char *argv[] )  {
 
-  int ROWS;
-  int COLUMNS;
-  int N;
-  clock_t t; // declare clock_t (long type)
+  kernal kernal;
+  kernal.name = "xgemm";
 
-  /* DUMB bools needed for the argument parsing logic */
-  bool openmp = false;
-  bool simple = true;
-  bool sanity_check = false;
-  
   /* VERY DUMB Argument Parsers */
-  N = parse_arguments(argc, argv, &simple, &openmp, &sanity_check);
-  ROWS = N;
-  COLUMNS = N;
-
-  /* declare the arrays...  better to do it as 1D arrays for CUDA */
+  kernal.size = parse_arguments(argc, argv);
+  /* declare the arrays...  better to do it as 1D arrays for HIP */
 
   // First allocated them on the host (CPU)
-    X_TYPE* A = (X_TYPE*)malloc((ROWS * COLUMNS) * sizeof(X_TYPE));
-    X_TYPE* B = (X_TYPE*)malloc((ROWS * COLUMNS) * sizeof(X_TYPE));
-    X_TYPE* C = (X_TYPE*)malloc((ROWS * COLUMNS) * sizeof(X_TYPE));
+    X_TYPE* A = (X_TYPE*)malloc((kernal.size * kernal.size) * sizeof(X_TYPE));
+    X_TYPE* B = (X_TYPE*)malloc((kernal.size * kernal.size) * sizeof(X_TYPE));
+    X_TYPE* C = (X_TYPE*)malloc((kernal.size * kernal.size) * sizeof(X_TYPE));
 
   // Then Allocate them on the GPUs
   X_TYPE* D_A;
   X_TYPE* D_B;
   X_TYPE* D_C;
-  hipMalloc((void**)&D_A, sizeof( X_TYPE ) * (ROWS * COLUMNS));
-  hipMalloc((void**)&D_B, sizeof( X_TYPE ) * (ROWS * COLUMNS));
-  hipMalloc((void**)&D_C, sizeof( X_TYPE ) * (ROWS * COLUMNS));
+  hipMalloc((void**)&D_A, sizeof( X_TYPE ) * (kernal.size * kernal.size));
+  hipMalloc((void**)&D_B, sizeof( X_TYPE ) * (kernal.size * kernal.size));
+  hipMalloc((void**)&D_C, sizeof( X_TYPE ) * (kernal.size * kernal.size));
 
   double start = omp_get_wtime();  
-
-  initialize_matrices(A, B, C, ROWS, COLUMNS);
+  
+  initialize_matrix_1D(A, B, C, kernal.size, kernal.size);
     
   double end = omp_get_wtime(); 
   printf("Init TIME: %f sec\n",(end-start));
@@ -69,6 +42,11 @@ int main( int argc, char *argv[] )  {
    // THIS IS NEW !!!!!!!
   auto GPUsensor = pmt::rocm::ROCM::Create();
   auto CPUsensor = pmt::rapl::Rapl::Create();
+  //Start the PMT "sensor"
+  auto GPUstart = GPUsensor->Read(); 
+  auto CPUstart = CPUsensor->Read(); 
+  auto GPUend = GPUsensor->Read(); 
+  auto CPUend = CPUsensor->Read(); 
 
   /*======================================================================*/
   /*                START of Section of the code that matters!!!          */
@@ -76,34 +54,45 @@ int main( int argc, char *argv[] )  {
 
   /* Simple matrix multiplication */
   /*==============================*/
+    if (true ==simple){
+    kernal.algorithm = "simple_gpu";
+    hipGetDevice(&kernal.gpuid);  
+
     int block_size = 512;
-    int grid_size = ((ROWS + block_size) / block_size);
+    int grid_size = ((kernal.size + block_size) / block_size);
     
+
+    do {
     //Start the PMT "sensor"
     auto GPUstart = GPUsensor->Read(); // READING the GPU via NVML
     auto CPUstart = CPUsensor->Read(); // READING the CPU via RAPL
 
     // Transfer data from host to device memory
-    hipMemcpy(D_A, A, sizeof(X_TYPE) * (ROWS * COLUMNS), hipMemcpyHostToDevice);
-    hipMemcpy(D_B, B, sizeof(X_TYPE) * (ROWS * COLUMNS), hipMemcpyHostToDevice);
+    hipMemcpy(D_A, A, sizeof(X_TYPE) * (kernal.size * kernal.size), hipMemcpyHostToDevice);
+    hipMemcpy(D_B, B, sizeof(X_TYPE) * (kernal.size * kernal.size), hipMemcpyHostToDevice);
     
-    simple_matrix_multiply<<<grid_size,block_size>>>(D_A, D_B, D_C, ROWS, COLUMNS);
+    simple_matrix_multiply<<<grid_size,block_size>>>(D_A, D_B, D_C, kernal.size, kernal.size);
 
    // Transfer data from device to host memory
-    hipMemcpy(C, D_C, sizeof(X_TYPE) * (ROWS * COLUMNS), hipMemcpyDeviceToHost);
+    hipMemcpy(C, D_C, sizeof(X_TYPE) * (kernal.size * kernal.size), hipMemcpyDeviceToHost);
 
     //Start the PMT "sensor"
     auto GPUend = GPUsensor->Read();
     auto CPUend = CPUsensor->Read();
 
-    std::cout << "SIZE: " << N << std::endl;
-    std::cout << "(RAPL) CPU_TIME: " << pmt::PMT::seconds(CPUstart, CPUend) << " | (ROCM) GPU_TIME: " << pmt::PMT::seconds(GPUstart, GPUend) << " s"<< std::endl;
-    std::cout << "(RAPL) CPU_JOULES: " << pmt::PMT::joules(CPUstart, CPUend) << " | (ROCM) GPU_JOULES: " << pmt::PMT::joules(GPUstart, GPUend) << " J"<< std::endl;
-    std::cout << "(RAPL) CPU_WATTS: " << pmt::PMT::watts(CPUstart, CPUend) << " | (ROCM) GPU_WATTS: " << pmt::PMT::watts(GPUstart, GPUend) << " W"<< std::endl;
-    std::cout << "Total TIME: " << (pmt::PMT::seconds(CPUstart, CPUend) + pmt::PMT::seconds(GPUstart, GPUend))*0.5 << " s"<< std::endl;
-    std::cout << "Total JOULES: " << (pmt::PMT::joules(CPUstart, CPUend) + pmt::PMT::joules(GPUstart, GPUend)) << " J"<< std::endl;
-    std::cout << "Total WATTS: " << (pmt::PMT::watts(CPUstart, CPUend) + pmt::PMT::watts(GPUstart, GPUend)) << " W"<< std::endl;
-    
+    kernal.rapl_times[kernal.N_runs] = pmt::PMT::seconds(CPUstart, CPUend);
+    kernal.rapl_powers[kernal.N_runs] = pmt::PMT::watts(CPUstart, CPUend);
+    kernal.rapl_energys[kernal.N_runs] = pmt::PMT::joules(CPUstart, CPUend);
+
+    kernal.rocm_times[kernal.N_runs] = pmt::PMT::seconds(GPUstart, GPUend);
+    kernal.rocm_powers[kernal.N_runs] = pmt::PMT::watts(GPUstart, GPUend);
+    kernal.rocm_energys[kernal.N_runs] = pmt::PMT::joules(GPUstart, GPUend);
+
+    kernal.N_runs ++;
+    }while (kernal.time < kernal.max_time && kernal.N_runs < kernal.max_runs);
+    kernal.calculate_stats();
+  }
+    kernal.print_pmt_rocm_info();
   
   /*======================================================================*/
   /*                 END of Section of the code that matters!!!           */
