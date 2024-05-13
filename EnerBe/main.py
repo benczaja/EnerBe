@@ -113,7 +113,7 @@ class BenchMarker:
                 job_string_text += "#SBATCH --cpus-per-task=" + self.sbatch_data['cpus-per-task'] + "\n"
                 job_string_text += "#SBATCH --time=" + self.sbatch_data['time'] + "\n"
 
-                if self.sbatch_data['has_gpus']:
+                if self.sbatch_data['gpus-per-node']:
                     job_string_text += "#SBATCH --gpus-per-node=" + self.sbatch_data['gpus-per-node'] + "\n"
 
                 job_string_text += "\n"
@@ -181,13 +181,15 @@ class BenchMarker:
                 print("DOES NOT EXIST")
                 exit(1)
 
-            # some dumb logic to encorperate no launcher
-            if self.sbatch_data['launcher'] == "bash":
-                CMD = executable
-            else:
-                CMD = self.sbatch_data['launcher'] + " " + executable
+            CMD = executable
 
-            if len(self.case_info['args']) >0:
+            if self.sbatch_data['launcher']:
+                if self.sbatch_data['launcher'] == "mpirun":
+                    CMD = self.sbatch_data['launcher'] + " -np " + self.sbatch_data['ntasks'] + " " + executable
+                if self.sbatch_data['launcher'] == "srun":
+                    CMD = self.sbatch_data['launcher'] + " --ntasks " + self.sbatch_data['ntasks'] + " " + executable
+
+            if self.case_info['args']:
                 for arg in self.case_info['args']:
                     CMD += " " + arg
             CMD += " " + param
