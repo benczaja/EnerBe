@@ -12,22 +12,24 @@
         "script_name": "EnerBe.sbatch.sh",
         "partition": "rome",
         "nodes": "1",
-        "ntasks": "1",
-        "cpus-per-task": "128",
+        "ntasks": "128",
+        "cpus-per-task": "1",
         "time": "00:30:00",
-        "gpus-per-node": "1",
+        "gpus-per-node": null,
         "exclusive": false,
         "constraint": null,
         "launcher": null,
-        "array_jobs": "1"
+        "array_jobs": "10"
     },
 
     "case_info":{
-        "application": ["dgemm_pmt"],
-        "args": ["--openmp"],
+        "application": ["aneurysm_pmt"],
+        "args": null,
         "environment_parameters": null,
         "input_parameters": [
-            "10"
+            "/home/benjamic/EnerBe/bin/input_1_node.xml",
+            "/home/benjamic/EnerBe/bin/input_1_node_big.xml",
+            "/home/benjamic/EnerBe/bin/input_1_node_XL.xml"
         ]
     }
 }

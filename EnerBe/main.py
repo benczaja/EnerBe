@@ -121,12 +121,13 @@ class BenchMarker:
                 if self.sbatch_data['gpus-per-node']:
                     job_string_text += "#SBATCH --gpus-per-node=" + self.sbatch_data['gpus-per-node'] + "\n"
                 if self.sbatch_data['exclusive']:
-                    job_string_text += "#SBATCH --exclusive"
+                    job_string_text += "#SBATCH --exclusive\n"
 
                 job_string_text += "\n"
 
-                for command in self.misc_commands:
-                    job_string_text += command + "\n"
+                if self.misc_commands:
+                    for command in self.misc_commands:
+                        job_string_text += command + "\n"
 
                 for module in self.modules:
                     job_string_text += "module load " + module + "\n"
