@@ -7,118 +7,74 @@
 #include <pmt/Rapl.h> // needed for RAPL
 #include <pmt/ROCM.h> // needed for PMT
 #include <iostream> // needed for CPP IO ... cout, endl etc etc
-
-
-void simple_axpy(int n, X_TYPE a, X_TYPE * x, X_TYPE * y){
-
-    printf("(Simple) saxpy of Array of size (%d)\n",n);
-
-    for(int i=0; i<n; i++){
-        y[i] = a * x[i] + y[i];
-    }
-}
-
-void openmp_axpy(int n, X_TYPE a, X_TYPE * x, X_TYPE * y){
-    int num_threads = omp_get_max_threads();
-
-    printf("(OpenMP) saxpy of Array of size (%d)\n",n);
-    printf("Using %d Threads\n", num_threads);
-    #pragma omp parallel for
-    for(int i=0; i<n; i++){
-        y[i] = a * x[i] + y[i];
-    }
-}
-
-__global__ void gpu_axpy(int n, X_TYPE a, X_TYPE * x, X_TYPE * y) {
-    
-    int tid = blockIdx.x * blockDim.x + threadIdx.x;
-    
-    // Handling arbitrary vector size
-    if (tid < n){
-        y[tid] = a * x[tid] + y[tid];
-    }
-}
-
-
-
-
+#include "kernals.h"
 
 int main( int argc, char *argv[] )  {
 
-    printf("X_TYPE size is (%d) bytes \n",sizeof (X_TYPE));
+    kernal kernal;
+    kernal.name = "axpy";
 
-    int N;
-    /* DUMB bools needed for the argument parsing logic */
-    bool openmp = false;
-    bool simple = true;
-    bool sanity_check = false;
-    
     /* VERY DUMB Argument Parsers */
-    N = parse_arguments(argc, argv, &simple, &openmp, &sanity_check);
+    kernal.size = parse_arguments(argc, argv);
 
     X_TYPE *d_sx; /* n is an array of N integers */
     X_TYPE *d_sy; /* n is an array of N integers */
 
     X_TYPE a = 2.0;
     // Allocate Host memory 
-    X_TYPE* sx = (X_TYPE*)malloc(N * sizeof(X_TYPE));
-    X_TYPE* sy = (X_TYPE*)malloc(N * sizeof(X_TYPE));
+    X_TYPE* sx = (X_TYPE*)malloc(kernal.size* sizeof(X_TYPE));
+    X_TYPE* sy = (X_TYPE*)malloc(kernal.size* sizeof(X_TYPE));
 
     // Allocate device memory 
-    hipMalloc((void**)&d_sx, sizeof(X_TYPE) * N);
-    hipMalloc((void**)&d_sy, sizeof(X_TYPE) * N);
+    hipMalloc((void**)&d_sx, sizeof(X_TYPE) * kernal.size);
+    hipMalloc((void**)&d_sy, sizeof(X_TYPE) * kernal.size);
 
     // THIS IS NEW !!!!!!!
     auto GPUsensor = pmt::rocm::ROCM::Create();
     auto CPUsensor = pmt::rapl::Rapl::Create();
+    //Start the PMT "sensor"
+    auto GPUstart = GPUsensor->Read(); 
+    auto CPUstart = CPUsensor->Read(); 
+    auto GPUend = GPUsensor->Read(); 
+    auto CPUend = CPUsensor->Read(); 
 
     /* Simple saxpy */
     /*==============================*/
     if (true == simple)
     {
+        kernal.algorithm = "simple_gpu";
+        hipGetDevice(&kernal.gpuid);  
 
         int block_size = 512;
-        int grid_size = ((N + block_size) / block_size);
+        int grid_size = ((kernal.size+ block_size) / block_size);
         
+        do {
         //Start the PMT "sensor"
         auto GPUstart = GPUsensor->Read(); // READING the GPU via ROCM
         auto CPUstart = CPUsensor->Read(); // READING the CPU via RAPL
         
         // Transfer data from host to device memory
-        hipMemcpy(d_sx, sx, sizeof(X_TYPE) * N, hipMemcpyHostToDevice);
-        hipMemcpy(d_sy, sy, sizeof(X_TYPE) * N, hipMemcpyHostToDevice);
+        hipMemcpy(d_sx, sx, sizeof(X_TYPE) * kernal.size, hipMemcpyHostToDevice);
+        hipMemcpy(d_sy, sy, sizeof(X_TYPE) * kernal.size, hipMemcpyHostToDevice);
 
-        gpu_axpy<<<grid_size,block_size>>>(N, a, d_sx, d_sy);
+        gpu_axpy<<<grid_size,block_size>>>(kernal.size, a, d_sx, d_sy);
 
-        hipMemcpy(sy, d_sy, sizeof(X_TYPE) * N, hipMemcpyDeviceToHost);
+        hipMemcpy(sy, d_sy, sizeof(X_TYPE) * kernal.size, hipMemcpyDeviceToHost);
 
         //Start the PMT "sensor"
         auto GPUend = GPUsensor->Read();
         auto CPUend = CPUsensor->Read();
 
-        std::cout << "SIZE: " << N << std::endl;
-        std::cout << "(RAPL) CPU_TIME: " << pmt::PMT::seconds(CPUstart, CPUend) << " | (ROCM) GPU_TIME: " << pmt::PMT::seconds(GPUstart, GPUend) << " s"<< std::endl;
-        std::cout << "(RAPL) CPU_JOULES: " << pmt::PMT::joules(CPUstart, CPUend) << " | (ROCM) GPU_JOULES: " << pmt::PMT::joules(GPUstart, GPUend) << " J"<< std::endl;
-        std::cout << "(RAPL) CPU_WATTS: " << pmt::PMT::watts(CPUstart, CPUend) << " | (ROCM) GPU_WATTS: " << pmt::PMT::watts(GPUstart, GPUend) << " W"<< std::endl;
-        std::cout << "Total TIME: " << (pmt::PMT::seconds(CPUstart, CPUend) + pmt::PMT::seconds(GPUstart, GPUend))*0.5 << " s"<< std::endl;
-        std::cout << "Total JOULES: " << (pmt::PMT::joules(CPUstart, CPUend) + pmt::PMT::joules(GPUstart, GPUend)) << " J"<< std::endl;
-        std::cout << "Total WATTS: " << (pmt::PMT::watts(CPUstart, CPUend) + pmt::PMT::watts(GPUstart, GPUend)) << " W"<< std::endl;
-    
-    }
-    /* OpenMP parallel saxpy */
-    /*==============================*/
-    if (true == openmp)
-    {
+    kernal.rapl_times[kernal.N_runs] = pmt::PMT::seconds(CPUstart, CPUend);
+    kernal.rapl_powers[kernal.N_runs] = pmt::PMT::watts(CPUstart, CPUend);
+    kernal.rapl_energys[kernal.N_runs] = pmt::PMT::joules(CPUstart, CPUend);
 
-    // omp_get_wtime needed here because clock will sum up time for all threads
-    double start = omp_get_wtime();  
-
-    openmp_axpy(N, 2.0, sx, sy);
-    
-    double end = omp_get_wtime(); 
-    printf("TIME: %f sec\n",(end-start));
-
-    }
-
-
+    kernal.rocm_times[kernal.N_runs] = pmt::PMT::seconds(GPUstart, GPUend);
+    kernal.rocm_powers[kernal.N_runs] = pmt::PMT::watts(GPUstart, GPUend);
+    kernal.rocm_energys[kernal.N_runs] = pmt::PMT::joules(GPUstart, GPUend);
+    kernal.N_runs ++;
+    }while (kernal.time < kernal.max_time && kernal.N_runs < kernal.max_runs);
+    kernal.calculate_stats();
+  }
+    kernal.print_pmt_rocm_info();
 }

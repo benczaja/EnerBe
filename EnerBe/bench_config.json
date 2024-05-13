@@ -1,26 +1,37 @@
 {
     "modules": [
-        "2023",
-        "foss/2023a",
-        "CUDA/12.1.1",
-        "pmt/1.2.0-GCCcore-12.3.0",
         "SciPy-bundle/2023.07-gfbf-2023a"
     ],
+
+    "misc_commands": [
+        "source /cvmfs/software.eessi.io/versions/2023.06/init/bash",
+        "source /home/benjamic/EnerBe/liza/bin/activate"
+    ],
+
     "sbatch_data": {
         "script_name": "EnerBe.sbatch.sh",
-        "partition": "genoa",
+        "partition": "tutti",
+        "constraint": "gpu_nvidia",
         "nodes": "1",
-        "ntasks": "192",
-        "cpus-per-task": "1",
+        "exclusive": true,
+        "ntasks": "1",
+        "cpus-per-task": "24",
         "time": "00:30:00",
-        "has_gpus": false,
+        "has_gpus": true,
         "gpus-per-node": "1",
-        "launcher": "bash"
+        "launcher": "bash",
+        "num_jobs": "10"
     },
     "case_info":{
-        "application": ["dgemm_pmt"],
+        "application": ["sgemm_pmt_cuda"],
         "args": ["--simple"],
         "environment_parameters": null,
-        "input_parameters": ["10" ,"100", "1000", "10000", "20000", "30000", "40000"]
+        "input_parameters": ["10",
+        "100",
+        "1000",
+        "10000",
+        "20000",
+        "30000",
+        "40000"]
     }
 }
