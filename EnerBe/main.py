@@ -115,13 +115,10 @@ class BenchMarker:
                 job_string_text += "#SBATCH --cpus-per-task=" + self.sbatch_data['cpus-per-task'] + "\n"
                 job_string_text += "#SBATCH --time=" + self.sbatch_data['time'] + "\n"
 
-<<<<<<< HEAD
-                if self.sbatch_data['gpus-per-node']:
-=======
                 if self.sbatch_data['constraint']:
                     job_string_text += "#SBATCH --constraint=" + self.sbatch_data['constraint'] + "\n"
-                if self.sbatch_data['has_gpus']:
->>>>>>> 340c29604791fd793cb04ea8093c319a3ad651b3
+
+                if self.sbatch_data['gpus-per-node']:
                     job_string_text += "#SBATCH --gpus-per-node=" + self.sbatch_data['gpus-per-node'] + "\n"
                 if self.sbatch_data['exclusive']:
                     job_string_text += "#SBATCH --exclusive"
@@ -155,7 +152,7 @@ class BenchMarker:
                 print("Launching Jobscript: ")
                 output = subprocess.check_output([
                     'sbatch',
-                    '-a 1-' + self.sbatch_data['num_jobs'],
+                    '-a 1-' + self.sbatch_data['array_jobs'],
                     '--output='+self.EnerBe_log_dir +"/slurmjob.%j.out",
                     '--error='+self.EnerBe_log_dir +"/slurmjob.%j.err",
                     batch_file]).decode("utf-8")
