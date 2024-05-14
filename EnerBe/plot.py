@@ -25,15 +25,16 @@ class Plotter():
         
         f, (ax1, ax2, ax3) = plt.subplots(3, 1, sharex=True, figsize=(8, 10))
 
-        sns.lineplot(x=x, y="CPU_TIME",  hue=hue, style=style,  data=plot_data, ax=ax1)
-        sns.lineplot(x=x, y="CPU_WATTS", hue=hue, style=style,  data=plot_data, ax=ax2,legend=False)
-        sns.lineplot(x=x, y="CPU_JOULES",hue=hue, style=style,  data=plot_data, ax=ax3,legend=False)
+        sns.lineplot(x=x, y="CPU_TIME",  hue=hue, style=style,  data=plot_data, markers=True,ax=ax1)
+        sns.lineplot(x=x, y="CPU_WATTS", hue=hue, style=style,  data=plot_data, markers=True,ax=ax2,legend=False)
+        sns.lineplot(x=x, y="CPU_JOULES",hue=hue, style=style,  data=plot_data, markers=True,ax=ax3,legend=False)
 
         ax1.set_ylabel("CPU Time (s)")
         ax2.set_ylabel("CPU Power (W)")
         ax3.set_ylabel("CPU Energy (J)")
 
         ax1.set_title(title)
+        ax1.legend(loc=2, prop={'size': 6})
 
         plt.tight_layout()
 
