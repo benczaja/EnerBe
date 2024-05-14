@@ -121,7 +121,10 @@ class BenchMarker:
                         continue
                     else:
                         if self.sbatch_data[key]:
-                            job_string_text += "#SBATCH --" + key + "=" + self.sbatch_data[key] + "\n"
+                            if key == "exclusive":
+                                job_string_text += "#SBATCH --exclusive\n"
+                            else:
+                                job_string_text += "#SBATCH --" + key + "=" + self.sbatch_data[key] + "\n"
 
                 job_string_text += "\n"
 
@@ -129,8 +132,10 @@ class BenchMarker:
                     for command in self.misc_commands:
                         job_string_text += command + "\n"
 
-                for module in self.modules:
-                    job_string_text += "module load " + module + "\n"
+                if self.modules:
+                    for module in self.modules:
+                        job_string_text += "module load " + module + "\n"
+        
                 job_string_text += "\n"
 
                 job_string_text += "python " + self.EnerBe_root_dir + "/EnerBe/main.py --run " + input_parameter
@@ -344,14 +349,13 @@ class BenchMarker:
                 # AMD
                 try:
                     output = subprocess.check_output(['rocm-smi', '--showproductname']).decode("utf-8")
-        
+                    print(output)
                     pattern = r'Card series:\s*(?P<gpuname>.*)'
                     x = re.search(pattern, output,re.MULTILINE)
                     self.arch_info["GPU_NAME"] = x['gpuname']
         
                 except:
                     self.arch_info["GPU_NAME"] = float("nan")
-
 
 
         def to_csv(self):
@@ -448,8 +452,7 @@ if __name__ == "__main__":
         plotter = Plotter()
         plotter.load_data(benchmarker.EnerBe_root_dir + "/EnerBe/tmp_results/results.csv")
         #Maybe a good place to apply masks to the data
-        plotter.plot_data  = plotter.plot_data[plotter.plot_data['NAME'] == "Palabos_anerusym"]
-        plotter.CPU_TPE_plot(x="SIZE",hue="CPU_NAME",title="Palabos_anerusym",style="MPI_RANKS")
+        plotter.GPU_TPE_plot(x="SIZE",hue="GPU_NAME",title="xgemm",style="PRECISION")
 
     if args.run:
 
