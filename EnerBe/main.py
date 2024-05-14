@@ -6,6 +6,7 @@ from subprocess import Popen, PIPE
 import re
 import pandas as pd
 import shutil
+import pdb
 
 from plot import Plotter
 
@@ -109,19 +110,18 @@ class BenchMarker:
                 tmp_idx = input_parameters.index(input_parameter)
 
                 job_string_text = "#!/bin/bash\n\n"
-                job_string_text += "#SBATCH --partition=" + self.sbatch_data['partition'] + "\n"
-                job_string_text += "#SBATCH --nodes=" + self.sbatch_data['nodes'] + "\n"
-                job_string_text += "#SBATCH --ntasks=" + self.sbatch_data['ntasks'] + "\n"
-                job_string_text += "#SBATCH --cpus-per-task=" + self.sbatch_data['cpus-per-task'] + "\n"
-                job_string_text += "#SBATCH --time=" + self.sbatch_data['time'] + "\n"
 
-                if self.sbatch_data['constraint']:
-                    job_string_text += "#SBATCH --constraint=" + self.sbatch_data['constraint'] + "\n"
-
-                if self.sbatch_data['gpus-per-node']:
-                    job_string_text += "#SBATCH --gpus-per-node=" + self.sbatch_data['gpus-per-node'] + "\n"
-                if self.sbatch_data['exclusive']:
-                    job_string_text += "#SBATCH --exclusive\n"
+                #pdb.set_trace()
+                for key in self.sbatch_data.keys():
+                    if key == "launcher":
+                        continue
+                    if key == "script_name":
+                        continue
+                    if key == "array_jobs":
+                        continue
+                    else:
+                        if self.sbatch_data[key]:
+                            job_string_text += "#SBATCH --" + key + "=" + self.sbatch_data[key] + "\n"
 
                 job_string_text += "\n"
 
@@ -448,8 +448,8 @@ if __name__ == "__main__":
         plotter = Plotter()
         plotter.load_data(benchmarker.EnerBe_root_dir + "/EnerBe/tmp_results/results.csv")
         #Maybe a good place to apply masks to the data
-        plotter.plot_data  = plotter.plot_data[plotter.plot_data['NAME'] == "xgemm"]
-        plotter.GPU_TPE_plot(x="SIZE",hue="GPU_NAME",title="xgemm",style="PRECISION")
+        plotter.plot_data  = plotter.plot_data[plotter.plot_data['NAME'] == "Palabos_anerusym"]
+        plotter.CPU_TPE_plot(x="SIZE",hue="CPU_NAME",title="Palabos_anerusym",style="MPI_RANKS")
 
     if args.run:
 

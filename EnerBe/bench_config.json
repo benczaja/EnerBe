@@ -10,13 +10,14 @@
 
     "sbatch_data": {
         "script_name": "EnerBe.sbatch.sh",
-        "partition": "genoa",
+        "partition": "rome",
         "nodes": "1",
-        "ntasks": "192",
+        "ntasks": "64",
+        "sockets-per-node": "1",
         "cpus-per-task": "1",
         "time": "00:30:00",
         "gpus-per-node": null,
-        "exclusive": true,
+        "exclusive": false,
         "constraint": null,
         "launcher": "mpirun",
         "array_jobs": "10"
