@@ -22,7 +22,7 @@ if (ENABLE_PMT)
     else()
         message(STATUS "Looking for pmt - not found\n Configuring PMT to be built locally ")
 
-        set(PMT_CONFIG_ARGS "-DCMAKE_INSTALL_PREFIX=${PROJECT_SOURCE_DIR}/pmt;-DPMT_BUILD_RAPL=1")
+        set(PMT_CONFIG_ARGS "-DCMAKE_INSTALL_PREFIX=${PROJECT_SOURCE_DIR}/pmt;-DPMT_BUILD_RAPL=1;-DPMT_BUILD_NVML=0;-DPMT_BUILD_ROCM=0;-DPMT_BUILD_NVIDIA=0")
         if (ENABLE_CUDA)
             set(PMT_CONFIG_ARGS "${PMT_CONFIG_ARGS};-DPMT_BUILD_RAPL=1;-DPMT_BUILD_NVML=1")
         endif()

@@ -35,7 +35,8 @@ int main( int argc, char *argv[] )  {
   initialize_matrix_2D(A, B, C, kernal.size, kernal.size);
 
   // THIS IS NEW !!!!!!!
-  std::unique_ptr<pmt::PMT> sensor = pmt::rapl::Rapl::Create();
+  //std::unique_ptr<pmt::PMT> sensor = pmt::rapl::Rapl::Create();
+  std::unique_ptr<pmt::PMT> sensor = pmt::Create("Rapl");
   auto start = sensor->Read();
   auto end = sensor->Read();
 

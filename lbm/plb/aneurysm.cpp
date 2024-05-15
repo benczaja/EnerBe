@@ -42,7 +42,6 @@
 #include "palabos3D.h"
 #include "palabos3D.hh"
 #include <pmt.h> // needed for PMT
-#include <pmt/Rapl.h> // needed for RAPL
 
 using namespace plb;
 using namespace std;
@@ -367,7 +366,8 @@ void run ()
 
     // Start PMT sensor
     //std::unique_ptr<pmt::PMT> sensor = pmt::rapl::RAPL::Create();
-    auto sensor = pmt::rapl::Rapl::Create();
+    //std::unique_ptr<pmt::PMT> sensor = pmt::rapl::Rapl::Create();
+    std::unique_ptr<pmt::PMT> sensor = pmt::Create("Rapl");
     auto start = sensor->Read();
 
     // Collision and streaming iterations.

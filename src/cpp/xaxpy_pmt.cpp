@@ -21,7 +21,7 @@ int main( int argc, char *argv[] )  {
     sy = (X_TYPE*)malloc(kernal.size * sizeof (X_TYPE));
 
     // THIS IS NEW !!!!!!!
-    std::unique_ptr<pmt::PMT> sensor = pmt::rapl::Rapl::Create();
+    std::unique_ptr<pmt::PMT> sensor = pmt::Create("Rapl");
     auto start = sensor->Read();
     auto end = sensor->Read();
     

@@ -40,8 +40,8 @@ int main( int argc, char *argv[] )  {
   printf("Init TIME: %f sec\n",(end-start));
 
    // THIS IS NEW !!!!!!!
-  std::unique_ptr<pmt::PMT> GPUsensor = pmt::rocm::ROCM::Create();
-  std::unique_ptr<pmt::PMT> CPUsensor = pmt::rapl::Rapl::Create();
+  std::unique_ptr<pmt::PMT> GPUsensor = pmt::Create("ROCM");
+  std::unique_ptr<pmt::PMT> CPUsensor = pmt::Create("Rapl");
   //Start the PMT "sensor"
   auto GPUstart = GPUsensor->Read(); 
   auto CPUstart = CPUsensor->Read(); 
