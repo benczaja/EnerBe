@@ -30,8 +30,8 @@ int main( int argc, char *argv[] )  {
     hipMalloc((void**)&d_sy, sizeof(X_TYPE) * kernal.size);
 
     // THIS IS NEW !!!!!!!
-    auto GPUsensor = pmt::rocm::ROCM::Create();
-    auto CPUsensor = pmt::rapl::Rapl::Create();
+    std::unique_ptr<pmt::PMT> GPUsensor = pmt::rocm::ROCM::Create();
+    std::unique_ptr<pmt::PMT> CPUsensor = pmt::rapl::Rapl::Create();
     //Start the PMT "sensor"
     auto GPUstart = GPUsensor->Read(); 
     auto CPUstart = CPUsensor->Read(); 

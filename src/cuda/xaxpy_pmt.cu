@@ -3,7 +3,6 @@
 #include <time.h> // needed for clock() and CLOCKS_PER_SEC etc
 #include "../helper.h" // local helper header to clean up code
 #include <pmt.h> // needed for PMT
-#include <pmt/Rapl.h> // needed for RAPL
 #include <iostream> // needed for CPP IO ... cout, endl etc etc
 #include "kernals.h"
 
@@ -28,8 +27,8 @@ int main( int argc, char *argv[] )  {
     cudaMalloc((void**)&d_sy, sizeof(X_TYPE) * kernal.size);
 
     // THIS IS NEW !!!!!!!
-    auto GPUsensor = pmt::nvml::NVML::Create();
-    auto CPUsensor = pmt::rapl::Rapl::Create();
+    std::unique_ptr<pmt::PMT> GPUsensor = pmt::nvml::NVML::Create();
+    std::unique_ptr<pmt::PMT> CPUsensor = pmt::rapl::Rapl::Create();
     //Start the PMT "sensor"
     auto GPUstart = GPUsensor->Read(); 
     auto CPUstart = CPUsensor->Read(); 
