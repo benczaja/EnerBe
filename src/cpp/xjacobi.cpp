@@ -57,8 +57,39 @@ int main( int argc, char *argv[] )  {
       kernal.times[kernal.N_runs] =  (kernal.end - kernal.start)/CLOCKS_PER_SEC;
       kernal.N_runs ++;
     }while (kernal.time < kernal.max_time && kernal.N_runs < kernal.max_runs);
-
-
+  }
+  //* Open matrix multiplication */
+  /*==============================*/
+  if (true == openmp)
+  {
+    clock_t t; // declare clock_t (long type)
+    kernal.algorithm = "openmp";
+    do {
+      /* initialize the arrays */
+      //initialize_matrix_1D(A, B, C, kernal.size, kernal.size);
+      srand(rand());
+      #pragma openmp parallel for
+      for (int row = 0; row < kernal.size; row++)
+      {
+        X_TYPE rowsum = 0.0;
+        for (int col = 0; col < kernal.size; col++)
+        {
+          X_TYPE value = rand()/(X_TYPE)RAND_MAX;
+          A[row + col*kernal.size] = value;
+          rowsum += value;
+        }
+        A[row + row*kernal.size] += rowsum;
+        B[row] = rand()/(X_TYPE)RAND_MAX;
+        C[row] = 0.0;
+      }
+      kernal.start = omp_get_wtime();
+      openmp_jacobi(A, B, C, Ctmp, kernal.size, kernal.size);
+      #pragma omp barrier
+      kernal.end = omp_get_wtime();
+      kernal.times[kernal.N_runs] =  (kernal.end - kernal.start);
+      kernal.N_runs ++;
+    }while (kernal.time < kernal.max_time && kernal.N_runs < kernal.max_runs);
+  }
   // Check error of final solution
   X_TYPE err = 0.0;
   for (int row = 0; row < kernal.size; row++)
@@ -76,7 +107,7 @@ int main( int argc, char *argv[] )  {
 
     kernal.calculate_stats();
     kernal.print_info();
-  }
+
   /* deallocate the arrays */
   free(A);
   free(B);

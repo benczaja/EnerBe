@@ -58,10 +58,7 @@ void openmp_matrix_multiply(X_TYPE** A, X_TYPE** B, X_TYPE** C, int ROWS, int CO
 //Jacbobi Iterative solver
 //============================================================================================================
 void simple_jacobi(X_TYPE* A, X_TYPE* B, X_TYPE* C, X_TYPE* Ctmp, int ROWS, int COLUMNS)
-//int simple_jacobi(double *A, double *b, double *x, double *xtmp)
 {
-// Returns the number of iterations performed
-
   int itr;
   int row, col;
   int MAX_ITERATIONS = 20000;
@@ -77,12 +74,9 @@ void simple_jacobi(X_TYPE* A, X_TYPE* B, X_TYPE* C, X_TYPE* Ctmp, int ROWS, int 
     // Perfom Jacobi iteration
     for (row = 0; row < ROWS; row++)
     {
-        //printf("row: %d\n",row);
       dot = 0.0;
       for (col = 0; col < COLUMNS; col++)
       {
-        //printf("col: %d\n",col);
-
         if (row != col){
           dot += A[row + col*ROWS] * C[col];
         }
@@ -97,6 +91,55 @@ void simple_jacobi(X_TYPE* A, X_TYPE* B, X_TYPE* C, X_TYPE* Ctmp, int ROWS, int 
 
     // Check for convergence
     sqdiff = 0.0;
+    for (row = 0; row < ROWS; row++)
+    {
+      diff    = Ctmp[row] - C[row];      
+      sqdiff += diff * diff;
+    }
+
+    itr++;
+  } while ((itr < MAX_ITERATIONS) && (sqrt(sqdiff) > CONVERGENCE_THRESHOLD));
+  std::cout<<"Jocobi solved in: " << itr <<" Iterations"<< std::endl;
+}
+
+
+
+void openmp_jacobi(X_TYPE* A, X_TYPE* B, X_TYPE* C, X_TYPE* Ctmp, int ROWS, int COLUMNS)
+{
+  int itr;
+  int row, col;
+  int MAX_ITERATIONS = 20000;
+  X_TYPE CONVERGENCE_THRESHOLD = 0.0001;
+  X_TYPE dot;
+  X_TYPE diff;
+  X_TYPE sqdiff;
+  X_TYPE* ptrtmp;
+  // Loop until converged or maximum iterations reached
+  itr = 0;
+  do
+  {
+    // Perfom Jacobi iteration
+    #pragma omp parallel for
+    for (row = 0; row < ROWS; row++)
+    {
+      dot = 0.0;
+      for (col = 0; col < COLUMNS; col++)
+      {
+        if (row != col){
+          dot += A[row + col*ROWS] * C[col];
+        }
+      }
+      Ctmp[row] = (B[row] - dot) / A[row + row*ROWS];
+    }
+
+    // Swap pointers
+    ptrtmp = C;
+    C      = Ctmp;
+    Ctmp   = ptrtmp;
+
+    // Check for convergence
+    sqdiff = 0.0;
+    #pragma omp parallel for
     for (row = 0; row < ROWS; row++)
     {
       diff    = Ctmp[row] - C[row];      
