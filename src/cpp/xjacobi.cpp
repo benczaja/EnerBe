@@ -62,7 +62,23 @@ int main( int argc, char *argv[] )  {
   /*==============================*/
   if (true == openmp)
   {
-    clock_t t; // declare clock_t (long type)
+
+  int num_devices = omp_get_num_devices();
+  printf("Number of available devices %d\n", num_devices);
+  #pragma omp target 
+  {
+      if (omp_is_initial_device()) {
+        printf("Running on host\n");    
+      } else {
+
+        int nteams= omp_get_num_teams(); 
+        int nthreads= omp_get_num_threads();
+        printf("Running on device with %d teams in total and %d threads in each team\n",nteams,nthreads);
+      }
+
+  }
+
+
     kernal.algorithm = "openmp";
     do {
       /* initialize the arrays */

@@ -119,7 +119,8 @@ void openmp_jacobi(X_TYPE* A, X_TYPE* B, X_TYPE* C, X_TYPE* Ctmp, int ROWS, int 
   do
   {
     // Perfom Jacobi iteration
-    #pragma omp parallel for
+    //#pragma omp parallel for
+    #pragma omp target
     for (row = 0; row < ROWS; row++)
     {
       dot = 0.0;
@@ -139,7 +140,8 @@ void openmp_jacobi(X_TYPE* A, X_TYPE* B, X_TYPE* C, X_TYPE* Ctmp, int ROWS, int 
 
     // Check for convergence
     sqdiff = 0.0;
-    #pragma omp parallel for
+    //#pragma omp parallel for
+    #pragma omp target
     for (row = 0; row < ROWS; row++)
     {
       diff    = Ctmp[row] - C[row];      
