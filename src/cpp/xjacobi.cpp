@@ -18,27 +18,12 @@ int main( int argc, char *argv[] )  {
   X_TYPE* A = (X_TYPE*)malloc(kernal.size * kernal.size * sizeof(X_TYPE));
   X_TYPE* B = (X_TYPE*)malloc((kernal.size) * sizeof(X_TYPE));
   X_TYPE* C = (X_TYPE*)malloc((kernal.size) * sizeof(X_TYPE));
+  X_TYPE* Ctmp = (X_TYPE*)malloc((kernal.size) * sizeof(X_TYPE));
+
 
   /*======================================================================*/
   /*                START of Section of the code that matters!!!          */
   /*======================================================================*/
-
-  /* initialize the arrays */
-  //initialize_matrix_1D(A, B, C, kernal.size, kernal.size);
-  srand(235);
-  for (int row = 0; row < kernal.size; row++)
-  {
-    double rowsum = 0.0;
-    for (int col = 0; col < kernal.size; col++)
-    {
-      double value = rand()/(double)RAND_MAX;
-      A[row + col*kernal.size] = value;
-      rowsum += value;
-    }
-    A[row + row*kernal.size] += rowsum;
-    B[row] = rand()/(double)RAND_MAX;
-    C[row] = 0.0;
-  }
 
   /* Simple matrix multiplication */
   /*==============================*/
@@ -48,8 +33,26 @@ int main( int argc, char *argv[] )  {
     kernal.algorithm = "simple";
     kernal.omp_threads = 1;
     do {
+
+      /* initialize the arrays */
+      //initialize_matrix_1D(A, B, C, kernal.size, kernal.size);
+      srand(0);
+      for (int row = 0; row < kernal.size; row++)
+      {
+        X_TYPE rowsum = 0.0;
+        for (int col = 0; col < kernal.size; col++)
+        {
+          X_TYPE value = rand()/(X_TYPE)RAND_MAX;
+          A[row + col*kernal.size] = value;
+          rowsum += value;
+        }
+        A[row + row*kernal.size] += rowsum;
+        B[row] = rand()/(X_TYPE)RAND_MAX;
+        C[row] = 0.0;
+      }
+
       kernal.start = double(clock());
-      simple_jacobi(A, B, C, kernal.size, kernal.size);
+      simple_jacobi(A, B, C, Ctmp, kernal.size, kernal.size);
       kernal.end = double(clock());
       kernal.times[kernal.N_runs] =  (kernal.end - kernal.start)/CLOCKS_PER_SEC;
       kernal.N_runs ++;
@@ -57,10 +60,10 @@ int main( int argc, char *argv[] )  {
 
 
   // Check error of final solution
-  double err = 0.0;
+  X_TYPE err = 0.0;
   for (int row = 0; row < kernal.size; row++)
   {
-    double tmp = 0.0;
+    X_TYPE tmp = 0.0;
     for (int col = 0; col < kernal.size; col++)
     {
       tmp += A[row + col*kernal.size] * C[col];
@@ -78,4 +81,5 @@ int main( int argc, char *argv[] )  {
   free(A);
   free(B);
   free(C);
+  free(Ctmp);
 }
