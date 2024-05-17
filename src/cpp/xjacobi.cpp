@@ -36,7 +36,7 @@ int main( int argc, char *argv[] )  {
 
       /* initialize the arrays */
       //initialize_matrix_1D(A, B, C, kernal.size, kernal.size);
-      srand(0);
+      srand(rand());
       for (int row = 0; row < kernal.size; row++)
       {
         X_TYPE rowsum = 0.0;
