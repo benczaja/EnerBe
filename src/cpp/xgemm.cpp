@@ -3,6 +3,7 @@
 #include <omp.h> // needed for OpenMP 
 #include <time.h> // needed for clock() and CLOCKS_PER_SEC etc
 #include "../helper.h" // local helper header to clean up code
+#include "../argparser.h"
 #include "kernals.h"
 
 
@@ -12,7 +13,11 @@ int main( int argc, char *argv[] )  {
   kernal.name = "xgemm";
   
   /* VERY DUMB Argument Parsers */
-  kernal.size = parse_arguments(argc, argv);
+  parse_arguments(argc, argv, &kernal.size, &kernal.algorithm, &kernal.name);
+
+  std::cout << "aglo: "<<kernal.algorithm<<std::endl;
+  std::cout << "name: "<<kernal.name<<std::endl;
+  std::cout << "size: "<<kernal.size<<std::endl;
 
   /* declare the arrays */
   X_TYPE** A = (X_TYPE**)malloc(kernal.size * sizeof( X_TYPE* ));

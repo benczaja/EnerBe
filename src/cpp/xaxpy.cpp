@@ -2,6 +2,7 @@
 #include <omp.h> // needed for OpenMP 
 #include <time.h> // needed for clock() and CLOCKS_PER_SEC etc
 #include "../helper.h" // local helper header to clean up code
+#include "../argparser.h"
 #include "kernals.h"
 
 int main( int argc, char *argv[] )  {
@@ -10,7 +11,8 @@ int main( int argc, char *argv[] )  {
     kernal.name = "axpy";
 
     /* VERY DUMB Argument Parsers */
-    kernal.size = parse_arguments(argc, argv);
+    parse_arguments(argc, argv, &kernal.size, &kernal.algorithm, &kernal.name);
+
 
     X_TYPE *sx; /* n is an array of N integers */
     X_TYPE *sy; /* n is an array of N integers */
