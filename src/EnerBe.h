@@ -13,8 +13,8 @@ typedef double X_TYPE;
 typedef float X_TYPE;
 #endif
 
-
-class kernal {      
+class EnerBe {      
+  
   public:
 
     std::string name;
@@ -280,35 +280,5 @@ class kernal {
 
 };
 
-/* DUMB bools needed for the argument parsing logic */
-bool openmp = false;
-bool simple = false;
-bool sanity_check = false;
-
-void initialize_matrix_1D(X_TYPE* A, X_TYPE* B, X_TYPE* C, int ROWS, int COLUMNS){
-    // Do this in Parallel with OpenMP
-    // Needs a seperate seed per thread as rand() is obtaining a mutex and therefore locking each thread.
-    unsigned int globalSeed = clock();  
-    #pragma omp parallel for
-    for (int i = 0; i < ROWS * COLUMNS; i++)
-        {
-          unsigned int randomState = i ^ globalSeed;
-          A[i] = (X_TYPE) rand_r(&randomState) / RAND_MAX;
-          B[i] = (X_TYPE) rand_r(&randomState) / RAND_MAX;
-          C[i] = 0.0 ;
-        }
-}
-
-void initialize_matrix_2D(X_TYPE** A, X_TYPE** B, X_TYPE** C, int ROWS, int COLUMNS){
-    for (int i = 0 ; i < ROWS ; i++)
-    {
-        for (int j = 0 ; j < COLUMNS ; j++)
-        {
-            A[i][j] = (X_TYPE) rand() / RAND_MAX ;
-            B[i][j] = (X_TYPE) rand() / RAND_MAX ;
-            C[i][j] = 0.0 ;
-        }
-    }
-}
 
 

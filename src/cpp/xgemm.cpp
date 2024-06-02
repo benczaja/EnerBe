@@ -2,14 +2,15 @@
 #include <stdlib.h> // needed for ‘RAND_MAX’ 
 #include <omp.h> // needed for OpenMP 
 #include <time.h> // needed for clock() and CLOCKS_PER_SEC etc
-#include "../helper.h" // local helper header to clean up code
+//#include "../EnerBe.h" // local helper header to clean up code
+#include "../mesh.h" // local helper header to clean up code
 #include "../argparser.h"
 #include "kernals.h"
 
 
 int main( int argc, char *argv[] )  {
     
-  kernal kernal;
+  mesh2d kernal;
   parse_arguments(argc, argv, kernal.size, kernal.algorithm, kernal.name);
 
   /* declare the arrays */
@@ -29,14 +30,13 @@ int main( int argc, char *argv[] )  {
   /*======================================================================*/
 
   /* initialize the arrays */
-  initialize_matrix_2D(A, B, C, kernal.size, kernal.size);
+  kernal.initialize_matrix_2D(A, B, C, kernal.size, kernal.size);
 
   /* Simple matrix multiplication */
   /*==============================*/
-  if (true == simple)
+  if (kernal.name == "xgemm" && kernal.algorithm == "simple")
   {
     clock_t t; // declare clock_t (long type)
-    kernal.algorithm = "simple";
     kernal.omp_threads = 1;
     do {
       kernal.start = double(clock());
@@ -49,7 +49,7 @@ int main( int argc, char *argv[] )  {
   }
   /* OpenMP parallel matrix multiplication */
   /*=======================================*/
-  if (true == openmp)
+  if (kernal.name == "xgemm" && kernal.algorithm == "openmp")
   {
     kernal.algorithm = "openmp";
     // omp_get_wtime needed here because clock will sum up time for all threads
