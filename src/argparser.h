@@ -34,7 +34,7 @@ bool isNumber(char number[])
 }
 
 
-void tokenize(std::string s, std::string del,std::string* algorithm, std::string* name)
+void tokenize(std::string s, std::string del,std::string &algorithm, std::string &name)
 {
     int count=0;
     int start, end = -1*del.size();
@@ -46,20 +46,22 @@ void tokenize(std::string s, std::string del,std::string* algorithm, std::string
             count++;
         }else if (count ==2){
             temp = s.substr(start, end - start);
-            std::cout <<"temp "<< temp <<std::endl;
+            name = temp;
             count ++;
         }
         else if (count ==3){
             temp = s.substr(start, end - start);
-            std::cout <<"temp "<< temp <<std::endl;
+            algorithm = temp;
             count ++;
 
         }
     } while (end != -1);
 }
 
-void parse_arguments(size_t count, char*  args[], int* problem_size, std::string* algorithm, std::string* name) {
+void parse_arguments(size_t count, char*  args[], int& problem_size, std::string& algorithm, std::string& name) {
     int N;
+    bool success_number = false;
+    bool success_algo = false;
     if (count != 3 ){
         printf("I need an alogrithm and problem size as an argument.\nSee what I accept: ./dgemm -h \n");
         exit (1);
@@ -76,14 +78,33 @@ void parse_arguments(size_t count, char*  args[], int* problem_size, std::string
                 res = algorithms[alg_idx].compare(args[i]);
                 if (res == 0){
                     tokenize(algorithms[alg_idx], "-", algorithm, name);
+                    success_algo = true;
+
                 }
 
                 if (isNumber(args[i])){
-                    sscanf(args[i],"%d", &problem_size);
+                    sscanf(args[i],"%d", &N);
+                    problem_size = N;
+                    success_number = true;
                     rounds++;
                 }
             }
         }
-            }while(rounds <2);
+        }while(rounds <2);
     }
+
+    if (!success_algo){
+        printf("Could not match Algortihm type\n");
+        printf("Accepted alogritms are:\n");
+        for (int alg_idx =0; alg_idx < N_algs; alg_idx ++){
+            std::cout<<algorithms[alg_idx]<<std::endl;
+        }
+
+        exit(1);
+    }
+    if (!success_number){
+        printf("Could not read number\n");
+        exit(1);
+    }
+
 }
