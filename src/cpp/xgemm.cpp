@@ -10,14 +10,7 @@
 int main( int argc, char *argv[] )  {
     
   kernal kernal;
-  kernal.name = "xgemm";
-  
-  /* VERY DUMB Argument Parsers */
-  parse_arguments(argc, argv, &kernal.size, &kernal.algorithm, &kernal.name);
-
-  std::cout << "aglo: "<<kernal.algorithm<<std::endl;
-  std::cout << "name: "<<kernal.name<<std::endl;
-  std::cout << "size: "<<kernal.size<<std::endl;
+  parse_arguments(argc, argv, kernal.size, kernal.algorithm, kernal.name);
 
   /* declare the arrays */
   X_TYPE** A = (X_TYPE**)malloc(kernal.size * sizeof( X_TYPE* ));

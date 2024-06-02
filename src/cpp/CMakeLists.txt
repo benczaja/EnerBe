@@ -2,7 +2,7 @@ include_directories(${PROJECT_SOURCE_DIR}/src/cpp)
 
 
 ## Here is where you want to add the sources....
-set(applications "xgemm;xaxpy;xjacobi")
+set(applications "xgemm")
 
 if (ENABLE_PMT)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -O3 -fpermissive")
