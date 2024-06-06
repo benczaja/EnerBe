@@ -31,7 +31,9 @@ class MM_t : public EnerBe {
 
         void InitializeMatrix();
         void PrintElement(int i);
-        void Run();
+        void run();
+        void simple_matrix_multiply(int ROWS, int COLUMNS);
+        void openmp_matrix_multiply(int ROWS, int COLUMNS);
 };
 
 

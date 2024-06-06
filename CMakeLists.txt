@@ -7,7 +7,7 @@ cmake_minimum_required(VERSION 3.24.0)
 # This is your project statement. You should always list languages;
 # Listing the version is nice here since it sets lots of useful variables
 project(
-  EnergyEfficientComputing
+  EnerBe
   VERSION 1.0
   LANGUAGES C CXX)
 

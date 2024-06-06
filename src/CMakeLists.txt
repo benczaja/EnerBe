@@ -1,5 +1,3 @@
-project(EnerBe)
-
 find_package(OpenMP REQUIRED)
 
 if (OPENMP_FOUND)
@@ -12,4 +10,13 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
 
 file(GLOB SOURCES "*.cpp")
-add_executable(EnerBe ${SOURCES})
+
+
+add_executable(dEnerBe ${SOURCES})
+target_compile_definitions(dEnerBe PUBLIC USE_DOUBLE)
+install(TARGETS dEnerBe RUNTIME DESTINATION ${PROJECT_SOURCE_DIR}/bin)
+
+add_executable(sEnerBe ${SOURCES})
+target_compile_definitions(sEnerBe PUBLIC)
+install(TARGETS sEnerBe RUNTIME DESTINATION ${PROJECT_SOURCE_DIR}/bin)
+
