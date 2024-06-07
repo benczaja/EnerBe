@@ -6,6 +6,7 @@
 #include <stdbool.h> // needed for bool usage
 #include <omp.h> // needed for OpenMP 
 #include <math.h>
+#include <pmt.h> // needed for PMT
 
 #ifdef USE_DOUBLE
 typedef double X_TYPE;
@@ -27,6 +28,7 @@ class EnerBe {
     int N_runs = 0;
     int max_runs = 20;
     int size = 0;
+    int measure_idx = 0;
 
 
     double start = 0.0;
@@ -73,7 +75,18 @@ class EnerBe {
     double nvml_energy_std = 0.0;
     double rocm_energy_std = 0.0;
 
-
+    #ifdef defined(PMT_ENABLED) && defined(CUDA_ENABLED)
+        std::unique_ptr<pmt::PMT> GPUsensor = pmt::Create("NVML");
+        std::unique_ptr<pmt::PMT> CPUsensor = pmt::Create("Rapl");
+        pmt::State CPUstart = CPUsensor->Read();
+        pmt::State CPUend = CPUsensor->Read();
+        pmt::State GPUstart = CPUsensor->Read();
+        pmt::State GPUend = CPUsensor->Read();
+    #else defined(PMT_ENABLED) 
+        std::unique_ptr<pmt::PMT> CPUsensor = pmt::Create("Rapl");
+        pmt::State CPUstart = CPUsensor->Read();
+        pmt::State CPUend = CPUsensor->Read();
+    #endif
 
     double times[20] =  {sign_of_the_beast};
 
@@ -89,7 +102,17 @@ class EnerBe {
     double rocm_powers[20] = {sign_of_the_beast};
     double rocm_energys[20] = {sign_of_the_beast};
 
-    void print_info() { 
+
+    void print_info(){
+
+        #ifdef PMT_ENABLED
+            print_pmt_rapl_info();
+        #else
+            print_basic_info();
+        #endif
+    }
+
+    void print_basic_info() { 
         std::cout << "NAME: " << name << std::endl;
         std::cout << "ALGO: "<< algorithm << std::endl;
         std::cout << "PRECISION: "<< sizeof (X_TYPE) <<" bytes"<< std::endl;
@@ -173,6 +196,37 @@ class EnerBe {
         std::cout << "Total JOULES: " << rapl_energy + rocm_energy << " J"<< std::endl;
         std::cout << "NRUNS: " << N_runs << std::endl;
     } 
+
+
+    void measure(){
+
+        if (measure_idx == 0 ){
+
+            #ifdef PMT_ENABLED
+                CPUstart = CPUsensor->Read();
+            #else
+                start = omp_get_wtime();
+            #endif
+
+            measure_idx = 1;
+
+        }else if (measure_idx == 1) {
+
+            #ifdef PMT_ENABLED
+                CPUend = CPUsensor->Read();
+                rapl_times[N_runs] = pmt::PMT::seconds(CPUstart, CPUend);
+                rapl_powers[N_runs] = pmt::PMT::watts(CPUstart, CPUend);
+                rapl_energys[N_runs] = pmt::PMT::joules(CPUstart, CPUend);
+            #else
+                end = omp_get_wtime();
+                times[N_runs] += end - start;
+            #endif
+
+            measure_idx = 0;
+        }
+
+
+    }
 
     void calculate_stats(){
         
