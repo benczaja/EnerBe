@@ -16,6 +16,12 @@ public:
     X_TYPE* B;
     X_TYPE* C;
 
+    #ifdef CUDA_ENABLED
+        X_TYPE* D_A;
+        X_TYPE* D_B;
+        X_TYPE* D_C;
+    #endif
+
 };
 
 class MM_t : public EnerBe {
@@ -31,9 +37,14 @@ class MM_t : public EnerBe {
 
         void InitializeMatrix();
         void PrintElement(int i);
-        void run();
         void simple_matrix_multiply(int ROWS, int COLUMNS);
         void openmp_matrix_multiply(int ROWS, int COLUMNS);
+        #ifdef CUDA_ENABLED
+            void call_gpu_matrix_multiply(X_TYPE* D_A, X_TYPE* D_B, X_TYPE* D_C, int ROWS, int COLUMNS);
+            void run();
+        #else
+            void run();
+        #endif
 };
 
 

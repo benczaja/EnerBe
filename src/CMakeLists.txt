@@ -49,7 +49,11 @@ if (ENABLE_PMT)
     endif()
 endif()
 
-
+if (ENABLE_CUDA)
+    enable_language(CUDA)
+    set(CMAKE_CUDA_FLAGS "-Xcompiler=-fopenmp -gencode arch=compute_80,code=sm_80 -lineinfo --ptxas-options=-v --disable-warnings")
+    set_source_files_properties(${SOURCES} PROPERTIES LANGUAGE CUDA)
+endif()
 
 
 
@@ -61,6 +65,10 @@ if (ENABLE_PMT)
     target_compile_definitions(dEnerBe PUBLIC PMT_ENABLED)
 endif()
 
+if (ENABLE_CUDA)
+target_link_options(dEnerBe PUBLIC "-fopenmp")
+target_compile_definitions(dEnerBe PUBLIC CUDA_ENABLED)
+endif()
 install(TARGETS dEnerBe RUNTIME DESTINATION ${PROJECT_SOURCE_DIR}/bin)
 
 
@@ -70,6 +78,11 @@ target_compile_definitions(sEnerBe PUBLIC)
 if (ENABLE_PMT)
     target_link_libraries(sEnerBe pmt)
     target_compile_definitions(sEnerBe PUBLIC PMT_ENABLED)
+endif()
+
+if (ENABLE_CUDA)
+    target_link_options(sEnerBe PUBLIC "-fopenmp")
+    target_compile_definitions(sEnerBe PUBLIC CUDA_ENABLED)
 endif()
 
 install(TARGETS sEnerBe RUNTIME DESTINATION ${PROJECT_SOURCE_DIR}/bin)
