@@ -76,15 +76,19 @@ class EnerBe {
     double nvml_energy_std = 0.0;
     double rocm_energy_std = 0.0;
 
-    #ifdef PMT_ENABLED CUDA_ENABLED
-        std::unique_ptr<pmt::PMT> GPUsensor = pmt::Create("NVML");
-        std::unique_ptr<pmt::PMT> CPUsensor = pmt::Create("Rapl");
+    #ifdef defined(PMT_ENABLED) && defined(CUDA_ENABLED)
+        //std::unique_ptr<pmt::PMT> GPUsensor = pmt::Create("NVML");
+        //std::unique_ptr<pmt::PMT> CPUsensor = pmt::Create("Rapl");
+        std::unique_ptr<pmt::PMT> GPUsensor = pmt::nvml::NVML::Create();
+        std::unique_ptr<pmt::PMT> CPUsensor = pmt::rapl::Rapl::Create();
+        
         pmt::State CPUstart = CPUsensor->Read();
         pmt::State CPUend = CPUsensor->Read();
         pmt::State GPUstart = GPUsensor->Read();
         pmt::State GPUend = GPUsensor->Read();
-    #elif PMT_ENABLED
-        std::unique_ptr<pmt::PMT> CPUsensor = pmt::Create("Rapl");
+    #elif defined(PMT_ENABLED)
+        //std::unique_ptr<pmt::PMT> CPUsensor = pmt::Create("Rapl");
+        std::unique_ptr<pmt::PMT> CPUsensor = pmt::rapl::Rapl::Create();
         pmt::State CPUstart = CPUsensor->Read();
         pmt::State CPUend = CPUsensor->Read();
     #endif
@@ -106,9 +110,9 @@ class EnerBe {
 
     void print_info(){
 
-        #ifdef PMT_ENABLED && CUDA_ENABLED
+        #ifdef defined(PMT_ENABLED) && defined(CUDA_ENABLED)
             print_pmt_nvml_info();
-        #elif PMT_ENABLED
+        #elif defined(PMT_ENABLED)
             print_pmt_rapl_info();
         #else
             print_basic_info();
@@ -204,10 +208,10 @@ class EnerBe {
     void measure(){
 
         if (measure_idx == 0 ){
-            #ifdef PMT_ENABLED && CUDA_ENABLED
+            #ifdef defined(PMT_ENABLED) && defined(CUDA_ENABLED)
                 CPUstart = CPUsensor->Read();
                 GPUstart = GPUsensor->Read();
-            #elif PMT_ENABLED
+            #elif defined(PMT_ENABLED)
                 CPUstart = CPUsensor->Read();
             #else
                 start = omp_get_wtime();
@@ -218,7 +222,7 @@ class EnerBe {
         }else if (measure_idx == 1) {
 
 
-            #ifdef PMT_ENABLED && CUDA_ENABLED
+            #ifdef defined(PMT_ENABLED) && defined(CUDA_ENABLED)
                 GPUend = GPUsensor->Read();
                 CPUend = CPUsensor->Read();
 
@@ -230,7 +234,7 @@ class EnerBe {
                 nvml_powers[N_runs] = pmt::PMT::watts(GPUstart, GPUend);
                 nvml_energys[N_runs] = pmt::PMT::joules(GPUstart, GPUend);
 
-            #elif PMT_ENABLED
+            #elif defined(PMT_ENABLED)
                 CPUend = CPUsensor->Read();
                 rapl_times[N_runs] = pmt::PMT::seconds(CPUstart, CPUend);
                 rapl_powers[N_runs] = pmt::PMT::watts(CPUstart, CPUend);

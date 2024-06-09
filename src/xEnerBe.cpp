@@ -4,8 +4,7 @@
 #include <time.h> // needed for clock() and CLOCKS_PER_SEC etc
 #include "mesh.hpp"
 #include "argparser.h"
-//#include "kernals.h"
-
+#include "pmt.h"
 using namespace std;
 
 int main( int argc, char *argv[] )  {
@@ -16,7 +15,6 @@ int main( int argc, char *argv[] )  {
   parse_arguments(argc, argv, MM.size, MM.algorithm, MM.name);
 
   MM.InitializeMatrix();
-
+  
   MM.run();
-
 }
