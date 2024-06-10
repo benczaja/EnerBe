@@ -183,7 +183,9 @@ void MM_t::openmp_jacobi(X_TYPE* A, X_TYPE* B, X_TYPE* C, X_TYPE* Ctmp, int ROWS
 
 
 #ifdef CUDA_ENABLED
-    __global__ void gpu_matrix_multiply(X_TYPE* D_A, X_TYPE* D_B, X_TYPE* D_C,int ROWS, int COLUMNS){
+    __global__ void gpu_thread_matrix_multiply(X_TYPE* D_A, X_TYPE* D_B, X_TYPE* D_C,int ROWS, int COLUMNS){
+    // This will solve the matmul by assigning each GPU thread to a single site on the result matrix C
+    // Each GPU thread has a local index in its CUDA thread block
     
     int local_COLUMN = threadIdx.x + blockIdx.x * blockDim.x;
 	int local_ROW = threadIdx.y + blockIdx.y * blockDim.y;
@@ -198,10 +200,10 @@ void MM_t::openmp_jacobi(X_TYPE* A, X_TYPE* B, X_TYPE* C, X_TYPE* Ctmp, int ROWS
 		}
 }
     // We basically need a wrapper for the actual kernal call since __global__ functions cannot be class members.
-    void MM_t::call_gpu_matrix_multiply(X_TYPE* D_A, X_TYPE* D_B, X_TYPE* D_C, int ROWS, int COLUMNS){
+    void MM_t::call_gpu_thread_matrix_multiply(X_TYPE* D_A, X_TYPE* D_B, X_TYPE* D_C, int ROWS, int COLUMNS){
         int block_size = 512;
         int grid_size = ((size + block_size) / block_size);
-        gpu_matrix_multiply<<<grid_size,block_size>>>(Mesh2D.D_A, Mesh2D.D_B, Mesh2D.D_C, size, size);
+        gpu_thread_matrix_multiply<<<grid_size,block_size>>>(Mesh2D.D_A, Mesh2D.D_B, Mesh2D.D_C, size, size);
     }
 
 
@@ -319,7 +321,7 @@ if (name == "jacobi" && algorithm == "openmp")
 
 
 #ifdef CUDA_ENABLED
-    if (name == "xgemm" && algorithm == "simplegpu")
+    if (name == "xgemm" && algorithm == "gputhread")
     {
         Initialize_symmetric_matricies_ABC();
         cudaGetDevice(&gpuid);  	
@@ -333,7 +335,7 @@ if (name == "jacobi" && algorithm == "openmp")
             cudaMemcpy(Mesh2D.D_A, Mesh2D.A, sizeof(X_TYPE) * (size * size), cudaMemcpyHostToDevice);
             cudaMemcpy(Mesh2D.D_B, Mesh2D.B, sizeof(X_TYPE) * (size * size), cudaMemcpyHostToDevice);
 
-            call_gpu_matrix_multiply(Mesh2D.D_A, Mesh2D.D_B, Mesh2D.D_C, size, size);
+            call_gpu_thread_matrix_multiply(Mesh2D.D_A, Mesh2D.D_B, Mesh2D.D_C, size, size);
             
             // Transfer data from device to host memory
             cudaMemcpy(Mesh2D.C, Mesh2D.D_C, sizeof(X_TYPE) * (size * size), cudaMemcpyDeviceToHost);
