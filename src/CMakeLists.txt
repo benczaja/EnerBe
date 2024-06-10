@@ -1,6 +1,7 @@
 include(ExternalProject)
 
 find_package(OpenMP REQUIRED)
+find_package(BLAS REQUIRED)
 
 if (OPENMP_FOUND)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
@@ -60,16 +61,27 @@ endif()
 
 add_executable(dEnerBe ${SOURCES})
 target_compile_definitions(dEnerBe PUBLIC USE_DOUBLE)
+include_directories("${PROJECT_SOURCE_DIR}/OpenBLAS/include")
+#target_link_libraries(dEnerBe lapack)
+#target_link_libraries(dEnerBe openblas)
+
 
 if (ENABLE_PMT)
-    target_link_libraries(dEnerBe pmt)
-    target_compile_definitions(dEnerBe PUBLIC PMT_ENABLED)
+target_link_libraries(dEnerBe pmt)
+target_compile_definitions(dEnerBe PUBLIC PMT_ENABLED)
 endif()
 
 if (ENABLE_CUDA)
 target_link_options(dEnerBe PUBLIC "-fopenmp")
 target_compile_definitions(dEnerBe PUBLIC CUDA_ENABLED)
 endif()
+
+if(BLAS_FOUND)
+    message("OpenBLAS found.")
+    include_directories(/home/benjamic/EnerBe/OpenBLAS/include/)
+    target_link_libraries(dEnerBe ${BLAS_LIBRARIES})
+endif(BLAS_FOUND)
+
 install(TARGETS dEnerBe RUNTIME DESTINATION ${PROJECT_SOURCE_DIR}/bin)
 
 
@@ -85,6 +97,12 @@ if (ENABLE_CUDA)
     target_link_options(sEnerBe PUBLIC "-fopenmp")
     target_compile_definitions(sEnerBe PUBLIC CUDA_ENABLED)
 endif()
+
+if(BLAS_FOUND)
+    message("OpenBLAS found.")
+    include_directories(/home/benjamic/EnerBe/OpenBLAS/include/)
+    target_link_libraries(sEnerBe ${BLAS_LIBRARIES})
+endif(BLAS_FOUND)
 
 install(TARGETS sEnerBe RUNTIME DESTINATION ${PROJECT_SOURCE_DIR}/bin)
 

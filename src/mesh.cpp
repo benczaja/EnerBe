@@ -1,4 +1,5 @@
 #include "mesh.hpp"
+#include <../../OpenBLAS/include/cblas.h>
 
 using namespace std;
 
@@ -81,6 +82,19 @@ void MM_t::openmp_matrix_multiply(int ROWS, int COLUMNS)
         }
     }
 }
+
+void MM_t::cblas_matrix_multiply(int ROWS, int COLUMNS)
+{
+    #ifdef USE_DOUBLE
+        cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, ROWS, ROWS, COLUMNS, 1.0, Mesh2D.A, COLUMNS, Mesh2D.B, COLUMNS, 1.0, Mesh2D.C, COLUMNS);
+    #else 
+        cblas_sgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans,  ROWS, ROWS, COLUMNS, 1.0, Mesh2D.A, COLUMNS, Mesh2D.B, COLUMNS, 1.0, Mesh2D.C, COLUMNS);
+    #endif
+
+}
+
+
+
 
 void MM_t::simple_jacobi(X_TYPE* A, X_TYPE* B, X_TYPE* C, X_TYPE* Ctmp, int ROWS, int COLUMNS)
 {
@@ -240,6 +254,20 @@ void MM_t::run()
         do {
             measure();
             openmp_matrix_multiply(size, size);
+            measure();
+            N_runs ++;
+        }while (time < max_time && N_runs < max_runs);
+      calculate_stats();
+      print_info();
+    }
+
+    if (name == "xgemm" && algorithm == "cblas")
+    {
+        Initialize_symmetric_matricies_ABC();
+        do {
+            measure();
+            
+            cblas_matrix_multiply(size, size);
             measure();
             N_runs ++;
         }while (time < max_time && N_runs < max_runs);

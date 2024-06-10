@@ -39,6 +39,7 @@ class MM_t : public EnerBe {
         void PrintElement(int i);
         void simple_matrix_multiply(int ROWS, int COLUMNS);
         void openmp_matrix_multiply(int ROWS, int COLUMNS);
+        void cblas_matrix_multiply(int ROWS, int COLUMNS);
         void simple_jacobi(X_TYPE* A, X_TYPE* B, X_TYPE* C, X_TYPE* Ctmp, int ROWS, int COLUMNS);
         void openmp_jacobi(X_TYPE* A, X_TYPE* B, X_TYPE* C, X_TYPE* Ctmp, int ROWS, int COLUMNS);
         #ifdef CUDA_ENABLED
