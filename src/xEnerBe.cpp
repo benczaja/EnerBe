@@ -14,7 +14,7 @@ int main( int argc, char *argv[] )  {
 
   parse_arguments(argc, argv, MM.size, MM.algorithm, MM.name);
 
-  MM.InitializeMatrix();
+  //MM.InitializeMatrix();
   
   MM.run();
 }

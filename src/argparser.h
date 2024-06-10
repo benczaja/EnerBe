@@ -3,17 +3,20 @@
 #include <stdbool.h> // needed for bool usage
 
 const int N_algs = 5;
-std::string algorithms[N_algs] = { "--xgemm-simple", "--xgemm-openmp", "--xgemm-simplegpu", "--xaxpy-simple", "--xaxpy-openmp" };
+std::string algorithms[N_algs] = { "--xgemm-simple", "--xgemm-openmp", "--xgemm-simplegpu", "--jacobi-simple", "--jacobi-openmp" };
 int res;
 int rounds=0;
 
 void print_usage()
 {
     fprintf(stderr, "Example usage:\n");
-    fprintf(stderr, "saxpy [--algortim-type] (array size) \n");
-    fprintf(stderr, "\t--xaxpy-simple    Invoke simple implementation of Saxpy (Single precision A X plus Y)\n");
-    fprintf(stderr, "\t--xaxpy-openmp    Invoke parallel (OpenMP) implementation of Saxpy (Single precision A X plus Y)\n");
-    fprintf(stderr, "\t-h    Display help\n");
+    fprintf(stderr, "sEnerBe [--algortim-type] (problem size) \n");
+
+    printf("Accepted alogritms are:\n");
+    for (int alg_idx =0; alg_idx < N_algs; alg_idx ++){
+        std::cout<<algorithms[alg_idx]<<std::endl;
+    }
+    fprintf(stderr, "-h    Display help\n");
 }
 
 
@@ -63,7 +66,8 @@ void parse_arguments(size_t count, char*  args[], int& problem_size, std::string
     bool success_number = false;
     bool success_algo = false;
     if (count != 3 ){
-        printf("I need an alogrithm and problem size as an argument.\nSee what I accept: ./dgemm -h \n");
+        printf("I need an alogrithm and problem size as an argument.\nSee what I accept: ./xEnerBe -h \n");
+        print_usage();
         exit (1);
     }else{
     do

@@ -5,7 +5,7 @@ using namespace std;
 MM_t::MM_t(Mesh2D_t& Mesh2D_):
   Mesh2D(Mesh2D_)
 {
-    InitializeMatrix();
+    Initialize_symmetric_matricies_ABC();
     run();
 }
 
@@ -19,7 +19,7 @@ MM_t::~MM_t() {
 
 
 // Allocated A, B, C matrixies
-void MM_t::InitializeMatrix() 
+void MM_t::Initialize_symmetric_matricies_ABC() 
 {
     Mesh2D.size = size;
     
@@ -82,6 +82,106 @@ void MM_t::openmp_matrix_multiply(int ROWS, int COLUMNS)
     }
 }
 
+void MM_t::simple_jacobi(X_TYPE* A, X_TYPE* B, X_TYPE* C, X_TYPE* Ctmp, int ROWS, int COLUMNS)
+{
+  int itr;
+  int row, col;
+  int MAX_ITERATIONS = 20000;
+  X_TYPE CONVERGENCE_THRESHOLD = 0.0001;
+  X_TYPE dot;
+  X_TYPE diff;
+  X_TYPE sqdiff;
+  X_TYPE* ptrtmp;
+  // Loop until converged or maximum iterations reached
+  itr = 0;
+  do
+  {
+    // Perfom Jacobi iteration
+    for (row = 0; row < ROWS; row++)
+    {
+      dot = 0.0;
+      for (col = 0; col < COLUMNS; col++)
+      {
+        if (row != col){
+          dot += A[row + col*ROWS] * C[col];
+        }
+      }
+      Ctmp[row] = (B[row] - dot) / A[row + row*ROWS];
+    }
+
+    // Swap pointers
+    ptrtmp = C;
+    C      = Ctmp;
+    Ctmp   = ptrtmp;
+
+    // Check for convergence
+    sqdiff = 0.0;
+    for (row = 0; row < ROWS; row++)
+    {
+      diff    = Ctmp[row] - C[row];      
+      sqdiff += diff * diff;
+    }
+
+    itr++;
+  } while ((itr < MAX_ITERATIONS) && (sqrt(sqdiff) > CONVERGENCE_THRESHOLD));
+  std::cout<<"Jocobi solved in: " << itr <<" Iterations"<< std::endl;
+}
+
+
+void MM_t::openmp_jacobi(X_TYPE* A, X_TYPE* B, X_TYPE* C, X_TYPE* Ctmp, int ROWS, int COLUMNS)
+{
+  int itr;
+  int row, col;
+  int MAX_ITERATIONS = 20000;
+  X_TYPE CONVERGENCE_THRESHOLD = 0.0001;
+  X_TYPE dot;
+  X_TYPE diff;
+  X_TYPE sqdiff;
+  X_TYPE* ptrtmp;
+  // Loop until converged or maximum iterations reached
+  itr = 0;
+  do
+  {
+    // Perfom Jacobi iteration
+    #pragma omp parallel for
+    for (row = 0; row < ROWS; row++)
+    {
+      dot = 0.0;
+      for (col = 0; col < COLUMNS; col++)
+      {
+        if (row != col){
+          dot += A[row + col*ROWS] * C[col];
+        }
+      }
+      Ctmp[row] = (B[row] - dot) / A[row + row*ROWS];
+    }
+
+    #pragma omp barrier
+
+    // Swap pointers
+    ptrtmp = C;
+    C      = Ctmp;
+    Ctmp   = ptrtmp;
+
+    // Check for convergence
+    sqdiff = 0.0;
+    #pragma omp parallel for
+    for (row = 0; row < ROWS; row++)
+    {
+      diff    = Ctmp[row] - C[row];      
+      sqdiff += diff * diff;
+    }
+
+    itr++;
+  } while ((itr < MAX_ITERATIONS) && (sqrt(sqdiff) > CONVERGENCE_THRESHOLD));
+  std::cout<<"Jocobi solved in: " << itr <<" Iterations"<< std::endl;
+}
+
+
+
+
+
+
 #ifdef CUDA_ENABLED
     __global__ void gpu_matrix_multiply(X_TYPE* D_A, X_TYPE* D_B, X_TYPE* D_C,int ROWS, int COLUMNS){
     
@@ -120,6 +220,7 @@ void MM_t::run()
 //XGEMMS
 //============================================================================================================
     if (name == "xgemm" && algorithm == "simple"){
+        Initialize_symmetric_matricies_ABC();
         omp_threads = 1;
         do {
             measure();
@@ -133,6 +234,7 @@ void MM_t::run()
 
     if (name == "xgemm" && algorithm == "openmp")
     {
+        Initialize_symmetric_matricies_ABC();
         do {
             measure();
             openmp_matrix_multiply(size, size);
@@ -142,9 +244,84 @@ void MM_t::run()
       calculate_stats();
       print_info();
     }
+
+
+    if (name == "jacobi" && algorithm == "simple")
+    {
+        X_TYPE* A = (X_TYPE *) malloc((size * size)*sizeof(X_TYPE));
+        X_TYPE* B = (X_TYPE *) malloc((size)*sizeof(X_TYPE));
+        X_TYPE* C = (X_TYPE *) malloc((size)*sizeof(X_TYPE));
+        X_TYPE* Ctmp = (X_TYPE *) malloc((size)*sizeof(X_TYPE));
+
+        do {
+        /* initialize the arrays */
+        //initialize_matrix_1D(A, B, C, kernal.size, kernal.size);
+        srand(rand());
+        for (int row = 0; row < size; row++)
+        {
+        X_TYPE rowsum = 0.0;
+        for (int col = 0; col < size; col++)
+        {
+          X_TYPE value = rand()/(X_TYPE)RAND_MAX;
+          A[row + col*size] = value;
+          rowsum += value;
+        }
+        A[row + row*size] += rowsum;
+        B[row] = rand()/(X_TYPE)RAND_MAX;
+        C[row] = 0.0;
+        Ctmp[row] = 0.0;
+      }
+
+            measure();
+            simple_jacobi(A, B, C, Ctmp, size, size);
+            measure();
+            N_runs ++;
+        }while (time < max_time && N_runs < max_runs);
+      calculate_stats();
+      print_info();
+    }
+
+if (name == "jacobi" && algorithm == "openmp")
+    {
+        X_TYPE* A = (X_TYPE *) malloc((size * size)*sizeof(X_TYPE));
+        X_TYPE* B = (X_TYPE *) malloc((size)*sizeof(X_TYPE));
+        X_TYPE* C = (X_TYPE *) malloc((size)*sizeof(X_TYPE));
+        X_TYPE* Ctmp = (X_TYPE *) malloc((size)*sizeof(X_TYPE));
+
+        do {
+        /* initialize the arrays */
+        //initialize_matrix_1D(A, B, C, kernal.size, kernal.size);
+        srand(rand());
+        for (int row = 0; row < size; row++)
+        {
+        X_TYPE rowsum = 0.0;
+        for (int col = 0; col < size; col++)
+        {
+          X_TYPE value = rand()/(X_TYPE)RAND_MAX;
+          A[row + col*size] = value;
+          rowsum += value;
+        }
+        A[row + row*size] += rowsum;
+        B[row] = rand()/(X_TYPE)RAND_MAX;
+        C[row] = 0.0;
+        Ctmp[row] = 0.0;
+      }
+
+            measure();
+            openmp_jacobi(A, B, C, Ctmp, size, size);
+            measure();
+            N_runs ++;
+        }while (time < max_time && N_runs < max_runs);
+      calculate_stats();
+      print_info();
+    }
+
+
+
 #ifdef CUDA_ENABLED
     if (name == "xgemm" && algorithm == "simplegpu")
     {
+        Initialize_symmetric_matricies_ABC();
         cudaGetDevice(&gpuid);  	
   
         int block_size = 512;
