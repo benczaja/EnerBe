@@ -44,6 +44,7 @@ class MM_t : public EnerBe {
         void openmp_jacobi(X_TYPE* A, X_TYPE* B, X_TYPE* C, X_TYPE* Ctmp, int ROWS, int COLUMNS);
         #ifdef CUDA_ENABLED
             void call_gpu_thread_matrix_multiply(X_TYPE* D_A, X_TYPE* D_B, X_TYPE* D_C, int ROWS, int COLUMNS);
+            void call_cuBLASxgemm(X_TYPE* D_A, X_TYPE* D_B, X_TYPE* D_C, int ROWS, int COLUMNS);
             void run();
         #else
             void run();

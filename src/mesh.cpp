@@ -1,7 +1,38 @@
 #include "mesh.hpp"
 #include <../../OpenBLAS/include/cblas.h>
+#ifdef CUDA_ENABLED
+#include <cuda_runtime.h>
+#include "cublas_v2.h"
+#endif
 
 using namespace std;
+
+#ifdef CUDA_ENABLED
+//////////////////////////////////Call Checks///////////////////
+#define CHECK(call)                                                            \
+{                                                                              \
+    const cudaError_t error = call;                                            \
+    if (error != cudaSuccess)                                                  \
+    {                                                                          \
+        fprintf(stderr, "Error: %s:%d, ", __FILE__, __LINE__);                 \
+        fprintf(stderr, "code: %d, reason: %s\n", error,                       \
+                cudaGetErrorString(error));                                    \
+        exit(1);                                                               \
+    }                                                                          \
+}
+
+#define CHECK_CUBLAS(call)                                                     \
+{                                                                              \
+    const cublasStatus_t err = call;                                                 \
+    if (err != CUBLAS_STATUS_SUCCESS)                                           \
+    {                                                                          \
+        fprintf(stderr, "Got CUBLAS error %d at %s:%d\n", err, __FILE__, __LINE__); \
+        printf("Reason: %s\n", cublasGetStatusName(err));                      \
+        exit(1);                                                               \
+    }                                                                          \
+}
+#endif
+
 
 MM_t::MM_t(Mesh2D_t& Mesh2D_):
   Mesh2D(Mesh2D_)
@@ -15,6 +46,13 @@ MM_t::~MM_t() {
   free(Mesh2D.A);
   free(Mesh2D.B);
   free(Mesh2D.C);
+
+  #ifdef CUDA_ENABLED
+    CHECK(cudaFree(Mesh2D.D_A));
+  	CHECK(cudaFree(Mesh2D.D_B));
+  	CHECK(cudaFree(Mesh2D.D_C));
+  #endif
+
 }
 
 
@@ -29,9 +67,9 @@ void MM_t::Initialize_symmetric_matricies_ABC()
     Mesh2D.C = (X_TYPE *) malloc((Mesh2D.size * Mesh2D.size)*sizeof(X_TYPE));
 
     #ifdef CUDA_ENABLED
-        cudaMalloc((void**)&Mesh2D.D_A, sizeof( X_TYPE ) * (Mesh2D.size * Mesh2D.size));
-        cudaMalloc((void**)&Mesh2D.D_B, sizeof( X_TYPE ) * (Mesh2D.size * Mesh2D.size));
-        cudaMalloc((void**)&Mesh2D.D_C, sizeof( X_TYPE ) * (Mesh2D.size * Mesh2D.size));
+        CHECK(cudaMalloc((void**)&Mesh2D.D_A, sizeof( X_TYPE ) * (Mesh2D.size * Mesh2D.size)));
+        CHECK(cudaMalloc((void**)&Mesh2D.D_B, sizeof( X_TYPE ) * (Mesh2D.size * Mesh2D.size)));
+        CHECK(cudaMalloc((void**)&Mesh2D.D_C, sizeof( X_TYPE ) * (Mesh2D.size * Mesh2D.size)));
     #endif
 
     unsigned int globalSeed = clock();  
@@ -212,12 +250,29 @@ void MM_t::openmp_jacobi(X_TYPE* A, X_TYPE* B, X_TYPE* C, X_TYPE* Ctmp, int ROWS
 			}
 			D_C[local_index] = tmp;
 		}
-}
+  }
     // We basically need a wrapper for the actual kernal call since __global__ functions cannot be class members.
     void MM_t::call_gpu_thread_matrix_multiply(X_TYPE* D_A, X_TYPE* D_B, X_TYPE* D_C, int ROWS, int COLUMNS){
         int block_size = 512;
         int grid_size = ((size + block_size) / block_size);
         gpu_thread_matrix_multiply<<<grid_size,block_size>>>(Mesh2D.D_A, Mesh2D.D_B, Mesh2D.D_C, size, size);
+    }
+
+    void MM_t::call_cuBLASxgemm(X_TYPE* D_A, X_TYPE* D_B, X_TYPE* D_C, int ROWS, int COLUMNS){
+        X_TYPE alpha = 1.2;
+        X_TYPE beta = 1.0e-3;
+        cublasHandle_t cublasH = NULL;
+        /////////Create the cuBLAS Handle
+      	CHECK_CUBLAS(cublasCreate(&cublasH));
+
+
+        ///////////Enableing Automatic Use of Tensor Cores
+    	  //CHECK_CUBLAS(cublasSetMathMode(cublasH, CUBLAS_TENSOR_OP_MATH));
+        #ifdef USE_DOUBLE
+          CHECK_CUBLAS(cublasDgemm(cublasH, CUBLAS_OP_N, CUBLAS_OP_N, ROWS, COLUMNS, COLUMNS, &alpha, D_A, COLUMNS, D_B, COLUMNS, &beta, D_C, COLUMNS));
+        #else
+          CHECK_CUBLAS(cublasSgemm(cublasH, CUBLAS_OP_N, CUBLAS_OP_N, ROWS, COLUMNS, COLUMNS, &alpha, D_A, COLUMNS, D_B, COLUMNS, &beta, D_C, COLUMNS));
+        #endif
     }
 
 
@@ -374,6 +429,32 @@ if (name == "jacobi" && algorithm == "openmp")
       calculate_stats();
       print_info();
     }
+    if (name == "xgemm" && algorithm == "cublas")
+    {
+        Initialize_symmetric_matricies_ABC();
+        cudaGetDevice(&gpuid);  	
+  
+        int block_size = 512;
+        int grid_size = ((size + block_size) / block_size);
+        do {
+            measure();
+
+            // Transfer data from host to device memory
+            cudaMemcpy(Mesh2D.D_A, Mesh2D.A, sizeof(X_TYPE) * (size * size), cudaMemcpyHostToDevice);
+            cudaMemcpy(Mesh2D.D_B, Mesh2D.B, sizeof(X_TYPE) * (size * size), cudaMemcpyHostToDevice);
+
+            call_cuBLASxgemm(Mesh2D.D_A, Mesh2D.D_B, Mesh2D.D_C, size, size);
+            
+            // Transfer data from device to host memory
+            cudaMemcpy(Mesh2D.C, Mesh2D.D_C, sizeof(X_TYPE) * (size * size), cudaMemcpyDeviceToHost);
+
+            measure();
+            N_runs ++;
+        }while (time < max_time && N_runs < max_runs);
+      calculate_stats();
+      print_info();
+    }
+
 #endif
 
   
