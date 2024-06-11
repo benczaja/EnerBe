@@ -2,8 +2,8 @@
 #include <iostream> // needed for CPP IO ... cout, endl etc etc
 #include <stdbool.h> // needed for bool usage
 
-const int N_algs = 5;
-std::string algorithms[N_algs] = { "--xgemm-simple", "--xgemm-openmp", "--xgemm-gputhread", "--jacobi-simple", "--jacobi-openmp" };
+const int N_algs = 6;
+std::string algorithms[N_algs] = { "--xgemm-simple", "--xgemm-openmp", "--xgemm-cblas", "--xgemm-gputhread", "--jacobi-simple", "--jacobi-openmp" };
 int res;
 int rounds=0;
 
