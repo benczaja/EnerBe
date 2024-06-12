@@ -6,6 +6,7 @@ Energy Benchmarks
 
 Requirements
 - C and C++ Compliers (GNU preferred)
+- BLAS libraries (OpenBLAS preferred)
 - ROCM or CUDA Compilers if compiling for AMD or NVIDIA GPUs
 - CMake
 
