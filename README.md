@@ -55,30 +55,30 @@ List the available algorithms
 ```
 ./bin/sEnerBe -h
 ```
-#### cblas dgemm example
+#### cblas dgemm example (with PMT enabled)
 
 ```
-./bin/sEnerBe --xgemm-cblas  2000
+../bin/sEnerBe --xgemm-cblas 5000
 ```
 output:
 ```
 NAME: xgemm
 ALGO: cblas
 PRECISION: 4 bytes
-OMP_THREADS: 24
+OMP_THREADS: 192
 MPI_RANKS: 0
 NGPUs: 0
 GPU ID: 99
-SIZE: 2000
-(RAPL) CPU_TIME: 0.100102 s
-(RAPL) CPU_TIME_var: 1.95394e-11 s^2
-(RAPL) CPU_TIME_std: 4.42033e-06 s
-(RAPL) CPU_WATTS: 0 W
-(RAPL) CPU_WATTS_var: 0 W^2
-(RAPL) CPU_WATTS_std: 0 W
-(RAPL) CPU_JOULES: 0 J
-(RAPL) CPU_JOULES_var: 0 J^2
-(RAPL) CPU_JOULES_std: 0 J
+SIZE: 5000
+(RAPL) CPU_TIME: 0.241004 s
+(RAPL) CPU_TIME_var: 0.00449523 s^2
+(RAPL) CPU_TIME_std: 0.0670465 s
+(RAPL) CPU_WATTS: 383.458 W
+(RAPL) CPU_WATTS_var: 787.34 W^2
+(RAPL) CPU_WATTS_std: 28.0596 W
+(RAPL) CPU_JOULES: 92.6907 J
+(RAPL) CPU_JOULES_var: 797.627 J^2
+(RAPL) CPU_JOULES_std: 28.2423 J
 NRUNS: 20
 ```
 
