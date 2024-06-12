@@ -1,8 +1,14 @@
 #include "mesh.hpp"
 #include <../../OpenBLAS/include/cblas.h>
+
 #ifdef CUDA_ENABLED
 #include <cuda_runtime.h>
 #include "cublas_v2.h"
+#endif
+
+#ifdef HIP_ENABLED
+#include <hip/hip_runtime.h>
+#include "rocblas/rocblas.h"
 #endif
 
 using namespace std;
@@ -52,6 +58,12 @@ MM_t::~MM_t() {
   	CHECK(cudaFree(Mesh2D.D_B));
   	CHECK(cudaFree(Mesh2D.D_C));
   #endif
+  #ifdef HIP_ENABLED
+    hipFree(Mesh2D.D_A);
+  	hipFree(Mesh2D.D_B);
+  	hipFree(Mesh2D.D_C);
+  #endif
+
 
 }
 
@@ -70,6 +82,11 @@ void MM_t::Initialize_symmetric_matricies_ABC()
         CHECK(cudaMalloc((void**)&Mesh2D.D_A, sizeof( X_TYPE ) * (Mesh2D.size * Mesh2D.size)));
         CHECK(cudaMalloc((void**)&Mesh2D.D_B, sizeof( X_TYPE ) * (Mesh2D.size * Mesh2D.size)));
         CHECK(cudaMalloc((void**)&Mesh2D.D_C, sizeof( X_TYPE ) * (Mesh2D.size * Mesh2D.size)));
+    #endif
+    #ifdef HIP_ENABLED
+        hipMalloc((void**)&Mesh2D.D_A, sizeof( X_TYPE ) * (Mesh2D.size * Mesh2D.size));
+        hipMalloc((void**)&Mesh2D.D_B, sizeof( X_TYPE ) * (Mesh2D.size * Mesh2D.size));
+        hipMalloc((void**)&Mesh2D.D_C, sizeof( X_TYPE ) * (Mesh2D.size * Mesh2D.size));
     #endif
 
     unsigned int globalSeed = clock();  
@@ -234,12 +251,12 @@ void MM_t::openmp_jacobi(X_TYPE* A, X_TYPE* B, X_TYPE* C, X_TYPE* Ctmp, int ROWS
 
 
 
-#ifdef CUDA_ENABLED
+#if defined(CUDA_ENABLED) || defined(HIP_ENABLED)
     __global__ void gpu_thread_matrix_multiply(X_TYPE* D_A, X_TYPE* D_B, X_TYPE* D_C,int ROWS, int COLUMNS){
     // This will solve the matmul by assigning each GPU thread to a single site on the result matrix C
     // Each GPU thread has a local index in its CUDA thread block
     
-    int local_COLUMN = threadIdx.x + blockIdx.x * blockDim.x;
+  int local_COLUMN = threadIdx.x + blockIdx.x * blockDim.x;
 	int local_ROW = threadIdx.y + blockIdx.y * blockDim.y;
 	int local_index = local_COLUMN + local_ROW * ROWS; // Right now this only works for symetric matricies
 	int tmp = 0;  
@@ -258,33 +275,41 @@ void MM_t::openmp_jacobi(X_TYPE* A, X_TYPE* B, X_TYPE* C, X_TYPE* Ctmp, int ROWS
         gpu_thread_matrix_multiply<<<grid_size,block_size>>>(Mesh2D.D_A, Mesh2D.D_B, Mesh2D.D_C, size, size);
     }
 
-    void MM_t::call_cuBLASxgemm(X_TYPE* D_A, X_TYPE* D_B, X_TYPE* D_C, int ROWS, int COLUMNS){
+    void MM_t::call_gpu_BLASxgemm(X_TYPE* D_A, X_TYPE* D_B, X_TYPE* D_C, int ROWS, int COLUMNS){
         X_TYPE alpha = 1.2;
         X_TYPE beta = 1.0e-3;
-        cublasHandle_t cublasH = NULL;
-        /////////Create the cuBLAS Handle
-      	CHECK_CUBLAS(cublasCreate(&cublasH));
 
-
-        ///////////Enableing Automatic Use of Tensor Cores
-    	  //CHECK_CUBLAS(cublasSetMathMode(cublasH, CUBLAS_TENSOR_OP_MATH));
-        #ifdef USE_DOUBLE
-          CHECK_CUBLAS(cublasDgemm(cublasH, CUBLAS_OP_N, CUBLAS_OP_N, ROWS, COLUMNS, COLUMNS, &alpha, D_A, COLUMNS, D_B, COLUMNS, &beta, D_C, COLUMNS));
-        #else
-          CHECK_CUBLAS(cublasSgemm(cublasH, CUBLAS_OP_N, CUBLAS_OP_N, ROWS, COLUMNS, COLUMNS, &alpha, D_A, COLUMNS, D_B, COLUMNS, &beta, D_C, COLUMNS));
+        #ifdef CUDA_ENABLED
+          cublasHandle_t cublasH = NULL;
+          /////////Create the cuBLAS Handle
+        	CHECK_CUBLAS(cublasCreate(&cublasH));
+          ///////////Enableing Automatic Use of Tensor Cores
+    	    //CHECK_CUBLAS(cublasSetMathMode(cublasH, CUBLAS_TENSOR_OP_MATH));
+          #ifdef USE_DOUBLE
+            CHECK_CUBLAS(cublasDgemm(cublasH, CUBLAS_OP_N, CUBLAS_OP_N, ROWS, COLUMNS, COLUMNS, &alpha, D_A, COLUMNS, D_B, COLUMNS, &beta, D_C, COLUMNS));
+          #else
+            CHECK_CUBLAS(cublasSgemm(cublasH, CUBLAS_OP_N, CUBLAS_OP_N, ROWS, COLUMNS, COLUMNS, &alpha, D_A, COLUMNS, D_B, COLUMNS, &beta, D_C, COLUMNS));
+          #endif
         #endif
+
+        #ifdef HIP_ENABLED
+          rocblas_handle rocblasH;
+          rocblas_create_handle(&rocblasH);
+
+        #ifdef USE_DOUBLE
+          rocblas_dgemm(rocblasH, rocblas_operation_none, rocblas_operation_none, ROWS, COLUMNS, COLUMNS, &alpha, D_A, COLUMNS, D_B, COLUMNS, &beta, D_C, COLUMNS);
+        #else
+          rocblas_sgemm(rocblasH, rocblas_operation_none, rocblas_operation_none, ROWS, COLUMNS, COLUMNS, &alpha, D_A, COLUMNS, D_B, COLUMNS, &beta, D_C, COLUMNS);
+        #endif
+        #endif
+
     }
 
 
 #endif
 
 
-
-#ifdef CUDA_ENABLED
-__host__ void MM_t::run() 
-#else
 void MM_t::run() 
-#endif
 {
 
 //============================================================================================================
@@ -340,7 +365,6 @@ void MM_t::run()
 
         do {
         /* initialize the arrays */
-        //initialize_matrix_1D(A, B, C, kernal.size, kernal.size);
         srand(rand());
         for (int row = 0; row < size; row++)
         {
@@ -403,36 +427,56 @@ if (name == "jacobi" && algorithm == "openmp")
 
 
 
-#ifdef CUDA_ENABLED
+#if defined(CUDA_ENABLED) || defined(HIP_ENABLED)
     if (name == "xgemm" && algorithm == "gputhread")
     {
         Initialize_symmetric_matricies_ABC();
-        cudaGetDevice(&gpuid);  	
-  
+        
+        #ifdef CUDA_ENABLED
+          cudaGetDevice(&gpuid);  	
+        #endif
+        #ifdef HIP_ENABLED
+          hipGetDevice(&gpuid);
+        #endif
         int block_size = 512;
         int grid_size = ((size + block_size) / block_size);
         do {
             measure();
 
             // Transfer data from host to device memory
-            cudaMemcpy(Mesh2D.D_A, Mesh2D.A, sizeof(X_TYPE) * (size * size), cudaMemcpyHostToDevice);
-            cudaMemcpy(Mesh2D.D_B, Mesh2D.B, sizeof(X_TYPE) * (size * size), cudaMemcpyHostToDevice);
+            #ifdef CUDA_ENABLED
+              cudaMemcpy(Mesh2D.D_A, Mesh2D.A, sizeof(X_TYPE) * (size * size), cudaMemcpyHostToDevice);
+              cudaMemcpy(Mesh2D.D_B, Mesh2D.B, sizeof(X_TYPE) * (size * size), cudaMemcpyHostToDevice);
+            #endif
+            #ifdef HIP_ENABLED
+              hipMemcpy(Mesh2D.D_A, Mesh2D.A, sizeof(X_TYPE) * (size * size), hipMemcpyHostToDevice);
+              hipMemcpy(Mesh2D.D_B, Mesh2D.B, sizeof(X_TYPE) * (size * size), hipMemcpyHostToDevice);
+            #endif
 
             call_gpu_thread_matrix_multiply(Mesh2D.D_A, Mesh2D.D_B, Mesh2D.D_C, size, size);
             
             // Transfer data from device to host memory
-            cudaMemcpy(Mesh2D.C, Mesh2D.D_C, sizeof(X_TYPE) * (size * size), cudaMemcpyDeviceToHost);
-
+            #ifdef CUDA_ENABLED
+              cudaMemcpy(Mesh2D.C, Mesh2D.D_C, sizeof(X_TYPE) * (size * size), cudaMemcpyDeviceToHost);
+            #endif
+            #ifdef HIP_ENABLED
+              hipMemcpy(Mesh2D.C, Mesh2D.D_C, sizeof(X_TYPE) * (size * size), hipMemcpyDeviceToHost);
+            #endif
             measure();
             N_runs ++;
         }while (time < max_time && N_runs < max_runs);
       calculate_stats();
       print_info();
     }
-    if (name == "xgemm" && algorithm == "cublas")
+    if (name == "xgemm" && algorithm == "gpublas")
     {
         Initialize_symmetric_matricies_ABC();
-        cudaGetDevice(&gpuid);  	
+        #ifdef CUDA_ENABLED
+          cudaGetDevice(&gpuid);  	
+        #endif
+        #ifdef HIP_ENABLED
+          hipGetDevice(&gpuid);
+        #endif	
   
         int block_size = 512;
         int grid_size = ((size + block_size) / block_size);
@@ -440,13 +484,24 @@ if (name == "jacobi" && algorithm == "openmp")
             measure();
 
             // Transfer data from host to device memory
-            cudaMemcpy(Mesh2D.D_A, Mesh2D.A, sizeof(X_TYPE) * (size * size), cudaMemcpyHostToDevice);
-            cudaMemcpy(Mesh2D.D_B, Mesh2D.B, sizeof(X_TYPE) * (size * size), cudaMemcpyHostToDevice);
+            #ifdef CUDA_ENABLED
+              cudaMemcpy(Mesh2D.D_A, Mesh2D.A, sizeof(X_TYPE) * (size * size), cudaMemcpyHostToDevice);
+              cudaMemcpy(Mesh2D.D_B, Mesh2D.B, sizeof(X_TYPE) * (size * size), cudaMemcpyHostToDevice);
+            #endif
+            #ifdef HIP_ENABLED
+              hipMemcpy(Mesh2D.D_A, Mesh2D.A, sizeof(X_TYPE) * (size * size), hipMemcpyHostToDevice);
+              hipMemcpy(Mesh2D.D_B, Mesh2D.B, sizeof(X_TYPE) * (size * size), hipMemcpyHostToDevice);
+            #endif
 
-            call_cuBLASxgemm(Mesh2D.D_A, Mesh2D.D_B, Mesh2D.D_C, size, size);
+            call_gpu_BLASxgemm(Mesh2D.D_A, Mesh2D.D_B, Mesh2D.D_C, size, size);
             
             // Transfer data from device to host memory
-            cudaMemcpy(Mesh2D.C, Mesh2D.D_C, sizeof(X_TYPE) * (size * size), cudaMemcpyDeviceToHost);
+            #ifdef CUDA_ENABLED
+              cudaMemcpy(Mesh2D.C, Mesh2D.D_C, sizeof(X_TYPE) * (size * size), cudaMemcpyDeviceToHost);
+            #endif
+            #ifdef HIP_ENABLED
+              hipMemcpy(Mesh2D.C, Mesh2D.D_C, sizeof(X_TYPE) * (size * size), hipMemcpyDeviceToHost);
+            #endif
 
             measure();
             N_runs ++;

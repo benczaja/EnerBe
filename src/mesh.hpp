@@ -16,7 +16,7 @@ public:
     X_TYPE* B;
     X_TYPE* C;
 
-    #ifdef CUDA_ENABLED
+    #if defined(CUDA_ENABLED) || defined(HIP_ENABLED)
         X_TYPE* D_A;
         X_TYPE* D_B;
         X_TYPE* D_C;
@@ -42,9 +42,9 @@ class MM_t : public EnerBe {
         void cblas_matrix_multiply(int ROWS, int COLUMNS);
         void simple_jacobi(X_TYPE* A, X_TYPE* B, X_TYPE* C, X_TYPE* Ctmp, int ROWS, int COLUMNS);
         void openmp_jacobi(X_TYPE* A, X_TYPE* B, X_TYPE* C, X_TYPE* Ctmp, int ROWS, int COLUMNS);
-        #ifdef CUDA_ENABLED
+        #if defined(CUDA_ENABLED) || defined(HIP_ENABLED)
             void call_gpu_thread_matrix_multiply(X_TYPE* D_A, X_TYPE* D_B, X_TYPE* D_C, int ROWS, int COLUMNS);
-            void call_cuBLASxgemm(X_TYPE* D_A, X_TYPE* D_B, X_TYPE* D_C, int ROWS, int COLUMNS);
+            void call_gpu_BLASxgemm(X_TYPE* D_A, X_TYPE* D_B, X_TYPE* D_C, int ROWS, int COLUMNS);
             void run();
         #else
             void run();

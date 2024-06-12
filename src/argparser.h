@@ -3,7 +3,7 @@
 #include <stdbool.h> // needed for bool usage
 
 const int N_algs = 7;
-std::string algorithms[N_algs] = { "--xgemm-simple", "--xgemm-openmp", "--xgemm-cblas", "--xgemm-gputhread", "--xgemm-cublas", "--jacobi-simple", "--jacobi-openmp" };
+std::string algorithms[N_algs] = { "--xgemm-simple", "--xgemm-openmp", "--xgemm-cblas", "--xgemm-gputhread", "--xgemm-gpublas", "--jacobi-simple", "--jacobi-openmp" };
 int res;
 int rounds=0;
 
