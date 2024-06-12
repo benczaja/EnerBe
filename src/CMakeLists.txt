@@ -14,6 +14,20 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
 
 file(GLOB SOURCES "*.cpp")
 
+if (ENABLE_HIP)
+    list(APPEND CMAKE_PREFIX_PATH /opt/rocm/hip /opt/rocm)
+    set(ROCM_PATH /opt/rocm) 
+    enable_language(C CXX HIP)
+    find_package(hip REQUIRED)
+
+    set(HIP_PATH "/opt/rocm/hip" CACHE PATH "Path to which HIP has been installed")
+    set(CMAKE_HIP_FLAGS "--offload-arch=gfx90a -fopenmp")
+    SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-rpath -Wl,/opt/rocm/lib")
+    set_source_files_properties(${SOURCES} PROPERTIES LANGUAGE HIP)
+endif()
+
+
+file(GLOB SOURCES "*.cpp")
 
 
 if (ENABLE_PMT)
@@ -25,9 +39,9 @@ if (ENABLE_PMT)
         message(STATUS "Looking for pmt - not found\n Configuring PMT to be built locally ")
 
         if (ENABLE_CUDA)
-            set(PMT_CONFIG_ARGS "-DCMAKE_INSTALL_PREFIX=${PROJECT_SOURCE_DIR}/pmt;-DPMT_BUILD_RAPL=1;-DPMT_BUILD_NVML=1;-DPMT_BUILD_NVIDIA=1")
+            set(PMT_CONFIG_ARGS "-DCMAKE_INSTALL_PREFIX=${PROJECT_SOURCE_DIR}/pmt;-DPMT_BUILD_RAPL=1;-DPMT_BUILD_NVML=1;-DPMT_BUILD_NVIDIA=1;-DPMT_BUILD_ROCM=0")
         elseif(ENABLE_HIP)
-            set(PMT_CONFIG_ARGS "-DCMAKE_INSTALL_PREFIX=${PROJECT_SOURCE_DIR}/pmt;-DPMT_BUILD_RAPL=1;-DPMT_BUILD_ROCM=1")
+            set(PMT_CONFIG_ARGS "-DCMAKE_INSTALL_PREFIX=${PROJECT_SOURCE_DIR}/pmt;-DPMT_BUILD_RAPL=1;-DPMT_BUILD_ROCM=1;-DPMT_BUILD_NVML=0;-DPMT_BUILD_NVIDIA=0;-DCMAKE_PREFIX_PATH=${ROCM_PATH}")
         else()
             set(PMT_CONFIG_ARGS "-DCMAKE_INSTALL_PREFIX=${PROJECT_SOURCE_DIR}/pmt;-DPMT_BUILD_RAPL=1;-DPMT_BUILD_NVML=0;-DPMT_BUILD_ROCM=0;-DPMT_BUILD_NVIDIA=0")
         endif()
@@ -72,9 +86,17 @@ target_compile_definitions(dEnerBe PUBLIC PMT_ENABLED)
 endif()
 
 if (ENABLE_CUDA)
-target_link_options(dEnerBe PUBLIC "-fopenmp")
-target_compile_definitions(dEnerBe PUBLIC CUDA_ENABLED)
+    target_link_libraries(dEnerBe cublas)
+    target_link_options(dEnerBe PUBLIC "-fopenmp")
+    target_compile_definitions(dEnerBe PUBLIC CUDA_ENABLED)
 endif()
+
+if (ENABLE_HIP)
+target_link_libraries(dEnerBe rocblas)
+target_link_options(dEnerBe PUBLIC "-fopenmp")
+    target_compile_definitions(dEnerBe PUBLIC HIP_ENABLED)
+endif()
+
 
 if(BLAS_FOUND)
     message("OpenBLAS found.")
@@ -89,13 +111,20 @@ add_executable(sEnerBe ${SOURCES})
 target_compile_definitions(sEnerBe PUBLIC)
 
 if (ENABLE_PMT)
-    target_link_libraries(sEnerBe pmt)
-    target_compile_definitions(sEnerBe PUBLIC PMT_ENABLED)
+target_link_libraries(sEnerBe pmt)
+target_compile_definitions(sEnerBe PUBLIC PMT_ENABLED)
 endif()
 
 if (ENABLE_CUDA)
-    target_link_options(sEnerBe PUBLIC "-fopenmp")
+target_link_libraries(sEnerBe cublas)
+target_link_options(sEnerBe PUBLIC "-fopenmp")
     target_compile_definitions(sEnerBe PUBLIC CUDA_ENABLED)
+endif()
+
+if (ENABLE_HIP)
+    target_link_libraries(sEnerBe rocblas)
+    target_link_options(sEnerBe PUBLIC "-fopenmp")
+    target_compile_definitions(sEnerBe PUBLIC HIP_ENABLED)
 endif()
 
 if(BLAS_FOUND)
