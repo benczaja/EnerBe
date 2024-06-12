@@ -55,7 +55,7 @@ List the available algorithms
 ```
 ./bin/sEnerBe -h
 ```
-#### cblas dgemm example (with PMT enabled)
+#### cblas sgemm example (with PMT enabled)
 
 ```
 ../bin/sEnerBe --xgemm-cblas 5000
