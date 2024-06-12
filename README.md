@@ -56,6 +56,7 @@ List the available algorithms
 ./bin/sEnerBe -h
 ```
 #### cblas sgemm example (with PMT enabled)
+> Results are from a AMD EPYC 9654 96-Core Processor (Genoa) Dual socket processor
 
 ```
 ../bin/sEnerBe --xgemm-cblas 5000
