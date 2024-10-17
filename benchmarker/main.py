@@ -21,8 +21,8 @@ class BenchMarker:
                 self.regex_number = '[+-]?((\d+\.\d*)|(\.\d+)|(\d+))([eE][+-]?\d+)?'
 
                 self.EnerBe_root_dir = "/".join(os.path.dirname(os.path.realpath(__file__)).split("/")[:-1])
-                self.EnerBe_log_dir = self.EnerBe_root_dir + "/EnerBe/" + "log"
-                self.EnerBe_sbatch_dir = self.EnerBe_root_dir + "/EnerBe/" + "sbatch"
+                self.EnerBe_log_dir = self.EnerBe_root_dir + "/benchmarker/" + "log"
+                self.EnerBe_sbatch_dir = self.EnerBe_root_dir + "/benchmarker/" + "sbatch"
                 # These will be picked up by the config
                 self.modules = []
                 self.misc_commands = []
@@ -132,13 +132,15 @@ class BenchMarker:
                     for command in self.misc_commands:
                         job_string_text += command + "\n"
 
+
                 if self.modules:
                     for module in self.modules:
                         job_string_text += "module load " + module + "\n"
         
                 job_string_text += "\n"
 
-                job_string_text += "python " + self.EnerBe_root_dir + "/EnerBe/main.py --run " + input_parameter
+                command = self.prepare_command(input_parameter)
+                job_string_text += "python " + self.EnerBe_root_dir + '/benchmarker/main.py --run="' + command + '"'
 
 
                 batch_file = self.EnerBe_sbatch_dir + "/" + self.sbatch_data["script_name"]
@@ -178,40 +180,26 @@ class BenchMarker:
                 shutil.rmtree(self.EnerBe_sbatch_dir, ignore_errors=False)
                 os.mkdir(self.EnerBe_sbatch_dir)
         
-        def run(self,param):
+        def prepare_command(self, input_parameter):
+
+            command =  self.EnerBe_root_dir + "/bin/" + self.case_info['application'][0] # this should be changed so we can loop over applications
+            for arg in self.case_info['args']:
+                command += " " + arg
+            command += " " + input_parameter
+
+            return command
+
+
+        def run(self, command):
 
             if not os.path.exists(self.EnerBe_log_dir):
                 os.mkdir(self.EnerBe_log_dir)
 
-            tmp_idx = self.case_info['input_parameters'].index(param)
-
-            application = self.case_info['application'][0]
-
-            bin_dir = self.EnerBe_root_dir + "/bin"
-            executable = bin_dir + "/" + application
-
-            if not os.path.isfile(executable):
-                print("Executable....")
-                print(executable)
-                print("DOES NOT EXIST")
-                exit(1)
-
-            CMD = executable
-
-            if self.sbatch_data['launcher']:
-                if self.sbatch_data['launcher'] == "mpirun":
-                    CMD = self.sbatch_data['launcher'] + " -np " + self.sbatch_data['ntasks'] + " " + executable
-                if self.sbatch_data['launcher'] == "srun":
-                    CMD = self.sbatch_data['launcher'] + " --ntasks " + self.sbatch_data['ntasks'] + " " + executable
-
-            if self.case_info['args']:
-                for arg in self.case_info['args']:
-                    CMD += " " + arg
-            CMD += " " + param
+            CMD = command
 
             print("Running this command ...")
-            print(CMD.split(" "))
-            process = Popen(CMD.split(" "), stdout=PIPE, stderr=PIPE)
+            print(CMD[0].split(" "))
+            process = Popen(CMD[0].split(" "), stdout=PIPE, stderr=PIPE)
 
             output, error = process.communicate()
             output = output.decode('ISO-8859-1').strip()
@@ -222,8 +210,9 @@ class BenchMarker:
                 self.tmp_out_file = self.tmp_out_file.replace(".out", "." + str(jobid) + ".out")
                 self.tmp_err_file = self.tmp_err_file.replace(".err", "." + str(jobid) + ".err")
             except:
-                self.tmp_out_file = self.tmp_out_file.replace(".out", "." + str(tmp_idx) + ".out")
-                self.tmp_err_file = self.tmp_err_file.replace(".err", "." + str(tmp_idx) + ".err")
+                pass
+                #self.tmp_out_file = self.tmp_out_file.replace(".out", "." + str(tmp_idx) + ".out")
+                #self.tmp_err_file = self.tmp_err_file.replace(".err", "." + str(tmp_idx) + ".err")
 
 
 
@@ -237,8 +226,6 @@ class BenchMarker:
         
             with open(self.EnerBe_log_dir + "/" + self.tmp_out_file, "r") as text_file:
                 output = text_file.read()
-
-            application = self.case_info['application'][0]
 
             device_types = ["CPU_", "GPU_", "TOTAL_"] # I am sorry for the _    
 
@@ -265,8 +252,6 @@ class BenchMarker:
                     except TypeError as error:
                         print(error)
                         print("Could not find REGEX match for "+ device_type + pattern +": in " + self.tmp_out_file)
-                        #exit(1)
-            #pdb.set_trace()
 
             # regex the results:
             name_pattern = r'NAME:\s(?P<rname>\w*)'
@@ -400,7 +385,7 @@ if __name__ == "__main__":
     parser.add_argument("--concatonate",metavar='N', type=str, nargs='*', help="Concatonate multiple tmp_results.csv together")
     parser.add_argument("-s","--sbatch", help="Create aand submit Jobscript based off info from 'bench_config.json'",action="store_true")
     parser.add_argument("-p","--plot", help="Plot the Benchmark",action="store_true")
-    parser.add_argument("-r","--run", help="Run the Benchmark",type=str)
+    parser.add_argument("-r","--run", help='Full command (space seperated)', type=str, nargs='+')
 
     args = parser.parse_args()
 
@@ -428,7 +413,7 @@ if __name__ == "__main__":
     if args.plot:
 
         plotter = Plotter()
-        plotter.load_data(benchmarker.EnerBe_root_dir + "/EnerBe/tmp_results/results.csv")
+        plotter.load_data(benchmarker.EnerBe_root_dir + "/benchmarker/tmp_results/results.csv")
         #Maybe a good place to apply masks to the data
         plotter.GPU_TPE_plot(x="SIZE",hue="GPU_NAME",title="xgemm",style="PRECISION")
 
