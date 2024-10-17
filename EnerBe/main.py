@@ -240,11 +240,9 @@ class BenchMarker:
 
             application = self.case_info['application'][0]
 
-            # regex the results:
-            if ("pmt" in application) & (("cuda" in application) | ("hip" in application)):
+            device_types = ["CPU_", "GPU_", "TOTAL_"] # I am sorry for the _    
 
-                device_types = ["CPU_", "GPU_"] # I am sorry for the _    
-                patterns = [
+            patterns = [
                     "TIME",
                     "TIME_var",
                     "TIME_std",
@@ -254,28 +252,7 @@ class BenchMarker:
                     "JOULES",
                     "JOULES_var",
                     "JOULES_std"
-                ]
-
-            elif ("pmt" in application):
-                device_types = ["CPU_"]  # I am sorry for the _ 
-                patterns = [
-                    "TIME",
-                    "TIME_var",
-                    "TIME_std",
-                    "WATTS", 
-                    "WATTS_var", 
-                    "WATTS_std", 
-                    "JOULES",
-                    "JOULES_var",
-                    "JOULES_std"
-                ]
-            else:
-                device_types = ["TOTAL_"] 
-                patterns = [
-                    "TIME",
-                    "TIME_var",
-                    "TIME_std",
-                ]
+            ]
             
             for device_type in device_types:
                 for pattern in patterns:
@@ -288,7 +265,8 @@ class BenchMarker:
                     except TypeError as error:
                         print(error)
                         print("Could not find REGEX match for "+ device_type + pattern +": in " + self.tmp_out_file)
-                        exit(1)
+                        #exit(1)
+            #pdb.set_trace()
 
             # regex the results:
             name_pattern = r'NAME:\s(?P<rname>\w*)'

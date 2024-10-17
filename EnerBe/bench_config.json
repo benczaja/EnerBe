@@ -2,7 +2,6 @@
     "modules": [
         "2023",
         "foss/2023a",
-        "pmt/1.2.0-GCCcore-12.3.0",
         "SciPy-bundle/2023.07-gfbf-2023a"
     ],
 
@@ -19,18 +18,16 @@
         "gpus-per-node": null,
         "exclusive": false,
         "constraint": null,
-        "launcher": "mpirun",
+        "launcher": null,
         "array_jobs": "10"
     },
 
     "case_info":{
-        "application": ["aneurysm_pmt"],
-        "args": null,
+        "application": ["sEnerBe"],
+        "args": ["--xgemm-cblas"],
         "environment_parameters": null,
         "input_parameters": [
-            "/home/benjamic/EnerBe/bin/input_1_node.xml",
-            "/home/benjamic/EnerBe/bin/input_1_node_big.xml",
-            "/home/benjamic/EnerBe/bin/input_1_node_XL.xml"
+            "10"
         ]
     }
 }
