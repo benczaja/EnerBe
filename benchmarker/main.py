@@ -415,7 +415,7 @@ if __name__ == "__main__":
         plotter = Plotter()
         plotter.load_data(benchmarker.EnerBe_root_dir + "/benchmarker/tmp_results/results.csv")
         #Maybe a good place to apply masks to the data
-        plotter.GPU_TPE_plot(x="SIZE",hue="GPU_NAME",title="xgemm",style="PRECISION")
+        plotter.TPE_plot(x="SIZE",style="PRECISION")
 
     if args.run:
 
