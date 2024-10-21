@@ -25,7 +25,8 @@ class BenchMarker:
                 self.EnerBe_sbatch_dir = self.EnerBe_root_dir + "/benchmarker/" + "sbatch"
                 # These will be picked up by the config
                 self.modules = []
-                self.misc_commands = []
+                self.pre_module_cmds = []
+                self.pre_executable_cmds = []
                 self.sbatch_data = {}
                 self.case_info = {}
 
@@ -91,7 +92,8 @@ class BenchMarker:
                 self.modules = config['modules']
                 self.sbatch_data = config['sbatch_data']
                 self.case_info = config['case_info']
-                self.misc_commands = config['misc_commands']
+                self.pre_module_cmds = config['pre_module_cmds']
+                self.pre_executable_cmds = config['pre_executable_cmds']
 
                 f.close()
 
@@ -128,14 +130,17 @@ class BenchMarker:
 
                 job_string_text += "\n"
 
-                if self.misc_commands:
-                    for command in self.misc_commands:
+                if self.pre_module_cmds:
+                    for command in self.pre_module_cmds:
                         job_string_text += command + "\n"
-
 
                 if self.modules:
                     for module in self.modules:
                         job_string_text += "module load " + module + "\n"
+
+                if self.pre_executable_cmds:
+                    for command in self.pre_executable_cmds:
+                        job_string_text += command + "\n"
         
                 job_string_text += "\n"
 

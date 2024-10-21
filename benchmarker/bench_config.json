@@ -1,33 +1,38 @@
 {
-    "modules": [
-        "2023",
-        "foss/2023a",
-        "SciPy-bundle/2023.07-gfbf-2023a"
+    "pre_module_cmds": [
+        "source /cvmfs/software.eessi.io/versions/2023.06/init/bash"
     ],
 
-    "misc_commands": null,
+    "modules": [
+        "foss/2023b",
+        "SciPy-bundle/2023.11-gfbf-2023b"
+    ],
+
+    "pre_executable_cmds": [
+        "export LD_LIBRARY_PATH=/cvmfs/software.eessi.io/versions/2023.06/software/linux/x86_64/intel/skylake_avx512/software/FlexiBLAS/3.3.1-GCC-13.2.0/lib"
+    ],
 
     "sbatch_data": {
         "script_name": "EnerBe.sbatch.sh",
-        "partition": "rome",
+        "partition": "tutti",
         "nodes": "1",
-        "ntasks": "64",
+        "ntasks": "72",
         "sockets-per-node": "1",
         "cpus-per-task": "1",
         "time": "00:30:00",
-        "gpus-per-node": null,
-        "exclusive": false,
-        "constraint": null,
+        "gpus-per-node": "1",
+        "exclusive": true,
+        "constraint": "gpu_amd",
         "launcher": null,
-        "array_jobs": "10"
+        "array_jobs": "1"
     },
 
     "case_info":{
         "application": ["sEnerBe"],
-        "args": ["--xgemm-cblas"],
+        "args": ["--xgemm-gpublas"],
         "environment_parameters": null,
         "input_parameters": [
-            "10"
+            "10", "100", "1000", "10000", "20000", "40000"
         ]
     }
 }
