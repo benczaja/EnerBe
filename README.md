@@ -2,7 +2,7 @@
 Energy Benchmarks
 
 
-### Build instructions
+## Build instructions
 
 Requirements
 - C and C++ Compliers (GNU preferred)
@@ -46,7 +46,7 @@ or HIP
 cmake -DENABLE_PMT=1 -DENABLE_HIP=1 ..
 ```
 
-### Running instuctions
+## Running instuctions
 
 There will be two executables `sEnerBe` of single FP precision and `dEnerBe` for double FP precision.
 
@@ -56,7 +56,7 @@ List the available algorithms
 ```
 ./bin/sEnerBe -h
 ```
-#### cblas sgemm example (with PMT enabled)
+### cblas sgemm example (with PMT enabled)
 > Results are from a AMD EPYC 9654 96-Core Processor (Genoa) Dual socket processor
 
 ```
@@ -84,5 +84,50 @@ SIZE: 5000
 NRUNS: 20
 ```
 
+## Benchmarker instructions
+
+Requirements
+- Python (pandas, seaborn)
 
 
+Scripts are located here `EnerBe/benchmarker`
+
+Simple usage:
+```
+python main.py -h
+usage: main.py [-h] [-c CONFIG] [--concatonate [N ...]] [-s] [-p] [-r RUN [RUN ...]]
+
+options:
+  -h, --help            show this help message and exit
+  -c CONFIG, --config CONFIG
+                        Pass specific .json config to script
+  --concatonate [N ...]
+                        Concatonate multiple tmp_results.csv together
+  -s, --sbatch          Create aand submit Jobscript based off info from 'bench_config.json'
+  -p, --plot            Plot the Benchmark
+  -r RUN [RUN ...], --run RUN [RUN ...]
+                        Full command (space seperated)
+```
+
+### How to run on a node that you have allocated:
+
+```
+python /home/benjamic/EnerBe/benchmarker/main.py --run="/home/benjamic/EnerBe/bin/dEnerBe --xgemm-gpublas 10000"
+```
+
+### Run with Slurm:
+You need to set up your case information in the `bench_config.json` 
+
+Then all you need to do is:
+```
+python main -s
+```
+
+### Plot the results
+
+Results will be plotted from the csvs that live in this directory: `EnerBe/benchmarker/tmp_results/results.csv`
+
+```
+python main.py -p
+```
+`.pngs` will be saved in the `benchmarker` directory
