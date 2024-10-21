@@ -27,9 +27,9 @@
         "array_jobs": "1"
     },
 
-    "case_info":{
-        "application": ["sEnerBe"],
-        "args": ["--xgemm-gpublas"],
+    "iterable_case_info":{
+        "applications": ["sEnerBe" , "dEnerBe"],
+        "args": ["--xgemm-gpublas", "--xgemm-gputhread"],
         "environment_parameters": null,
         "input_parameters": [
             "10", "100", "1000", "10000", "20000", "40000"
