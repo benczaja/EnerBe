@@ -268,7 +268,7 @@ class BenchMarker:
             return command
 
 
-        def run(self, command, application="",arg="",input_parameter=""):
+        def run(self, command):
 
             if not os.path.exists(self.EnerBe_log_dir):
                 os.mkdir(self.EnerBe_log_dir)
@@ -289,8 +289,8 @@ class BenchMarker:
                 self.tmp_out_file = self.tmp_out_file.replace(".out", "." + str(jobid) + ".out")
                 self.tmp_err_file = self.tmp_err_file.replace(".err", "." + str(jobid) + ".err")
             except:
-                self.tmp_out_file = self.tmp_out_file.replace(".out", "." + application + "." + arg + "." + input_parameter + ".out")
-                self.tmp_err_file = self.tmp_err_file.replace(".err", "." + application + "." + arg + "." + input_parameter + ".err")
+                self.tmp_out_file = self.tmp_out_file.replace(".out", command[0].replace(" ",".").replace("/",".").replace("-",".") + ".out")
+                self.tmp_err_file = self.tmp_err_file.replace(".err", command[0].replace(" ",".").replace("/",".").replace("-",".") + ".err")
 
 
 
@@ -482,11 +482,11 @@ if __name__ == "__main__":
     
     if args.sbatch:
         benchmarker.write_jobscript()
-        #benchmarker.launch_jobscript()
+        benchmarker.launch_jobscript()
         exit(0)
     if args.local:
         benchmarker.write_script()
-        benchmarker.launch_script()
+        #benchmarker.launch_script()
         exit(0)
 
     if args.concatonate:
