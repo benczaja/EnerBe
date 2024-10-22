@@ -144,6 +144,24 @@ class BenchMarker:
                         f.write(job_string_text)
                         f.close()
 
+        def launch_jobscript(self):
+
+            applications = self.iterable_case_info["applications"]
+            args = self.iterable_case_info["args"]
+            input_parameters = self.iterable_case_info["input_parameters"]
+
+            for application in applications:
+                for arg in args:
+                    for input_parameter in input_parameters:
+                        batch_file = self.EnerBe_sbatch_dir + "/" + self.sbatch_data["script_name"]
+                        batch_file = batch_file.replace(".sh", "." + application + "." + arg + "." + input_parameter + ".sh")
+
+                        print("Launching Jobscript: ")
+                        output = subprocess.check_output([
+                            'sh',
+                            batch_file]).decode("utf-8")
+                        print(batch_file)
+
 
 
         def write_jobscript(self):
@@ -248,7 +266,7 @@ class BenchMarker:
             return command
 
 
-        def run(self, command):
+        def run(self, command, application="",arg="",input_parameter=""):
 
             if not os.path.exists(self.EnerBe_log_dir):
                 os.mkdir(self.EnerBe_log_dir)
@@ -268,9 +286,8 @@ class BenchMarker:
                 self.tmp_out_file = self.tmp_out_file.replace(".out", "." + str(jobid) + ".out")
                 self.tmp_err_file = self.tmp_err_file.replace(".err", "." + str(jobid) + ".err")
             except:
-                pass
-                #self.tmp_out_file = self.tmp_out_file.replace(".out", "." + str(tmp_idx) + ".out")
-                #self.tmp_err_file = self.tmp_err_file.replace(".err", "." + str(tmp_idx) + ".err")
+                self.tmp_out_file = self.tmp_out_file.replace(".out", "." + application + "." + arg + "." + input_parameter + ".out")
+                self.tmp_err_file = self.tmp_err_file.replace(".err", "." + application + "." + arg + "." + input_parameter + ".err")
 
 
 
