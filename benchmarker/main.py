@@ -158,7 +158,7 @@ class BenchMarker:
                         batch_file = self.EnerBe_sbatch_dir + "/" + self.sbatch_data["script_name"]
                         batch_file = batch_file.replace(".sh", "." + application + "." + arg + "." + input_parameter + ".sh")
 
-                        print("Launching Jobscript: ")
+                        print("Running script: ")
                         output = subprocess.check_output([
                             'sh',
                             batch_file]).decode("utf-8")
@@ -289,8 +289,8 @@ class BenchMarker:
                 self.tmp_out_file = self.tmp_out_file.replace(".out", "." + str(jobid) + ".out")
                 self.tmp_err_file = self.tmp_err_file.replace(".err", "." + str(jobid) + ".err")
             except:
-                self.tmp_out_file = self.tmp_out_file.replace(".out", command[0].replace(" ",".").replace("/",".").replace("-",".") + ".out")
-                self.tmp_err_file = self.tmp_err_file.replace(".err", command[0].replace(" ",".").replace("/",".").replace("-",".") + ".err")
+                self.tmp_out_file = self.tmp_out_file.replace(".out", command[0].replace(" ",".").replace("/",".").replace("-",".").replace("..",".") + ".out")
+                self.tmp_err_file = self.tmp_err_file.replace(".err", command[0].replace(" ",".").replace("/",".").replace("-",".").replace("..",".") + ".err")
 
 
 
@@ -411,7 +411,7 @@ class BenchMarker:
                 results_file = results_dir + "/results_" + jobid +".csv"
             except:
                 print(self.command)
-                results_file = results_dir + "/tmp_results.csv"
+                results_file = results_dir + "/results_" + self.command[0].replace(" ",".").replace("/",".").replace("-",".").replace("..",".") + ".csv"
 
             out_data = self.results
             out_data.update(self.arch_info)
