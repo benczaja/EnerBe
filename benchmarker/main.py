@@ -98,6 +98,54 @@ class BenchMarker:
                 f.close()
 
 
+        def write_script(self):
+
+            self.clean_logs()
+
+            if not os.path.exists(self.EnerBe_sbatch_dir):
+                print("Making dir: " + self.EnerBe_sbatch_dir )
+                os.mkdir(self.EnerBe_sbatch_dir)
+            
+            
+            applications = self.iterable_case_info["applications"]
+            args = self.iterable_case_info["args"]
+            input_parameters = self.iterable_case_info["input_parameters"]
+
+            for application in applications:
+                for arg in args:
+                    for input_parameter in input_parameters:
+
+                        job_string_text = "#!/bin/bash\n\n"
+
+                        job_string_text += "\n"
+
+                        if self.pre_module_cmds:
+                            for command in self.pre_module_cmds:
+                                job_string_text += command + "\n"
+
+                        if self.modules:
+                            for module in self.modules:
+                                job_string_text += "module load " + module + "\n"
+
+                        if self.pre_executable_cmds:
+                            for command in self.pre_executable_cmds:
+                                job_string_text += command + "\n"
+
+                        job_string_text += "\n"
+
+                        command = self.prepare_command(application,arg,input_parameter)
+                        job_string_text += "python " + self.EnerBe_root_dir + '/benchmarker/main.py --run="' + command + '"'
+
+
+                        batch_file = self.EnerBe_sbatch_dir + "/" + self.sbatch_data["script_name"]
+                        batch_file = batch_file.replace(".sh", "." + application + "." + arg + "." + input_parameter + ".sh")
+
+                        f = open(batch_file, "w")
+                        f.write(job_string_text)
+                        f.close()
+
+
+
         def write_jobscript(self):
 
             self.clean_logs()
@@ -393,7 +441,8 @@ if __name__ == "__main__":
 
     parser.add_argument("-c","--config", help="Pass specific .json config to script",type=str)
     parser.add_argument("--concatonate",metavar='N', type=str, nargs='*', help="Concatonate multiple tmp_results.csv together")
-    parser.add_argument("-s","--sbatch", help="Create aand submit Jobscript based off info from 'bench_config.json'",action="store_true")
+    parser.add_argument("-s","--sbatch", help="Create and submit Jobscript based off info from 'bench_config.json'",action="store_true")
+    parser.add_argument("-l","--local", help="Create and submit local scripts based off info from 'bench_config.json'",action="store_true")
     parser.add_argument("-p","--plot", help="Plot the Benchmark",action="store_true")
     parser.add_argument("-r","--run", help='Full command (space seperated)', type=str, nargs='+')
 
@@ -413,6 +462,10 @@ if __name__ == "__main__":
     if args.sbatch:
         benchmarker.write_jobscript()
         benchmarker.launch_jobscript()
+        exit(0)
+    if args.local:
+        benchmarker.write_script()
+        benchmarker.launch_script()
         exit(0)
 
     if args.concatonate:
