@@ -33,6 +33,7 @@ class BenchMarker:
                 self.tmp_out_file = "run.out"
                 self.tmp_err_file = "run.err"
 
+                self.batch_file = ""
                 self.command = ""
 
                 # These will be picked up when running the applications                
@@ -82,6 +83,8 @@ class BenchMarker:
                     "NRUNS": [float('nan')],
                 }
         
+        def clean_name(self, filename):
+            return(filename.replace("--",".").replace("..",".").replace("-",".").replace(" ","").replace("/","."))
 
         def read_config(self, config_file_name):
                 """
@@ -139,14 +142,15 @@ class BenchMarker:
                         job_string_text += "python " + self.EnerBe_root_dir + '/benchmarker/main.py --run="' + command + '"'
 
 
-                        batch_file = self.EnerBe_sbatch_dir + "/" + self.sbatch_data["script_name"]
-                        batch_file = batch_file.replace(".sh", "." + application + "." + arg + "." + input_parameter + ".sh")
+                        self.batch_file = self.sbatch_data["script_name"].replace(".sh", "." + application + "." + arg + "." + input_parameter + ".sh")
+                        self.batch_file = self.clean_name(self.batch_file)
+                        self.batch_file = self.EnerBe_sbatch_dir + "/" +  self.batch_file
 
-                        f = open(batch_file, "w")
+                        f = open(self.batch_file, "w")
                         f.write(job_string_text)
                         f.close()
 
-        def launch_jobscript(self):
+        def launch_script(self):
 
             applications = self.iterable_case_info["applications"]
             args = self.iterable_case_info["args"]
@@ -155,14 +159,14 @@ class BenchMarker:
             for application in applications:
                 for arg in args:
                     for input_parameter in input_parameters:
-                        batch_file = self.EnerBe_sbatch_dir + "/" + self.sbatch_data["script_name"]
-                        batch_file = batch_file.replace(".sh", "." + application + "." + arg + "." + input_parameter + ".sh")
+                        self.batch_file = self.sbatch_data["script_name"].replace(".sh", "." + application + "." + arg + "." + input_parameter + ".sh")
+                        self.batch_file = self.clean_name(self.batch_file)
+                        self.batch_file = self.EnerBe_sbatch_dir + "/" +  self.batch_file
 
-                        print("Running script: ")
+                        print("Running script:\n" + self.batch_file)
                         output = subprocess.check_output([
                             'sh',
-                            batch_file]).decode("utf-8")
-                        print(batch_file)
+                            self.batch_file]).decode("utf-8")
 
 
 
@@ -218,11 +222,11 @@ class BenchMarker:
                         command = self.prepare_command(application,arg,input_parameter)
                         job_string_text += "python " + self.EnerBe_root_dir + '/benchmarker/main.py --run="' + command + '"'
 
-
-                        batch_file = self.EnerBe_sbatch_dir + "/" + self.sbatch_data["script_name"]
-                        batch_file = batch_file.replace(".sh", "." + application + "." + arg + "." + input_parameter + ".sh")
-
-                        f = open(batch_file, "w")
+                        self.batch_file = self.sbatch_data["script_name"].replace(".sh", "." + application + "." + arg + "." + input_parameter + ".sh")
+                        self.batch_file = self.clean_name(self.batch_file)
+                        self.batch_file = self.EnerBe_sbatch_dir + "/" +  self.batch_file
+                        
+                        f = open(self.batch_file, "w")
                         f.write(job_string_text)
                         f.close()
 
@@ -235,8 +239,9 @@ class BenchMarker:
             for application in applications:
                 for arg in args:
                     for input_parameter in input_parameters:
-                        batch_file = self.EnerBe_sbatch_dir + "/" + self.sbatch_data["script_name"]
-                        batch_file = batch_file.replace(".sh", "." + application + "." + arg + "." + input_parameter + ".sh")
+                        self.batch_file = self.sbatch_data["script_name"].replace(".sh", "." + application + "." + arg + "." + input_parameter + ".sh")
+                        self.batch_file = self.clean_name(self.batch_file)
+                        self.batch_file = self.EnerBe_sbatch_dir + "/" +  self.batch_file
 
                         print("Launching Jobscript: ")
                         output = subprocess.check_output([
@@ -244,8 +249,8 @@ class BenchMarker:
                             '-a 1-' + self.sbatch_data['array_jobs'],
                             '--output='+self.EnerBe_log_dir +"/slurmjob.%j.out",
                             '--error='+self.EnerBe_log_dir +"/slurmjob.%j.err",
-                            batch_file]).decode("utf-8")
-                        print(batch_file)
+                            self.batch_file]).decode("utf-8")
+                        print(self.batch_file)
 
         def clean_logs(self):
             
@@ -289,10 +294,10 @@ class BenchMarker:
                 self.tmp_out_file = self.tmp_out_file.replace(".out", "." + str(jobid) + ".out")
                 self.tmp_err_file = self.tmp_err_file.replace(".err", "." + str(jobid) + ".err")
             except:
-                self.tmp_out_file = self.tmp_out_file.replace(".out", command[0].replace(" ",".").replace("/",".").replace("-",".").replace("..",".") + ".out")
-                self.tmp_err_file = self.tmp_err_file.replace(".err", command[0].replace(" ",".").replace("/",".").replace("-",".").replace("..",".") + ".err")
+                self.tmp_out_file = self.tmp_out_file.replace(".out", self.clean_name(command[0]) + ".out")
+                self.tmp_err_file = self.tmp_err_file.replace(".err", self.clean_name(command[0]) + ".err")
 
-
+            print(self.clean_name(command[0]))
 
             print("logging out/err to " + self.EnerBe_log_dir)
             with open(self.EnerBe_log_dir + "/" +self.tmp_out_file, "w") as text_file:
@@ -411,7 +416,7 @@ class BenchMarker:
                 results_file = results_dir + "/results_" + jobid +".csv"
             except:
                 print(self.command)
-                results_file = results_dir + "/results_" + self.command[0].replace(" ",".").replace("/",".").replace("-",".").replace("..",".") + ".csv"
+                results_file = results_dir + "/results_" + self.clean_name(self.command[0]) + ".csv"
 
             out_data = self.results
             out_data.update(self.arch_info)
@@ -486,7 +491,7 @@ if __name__ == "__main__":
         exit(0)
     if args.local:
         benchmarker.write_script()
-        #benchmarker.launch_script()
+        benchmarker.launch_script()
         exit(0)
 
     if args.concatonate:
