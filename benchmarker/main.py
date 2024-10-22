@@ -29,9 +29,11 @@ class BenchMarker:
                 self.pre_executable_cmds = []
                 self.sbatch_data = {}
                 self.iterable_case_info = {}
-
+                
                 self.tmp_out_file = "run.out"
                 self.tmp_err_file = "run.err"
+
+                self.command = ""
 
                 # These will be picked up when running the applications                
                 self.arch_info = {
@@ -271,7 +273,8 @@ class BenchMarker:
             if not os.path.exists(self.EnerBe_log_dir):
                 os.mkdir(self.EnerBe_log_dir)
 
-            CMD = command
+            self.command = command
+            CMD = self.command
 
             print("Running this command ...")
             print(CMD[0].split(" "))
@@ -407,6 +410,7 @@ class BenchMarker:
                 jobid = os.environ['SLURM_JOB_ID']
                 results_file = results_dir + "/results_" + jobid +".csv"
             except:
+                print(self.command)
                 results_file = results_dir + "/tmp_results.csv"
 
             out_data = self.results
@@ -478,7 +482,7 @@ if __name__ == "__main__":
     
     if args.sbatch:
         benchmarker.write_jobscript()
-        benchmarker.launch_jobscript()
+        #benchmarker.launch_jobscript()
         exit(0)
     if args.local:
         benchmarker.write_script()
