@@ -137,8 +137,11 @@ class BenchMarker:
                                 job_string_text += command + "\n"
 
                         job_string_text += "\n"
-
-                        command = self.prepare_command(application,arg,input_parameter)
+                        if self.sbatch_data['launcher']:
+                            command = self.sbatch_data['launcher']
+                            command += " " + self.prepare_command(application,arg,input_parameter)
+                        else:
+                            command = self.prepare_command(application,arg,input_parameter)
                         job_string_text += "python " + self.EnerBe_root_dir + '/benchmarker/main.py --run="' + command + '"'
 
 
@@ -268,7 +271,12 @@ class BenchMarker:
         
         def prepare_command(self, application, arg, input_parameter):
 
-            command =  self.EnerBe_root_dir + "/bin/" + application + " " + arg + " " + input_parameter # this should be changed so we can loop over applications
+            if len(arg) == 0:
+                command =  self.EnerBe_root_dir + "/bin/" + application + " " + input_parameter # this should be changed so we can loop over applications
+            else:
+                command =  self.EnerBe_root_dir + "/bin/" + application + " " + arg + " " + input_parameter # this should be changed so we can loop over applications
+
+
 
             return command
 

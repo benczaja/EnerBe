@@ -1,19 +1,17 @@
 {
     "pre_module_cmds": [
-        "source /cvmfs/software.eessi.io/versions/2023.06/init/bash"
     ],
 
     "modules": [
-        "foss/2023b",
-        "SciPy-bundle/2023.11-gfbf-2023b"
     ],
 
     "pre_executable_cmds": [
-        "export LD_LIBRARY_PATH=/cvmfs/software.eessi.io/versions/2023.06/software/linux/x86_64/intel/skylake_avx512/software/FlexiBLAS/3.3.1-GCC-13.2.0/lib"
+        "export LIBRARY_PATH=$LIBRARY_PATH:/home/benjamic/EnerBe/pmt/lib",
+        "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/benjamic/EnerBe/pmt/lib"
     ],
 
     "sbatch_data": {
-        "script_name": "EnerBe.sbatch.sh",
+        "script_name": "EnerBe.local.sh",
         "partition": "tutti",
         "nodes": "1",
         "ntasks": "72",
@@ -23,16 +21,16 @@
         "gpus-per-node": "1",
         "exclusive": true,
         "constraint": "gpu_amd",
-        "launcher": null,
+        "launcher": "mpirun -np 128",
         "array_jobs": "1"
     },
 
     "iterable_case_info":{
-        "applications": ["sEnerBe" , "dEnerBe"],
-        "args": ["--xgemm-gpublas", "--xgemm-gputhread"],
+        "applications": ["aneurysm_pmt"],
+        "args": [""],
         "environment_parameters": null,
         "input_parameters": [
-            "10", "100", "1000", "10000", "20000", "40000"
+            "/home/benjamic/EnerBe/bin/input_1_node.xml"
         ]
     }
 }
