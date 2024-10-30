@@ -365,11 +365,6 @@ void run ()
     pcout << "Running " << numIter << " iteration." << endl;
 
     // Start PMT sensor
-    //std::unique_ptr<pmt::PMT> sensor = pmt::rapl::RAPL::Create();
-    //std::unique_ptr<pmt::PMT> sensor = pmt::rapl::Rapl::Create();
-    //std::unique_ptr<pmt::PMT> sensor = pmt::Create("Rapl");
-    //auto start = sensor->Read();
-
     std::unique_ptr<pmt::PMT> CPUsensor = pmt::rapl::Rapl::Create();
     pmt::State CPUstart = CPUsensor->Read();
 
