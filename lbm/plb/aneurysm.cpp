@@ -367,8 +367,11 @@ void run ()
     // Start PMT sensor
     //std::unique_ptr<pmt::PMT> sensor = pmt::rapl::RAPL::Create();
     //std::unique_ptr<pmt::PMT> sensor = pmt::rapl::Rapl::Create();
-    std::unique_ptr<pmt::PMT> sensor = pmt::Create("Rapl");
-    auto start = sensor->Read();
+    //std::unique_ptr<pmt::PMT> sensor = pmt::Create("Rapl");
+    //auto start = sensor->Read();
+
+    std::unique_ptr<pmt::PMT> CPUsensor = pmt::rapl::Rapl::Create();
+    pmt::State CPUstart = CPUsensor->Read();
 
     // Collision and streaming iterations.
     for(int i = 0; i < numIter; ++i)
@@ -389,7 +392,7 @@ void run ()
     pcout << "Performance: " << (T)numFluidCells * (T)numIter / elapsed * 1.e-6 << " MLUPS" << endl;
 
 
-    auto end = sensor->Read();
+    pmt::State CPUend = CPUsensor->Read();
 
     int nranks = 0;
     MPI_Comm_size(MPI_COMM_WORLD, &nranks);
@@ -402,13 +405,13 @@ void run ()
     pcout << "NGPUs: "<< 0 << std::endl;
     pcout << "GPU ID: "<< 99 << std::endl;
     pcout << "SIZE: " << numFluidCells << endl;
-    pcout << "(RAPL) CPU_TIME: " << pmt::PMT::seconds(start, end) << " s"<< endl;
+    pcout << "(RAPL) CPU_TIME: " << pmt::PMT::seconds(CPUstart, CPUend) << " s"<< endl;
     pcout << "(RAPL) CPU_TIME_var: " << 0.0 << " s^2"<< endl;
     pcout << "(RAPL) CPU_TIME_std: " << 0.0 << " s"<< endl;
-    pcout << "(RAPL) CPU_WATTS: " << pmt::PMT::watts(start, end) << " W" << endl;
+    pcout << "(RAPL) CPU_WATTS: " << pmt::PMT::watts(CPUstart, CPUend) << " W" << endl;
     pcout << "(RAPL) CPU_WATTS_var: " << 0.0 << " W^2" << endl;
     pcout << "(RAPL) CPU_WATTS_std: " << 0.0 << " W" << endl;
-    pcout << "(RAPL) CPU_JOULES: " << pmt::PMT::joules(start, end) << " J" << endl;
+    pcout << "(RAPL) CPU_JOULES: " << pmt::PMT::joules(CPUstart, CPUend) << " J" << endl;
     pcout << "(RAPL) CPU_JOULES_var: " << 0.0 << " J^2" << endl;
     pcout << "(RAPL) CPU_JOULES_std: " << 0.0 << " J" << endl;
     pcout << "NRUNS: " << 1 << endl;
