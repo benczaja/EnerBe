@@ -10,29 +10,31 @@ class Plotter():
 
         self.arch_palette ={
             "NVIDIA A100-SXM4-40GB": "tab:blue",
-            "Intel(R) Xeon(R) Platinum 8360Y CPU @ 2.40GHz": "tab:blue", # host for A100
+            "Intel(R) Xeon(R) Platinum 8360Y CPU @ 2.40GHz (x2)": "tab:blue", # host for A100
 
             "NVIDIA H100": "tab:green",
-            "AMD EPYC 9334 32-Core Processor": "tab:green", # host for H100s
+            "AMD EPYC 9334 32-Core Processor (x2)": "tab:green", # host for H100s
 
             "Instinct MI210": "tab:orange",
 
-            "AMD Instinct MI300A Host": "tab:red",
+            "AMD Instinct MI300A Accelerator (x4)": "tab:red",
             "AMD Instinct MI300A Accelerator": "tab:red",
             
-            "AMD EPYC 7H12 64-Core Processor": "tab:pink",
-            "AMD EPYC 9654 96-Core Processor": "tab:cyan",
-            "Graviton3": "tab:grey"
+            "AMD EPYC 7H12 64-Core Processor (x2)": "tab:pink",
+            "AMD EPYC 9654 96-Core Processor (x2)": "tab:cyan",
+            "Graviton3 (x1)": "tab:grey"
             }
  
     def load_data(self,result_csv):
         self.data = pd.read_csv(result_csv,low_memory=False)
         self.plot_data = self.data
+        self.plot_data["PRECISION"] = self.plot_data["PRECISION"]*8  
 
     def TPE_plot(self, x, *args, **kwargs):
         style = kwargs.get('style', None)
         sort_by = kwargs.get('sort_by', None)
 
+        self.plot_data['CPU_NAME'] = self.plot_data['CPU_NAME'] + " (x" +self.plot_data['Sockets'].astype(str) + ")"
         for name in self.plot_data["NAME"].unique():
             for algo in self.plot_data["ALGO"].unique():
             
@@ -80,7 +82,6 @@ class Plotter():
         title = kwargs.get('title', None)
 
         plot_data = self.plot_data
-        plot_data["PRECISION"] = plot_data["PRECISION"]*8 
 
         if sort_by:
             plot_data = plot_data.sort_values(by=sort_by)
