@@ -7,6 +7,23 @@ class Plotter():
     def __init__(self):
         self.data = {}
         self.plot_data = {}
+
+        self.arch_palette ={
+            "NVIDIA A100-SXM4-40GB": "tab:blue",
+            "Intel(R) Xeon(R) Platinum 8360Y CPU @ 2.40GHz": "tab:blue", # host for A100
+
+            "NVIDIA H100": "tab:green",
+            "AMD EPYC 9334 32-Core Processor": "tab:green", # host for H100s
+
+            "Instinct MI210": "tab:orange",
+
+            "AMD Instinct MI300A Host": "tab:red",
+            "AMD Instinct MI300A Accelerator": "tab:red",
+            
+            "AMD EPYC 7H12 64-Core Processor": "tab:pink",
+            "AMD EPYC 9654 96-Core Processor": "tab:cyan",
+            "Graviton3": "tab:grey"
+            }
  
     def load_data(self,result_csv):
         self.data = pd.read_csv(result_csv,low_memory=False)
@@ -33,13 +50,12 @@ class Plotter():
         
                 f, axs = plt.subplots(3, 2, sharex=True, figsize=(8, 10))
 
-                sns.lineplot(x=x, y="CPU_TIME",  hue="CPU_NAME", style=style,  data=plot_data, markers=True,ax=axs[0,0])
-                sns.lineplot(x=x, y="CPU_WATTS", hue="CPU_NAME", style=style,  data=plot_data, markers=True,ax=axs[1,0],legend=False)
-                sns.lineplot(x=x, y="CPU_JOULES",hue="CPU_NAME", style=style,  data=plot_data, markers=True,ax=axs[2,0],legend=False)
-
-                sns.lineplot(x=x, y="GPU_TIME",  hue="GPU_NAME", style=style,  data=plot_data, markers=True,ax=axs[0,1])
-                sns.lineplot(x=x, y="GPU_WATTS", hue="GPU_NAME", style=style,  data=plot_data, markers=True,ax=axs[1,1],legend=False)
-                sns.lineplot(x=x, y="GPU_JOULES",hue="GPU_NAME", style=style,  data=plot_data, markers=True,ax=axs[2,1],legend=False)
+                sns.lineplot(x=x, y="CPU_TIME",  hue="CPU_NAME", style=style,  data=plot_data, palette=self.arch_palette, markers=True,ax=axs[0,0])
+                sns.lineplot(x=x, y="CPU_WATTS", hue="CPU_NAME", style=style,  data=plot_data, palette=self.arch_palette, markers=True,ax=axs[1,0],legend=False)
+                sns.lineplot(x=x, y="CPU_JOULES",hue="CPU_NAME", style=style,  data=plot_data, palette=self.arch_palette, markers=True,ax=axs[2,0],legend=False)
+                sns.lineplot(x=x, y="GPU_TIME",  hue="GPU_NAME", style=style,  data=plot_data, palette=self.arch_palette, markers=True,ax=axs[0,1])
+                sns.lineplot(x=x, y="GPU_WATTS", hue="GPU_NAME", style=style,  data=plot_data, palette=self.arch_palette, markers=True,ax=axs[1,1],legend=False)
+                sns.lineplot(x=x, y="GPU_JOULES",hue="GPU_NAME", style=style,  data=plot_data, palette=self.arch_palette, markers=True,ax=axs[2,1],legend=False)
 
                 axs[0,1].set_ylabel("GPU Time (s)")
                 axs[1,1].set_ylabel("GPU Power (W)")
