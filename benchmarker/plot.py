@@ -21,7 +21,10 @@ class Plotter():
             "AMD Instinct MI300A Accelerator": "tab:red",
             
             "AMD EPYC 7H12 64-Core Processor (x2)": "tab:pink",
+
+            "AMD EPYC 9654 96-Core Processor (x1)": "tab:cyan",
             "AMD EPYC 9654 96-Core Processor (x2)": "tab:cyan",
+
             "Graviton3 (x1)": "tab:grey"
             }
  
@@ -46,6 +49,8 @@ class Plotter():
 
                 title = name + "_" + algo
 
+                if "Palabos" in name:
+                    style="Sockets"
 
                 if sort_by:
                     plot_data = plot_data.sort_values(by=sort_by)
@@ -68,8 +73,8 @@ class Plotter():
                 axs[2,0].set_ylabel("CPU Energy (J)")
 
                 f.suptitle(title)
-                axs[0,0].legend(loc=2, prop={'size': 6})
-                axs[0,1].legend(loc=2, prop={'size': 6})
+                axs[0,0].legend(loc=2, prop={'size': 6}, bbox_to_anchor=[0, 1.6])
+                axs[0,1].legend(loc=2, prop={'size': 6}, bbox_to_anchor=[0, 1.6])
 
                 plt.tight_layout()
 
