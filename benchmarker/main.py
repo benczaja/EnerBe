@@ -222,7 +222,14 @@ class BenchMarker:
 
                         job_string_text += "\n"
 
-                        command = self.prepare_command(application,arg,input_parameter)
+                        job_string_text += "\n"
+                        if self.sbatch_data['launcher']:
+                            command = self.sbatch_data['launcher']
+                            command += " " + self.prepare_command(application,arg,input_parameter)
+                        else:
+                            command = self.prepare_command(application,arg,input_parameter)
+
+                        #command = self.prepare_command(application,arg,input_parameter)
                         job_string_text += "python " + self.EnerBe_root_dir + '/benchmarker/main.py --run="' + command + '"'
 
                         self.batch_file = self.sbatch_data["script_name"].replace(".sh", "." + application + "." + arg + "." + input_parameter + ".sh")
