@@ -6,17 +6,23 @@ module load foss/2023b
 #module load CMake/3.26.3-GCCcore-12.3.0
 #module load pmt/1.2.0-GCCcore-12.3.0
 
+
+source ../../liza_aarch64_cuda_env.sh 
 # in case you are not working with modules
-export LIBRARY_PATH=$LIBRARY_PATH:/home/benjamic/EnerBe/pmt/lib
-export LIBRARY_PATH=$LIBRARY_PATH:/opt/rocm/lib
-export LIBRARY_PATH=$LIBRARY_PATH:/cvmfs/software.eessi.io/versions/2023.06/software/linux/x86_64/amd/zen3/software/GCCcore/13.2.0/lib64
-export LIBRARY_PATH=$LIBRARY_PATH:/cvmfs/software.eessi.io/versions/2023.06/software/linux/x86_64/amd/zen3/software/OpenMPI/4.1.6-GCC-13.2.0/lib
+#export LIBRARY_PATH=$LIBRARY_PATH:/home/benjamic/EnerBe/pmt/lib
+#export LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LIBRARY_PATH
 
+#export LIBRARY_PATH=$LIBRARY_PATH:/opt/rocm/lib
+#export LIBRARY_PATH=$LIBRARY_PATH:/cvmfs/software.eessi.io/versions/2023.06/software/linux/x86_64/amd/zen3/software/GCCcore/13.2.0/lib64
+#export LIBRARY_PATH=$LIBRARY_PATH:/cvmfs/software.eessi.io/versions/2023.06/software/linux/x86_64/amd/zen3/software/OpenMPI/4.1.6-GCC-13.2.0/lib
+#export LIBRARY_PATH=$LIBRARY_PATH:/cvmfs/software.eessi.io/versions/2023.06/software/linux/aarch64/neoverse_v1/software/GCCcore/13.2.0/lib64
 
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/benjamic/EnerBe/pmt/lib
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/rocm/lib
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cvmfs/software.eessi.io/versions/2023.06/software/linux/x86_64/amd/zen3/software/GCCcore/13.2.0/lib64
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cvmfs/software.eessi.io/versions/2023.06/software/linux/x86_64/amd/zen3/software/OpenMPI/4.1.6-GCC-13.2.0/lib
+#export LD_LIBRARY_PATH=$LIBRARY_PATH
+
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/benjamic/EnerBe/pmt/lib
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/rocm/lib
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cvmfs/software.eessi.io/versions/2023.06/software/linux/x86_64/amd/zen3/software/GCCcore/13.2.0/lib64
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cvmfs/software.eessi.io/versions/2023.06/software/linux/x86_64/amd/zen3/software/OpenMPI/4.1.6-GCC-13.2.0/lib
 
 
 cd ..
