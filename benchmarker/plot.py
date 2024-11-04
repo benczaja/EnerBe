@@ -15,6 +15,9 @@ class Plotter():
             "NVIDIA H100": "tab:green",
             "AMD EPYC 9334 32-Core Processor (x2)": "tab:green", # host for H100s
 
+            'NVIDIA GH200 480GB': "tab:purple",
+            'NVIDIA GH200 480GB (x1)': "tab:purple",
+
             "Instinct MI210": "tab:orange",
 
             "AMD Instinct MI300A Accelerator (x4)": "tab:red",
@@ -51,6 +54,8 @@ class Plotter():
 
                 if "Palabos" in name:
                     style="Sockets"
+                else:
+                    style = kwargs.get('style', None)
 
                 if sort_by:
                     plot_data = plot_data.sort_values(by=sort_by)
