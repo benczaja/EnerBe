@@ -146,12 +146,10 @@ class EnerBe {
         std::cout << "SIZE: " << size << std::endl;
         std::cout << "PERF: " << perf << std::endl;
         std::cout << "PERF_UNIT: " << perf_unit << std::endl;
-        #if !defined(PMT_ENABLED) && !defined(CUDA_ENABLED) && !defined(HIP_ENABLED)
-            std::cout << "TOTAL_TIME: " << time << " s"<< std::endl;
-            std::cout << "TOTAL_TIME_var: " << time_var << " s^2"<< std::endl;
-            std::cout << "TOTAL_TIME_std: " << time_std << " s"<< std::endl;
-        #endif
         std::cout << "NRUNS: " << N_runs << std::endl;
+        std::cout << "TOTAL_TIME: " << time << " s"<< std::endl;
+        std::cout << "TOTAL_TIME_var: " << time_var << " s^2"<< std::endl;
+        std::cout << "TOTAL_TIME_std: " << time_std << " s"<< std::endl;
     } 
 
     void print_pmt_rapl_info() { 
@@ -165,7 +163,6 @@ class EnerBe {
         std::cout << "(RAPL) CPU_JOULES: " << rapl_energy << " J" << std::endl;
         std::cout << "(RAPL) CPU_JOULES_var: " << rapl_energy_var << " J^2" << std::endl;
         std::cout << "(RAPL) CPU_JOULES_std: " << rapl_energy_std << " J" << std::endl;
-        std::cout << "TOTAL_TIME: " << rapl_time + nvml_time << " s"<< std::endl;
         std::cout << "TOTAL_WATTS: " << rapl_power + nvml_power << " W"<< std::endl;
         std::cout << "TOTAL_JOULES: " << rapl_energy + nvml_energy << " J"<< std::endl;
 
@@ -182,7 +179,6 @@ class EnerBe {
         std::cout << "(RAPL) CPU_JOULES: " << rapl_energy << " | (NVML) GPU_JOULES: " << nvml_energy << " J"<< std::endl;
         std::cout << "(RAPL) CPU_JOULES_var: " << rapl_energy_var << " | (NVML) GPU_JOULES_var: " << nvml_energy_var << " J^2"<< std::endl;
         std::cout << "(RAPL) CPU_JOULES_std: " << rapl_energy_std << " | (NVML) GPU_JOULES_std: " << nvml_energy_std << " J"<< std::endl;
-        std::cout << "TOTAL_TIME: " << rapl_time + nvml_time << " s"<< std::endl;
         std::cout << "TOTAL_WATTS: " << rapl_power + nvml_power << " W"<< std::endl;
         std::cout << "TOTAL_JOULES: " << rapl_energy + nvml_energy << " J"<< std::endl;
     } 
@@ -198,7 +194,6 @@ class EnerBe {
         std::cout << "(RAPL) CPU_JOULES: " << rapl_energy << " | (ROCM) GPU_JOULES: " << rocm_energy << " J"<< std::endl;
         std::cout << "(RAPL) CPU_JOULES_var: " << rapl_energy_var << " | (ROCM) GPU_JOULES_var: " << rocm_energy_var << " J^2"<< std::endl;
         std::cout << "(RAPL) CPU_JOULES_std: " << rapl_energy_std << " | (ROCM) GPU_JOULES_std: " << rocm_energy_std << " J"<< std::endl;
-        std::cout << "Total TIME: " << rapl_time + rocm_time << " s"<< std::endl;
         std::cout << "Total WATTS: " << rapl_power + rocm_power << " W"<< std::endl;
         std::cout << "Total JOULES: " << rapl_energy + rocm_energy << " J"<< std::endl;
     } 
@@ -297,11 +292,12 @@ class EnerBe {
             sum_rocm_energy += rocm_energys[i];
 
         }
-        time = sum_time/double(N_runs);
 
         rapl_time = sum_rapl_time/double(N_runs);
         nvml_time = sum_nvml_time/double(N_runs);
         rocm_time = sum_rocm_time/double(N_runs);
+
+        time = rapl_time + nvml_time + rocm_time;
 
         rapl_power = sum_rapl_power/double(N_runs);
         nvml_power = sum_nvml_power/double(N_runs);
@@ -340,7 +336,6 @@ class EnerBe {
         }
     
         // variance is the square of standard deviation
-        time_var = values /double(N_runs);
 
         rapl_time_var = rapl_time_values /double(N_runs);
         nvml_time_var = nvml_time_values /double(N_runs);
@@ -353,6 +348,9 @@ class EnerBe {
         rapl_energy_var = rapl_energy_values /double(N_runs);
         nvml_energy_var = nvml_energy_values /double(N_runs);
         rocm_energy_var = rocm_energy_values /double(N_runs);
+
+        time_var = rapl_time_var + nvml_time_var + rocm_time_var;
+
         // calculating standard deviation by finding square root
         // of variance
         time_std = sqrt(time_var);
@@ -370,7 +368,7 @@ class EnerBe {
         
         if (name == "xgemm")
             {
-                perf = size * size * sizeof (X_TYPE) * 8.0 / (rapl_time + nvml_time + rocm_time); // FLOP/s
+                perf = size * size * sizeof (X_TYPE) * 8.0 / (time); // FLOP/s
                 perf_unit = "FLOPs";
             }
 
