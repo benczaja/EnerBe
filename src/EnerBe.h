@@ -21,6 +21,7 @@ class EnerBe {
 
     std::string name;
     std::string algorithm;
+    std::string perf_unit = "UNK";
     
     int omp_threads = omp_get_max_threads();
     int gpuid = 99;
@@ -38,6 +39,8 @@ class EnerBe {
     double time = 0.0;
     double time_var = 0.0;
     double time_std = 0.0;
+    double perf = 0;
+
 
     // Devil horns
     double sign_of_the_beast = 0.0;
@@ -141,21 +144,18 @@ class EnerBe {
         std::cout << "NGPUs: "<< N_gpus << std::endl;
         std::cout << "GPU ID: "<< gpuid << std::endl;
         std::cout << "SIZE: " << size << std::endl;
-        std::cout << "TOTAL_TIME: " << time << " s"<< std::endl;
-        std::cout << "TOTAL_TIME_var: " << time_var << " s^2"<< std::endl;
-        std::cout << "TOTAL_TIME_std: " << time_std << " s"<< std::endl;
+        std::cout << "PERF: " << perf << std::endl;
+        std::cout << "PERF_UNIT: " << perf_unit << std::endl;
+        #if !defined(PMT_ENABLED) && !defined(CUDA_ENABLED) && !defined(HIP_ENABLED)
+            std::cout << "TOTAL_TIME: " << time << " s"<< std::endl;
+            std::cout << "TOTAL_TIME_var: " << time_var << " s^2"<< std::endl;
+            std::cout << "TOTAL_TIME_std: " << time_std << " s"<< std::endl;
+        #endif
         std::cout << "NRUNS: " << N_runs << std::endl;
     } 
 
     void print_pmt_rapl_info() { 
-        std::cout << "NAME: " << name << std::endl;
-        std::cout << "ALGO: "<< algorithm << std::endl;
-        std::cout << "PRECISION: "<< sizeof (X_TYPE) <<" bytes"<< std::endl;
-        std::cout << "OMP_THREADS: "<< omp_threads << std::endl;
-        std::cout << "MPI_RANKS: "<< MPI_ranks << std::endl;
-        std::cout << "NGPUs: "<< N_gpus << std::endl;
-        std::cout << "GPU ID: "<< gpuid << std::endl;
-        std::cout << "SIZE: " << size << std::endl;
+        print_basic_info();
         std::cout << "(RAPL) CPU_TIME: " << rapl_time << " s"<< std::endl;
         std::cout << "(RAPL) CPU_TIME_var: " << rapl_time_var << " s^2"<< std::endl;
         std::cout << "(RAPL) CPU_TIME_std: " << rapl_time_std << " s"<< std::endl;
@@ -165,19 +165,14 @@ class EnerBe {
         std::cout << "(RAPL) CPU_JOULES: " << rapl_energy << " J" << std::endl;
         std::cout << "(RAPL) CPU_JOULES_var: " << rapl_energy_var << " J^2" << std::endl;
         std::cout << "(RAPL) CPU_JOULES_std: " << rapl_energy_std << " J" << std::endl;
-        std::cout << "NRUNS: " << N_runs << std::endl;
+        std::cout << "TOTAL_TIME: " << rapl_time + nvml_time << " s"<< std::endl;
+        std::cout << "TOTAL_WATTS: " << rapl_power + nvml_power << " W"<< std::endl;
+        std::cout << "TOTAL_JOULES: " << rapl_energy + nvml_energy << " J"<< std::endl;
 
     } 
 
     void print_pmt_nvml_info() { 
-        std::cout << "NAME: " << name << std::endl;
-        std::cout << "ALGO: "<< algorithm << std::endl;
-        std::cout << "PRECISION: "<< sizeof (X_TYPE) <<" bytes"<< std::endl;
-        std::cout << "OMP_THREADS: "<< omp_threads << std::endl;
-        std::cout << "MPI_RANKS: "<< MPI_ranks << std::endl;
-        std::cout << "NGPUs: "<< N_gpus << std::endl;
-        std::cout << "GPU ID: "<< gpuid << std::endl;
-        std::cout << "SIZE: " << size <<std::endl;
+        print_basic_info();
         std::cout << "(RAPL) CPU_TIME: " << rapl_time << " | (NVML) GPU_TIME: " << nvml_time << " s"<< std::endl;
         std::cout << "(RAPL) CPU_TIME_var: " << rapl_time_var << " | (NVML) GPU_TIME_var: " << nvml_time_var << " s^2"<< std::endl;
         std::cout << "(RAPL) CPU_TIME_std: " << rapl_time_std << " | (NVML) GPU_TIME_std: " << nvml_time_std << " s"<< std::endl;
@@ -190,18 +185,10 @@ class EnerBe {
         std::cout << "TOTAL_TIME: " << rapl_time + nvml_time << " s"<< std::endl;
         std::cout << "TOTAL_WATTS: " << rapl_power + nvml_power << " W"<< std::endl;
         std::cout << "TOTAL_JOULES: " << rapl_energy + nvml_energy << " J"<< std::endl;
-        std::cout << "NRUNS: " << N_runs << std::endl;
     } 
 
     void print_pmt_rocm_info() { 
-        std::cout << "NAME: " << name << std::endl;
-        std::cout << "ALGO: "<< algorithm << std::endl;
-        std::cout << "PRECISION: "<< sizeof (X_TYPE) <<" bytes"<< std::endl;
-        std::cout << "OMP_THREADS: "<< omp_threads << std::endl;
-        std::cout << "MPI_RANKS: "<< MPI_ranks << std::endl;
-        std::cout << "NGPUs: "<< N_gpus << std::endl;
-        std::cout << "GPU ID: "<< gpuid << std::endl;
-        std::cout << "SIZE: " << size <<std::endl;
+        print_basic_info();
         std::cout << "(RAPL) CPU_TIME: " << rapl_time << " | (ROCM) GPU_TIME: " << rocm_time << " s"<< std::endl;
         std::cout << "(RAPL) CPU_TIME_var: " << rapl_time_var << " | (ROCM) GPU_TIME_var: " << rocm_time_var << " s^2"<< std::endl;
         std::cout << "(RAPL) CPU_TIME_std: " << rapl_time_std << " | (ROCM) GPU_TIME_std: " << rocm_time_std << " s"<< std::endl;
@@ -214,7 +201,6 @@ class EnerBe {
         std::cout << "Total TIME: " << rapl_time + rocm_time << " s"<< std::endl;
         std::cout << "Total WATTS: " << rapl_power + rocm_power << " W"<< std::endl;
         std::cout << "Total JOULES: " << rapl_energy + rocm_energy << " J"<< std::endl;
-        std::cout << "NRUNS: " << N_runs << std::endl;
     } 
 
 
@@ -380,6 +366,14 @@ class EnerBe {
         rapl_energy_std = sqrt(rapl_energy_var);
         nvml_energy_std = sqrt(nvml_energy_var);
         rocm_energy_std = sqrt(rocm_energy_var);
+
+        
+        if (name == "xgemm")
+            {
+                perf = size * size * sizeof (X_TYPE) * 8.0 / (rapl_time + nvml_time + rocm_time); // FLOP/s
+                perf_unit = "FLOPs";
+            }
+
     }
 
 };
