@@ -284,7 +284,7 @@ void MM_t::openmp_jacobi(X_TYPE* A, X_TYPE* B, X_TYPE* C, X_TYPE* Ctmp, int ROWS
           /////////Create the cuBLAS Handle
         	CHECK_CUBLAS(cublasCreate(&cublasH));
           ///////////Enableing Automatic Use of Tensor Cores
-    	    //CHECK_CUBLAS(cublasSetMathMode(cublasH, CUBLAS_TENSOR_OP_MATH));
+    	    CHECK_CUBLAS(cublasSetMathMode(cublasH, CUBLAS_TENSOR_OP_MATH));
           #ifdef USE_DOUBLE
             CHECK_CUBLAS(cublasDgemm(cublasH, CUBLAS_OP_N, CUBLAS_OP_N, ROWS, COLUMNS, COLUMNS, &alpha, D_A, COLUMNS, D_B, COLUMNS, &beta, D_C, COLUMNS));
           #else
