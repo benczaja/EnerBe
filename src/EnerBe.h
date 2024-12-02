@@ -328,7 +328,6 @@ class EnerBe {
         if (name == "xgemm" && (algorithm == "simple" || algorithm == "openmp" || algorithm == "cblas"))
             {
                 // Keeping the FLOPs calculation simple
-                std:: cout << rapl_time <<std::endl;
                 perf = 2.0 * size * size * size / (rapl_time); // RAPL time could be dangerous
                 perf_unit = "FLOPs";
             }
