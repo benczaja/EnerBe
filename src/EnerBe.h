@@ -321,7 +321,8 @@ class EnerBe {
         
         if (name == "xgemm")
             {
-                perf = size * size * sizeof (X_TYPE) * 8.0 / (gpu_time); // FLOP/s
+                // Keeping the FLOPs calculation simple
+                perf = 2.0 * size * size * size / (gpu_time); // FLOP/s
                 perf_unit = "FLOPs";
             }
 
