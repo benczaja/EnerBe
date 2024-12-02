@@ -319,13 +319,19 @@ class EnerBe {
         gpu_energy_std = sqrt(gpu_energy_var);
 
         
-        if (name == "xgemm")
+        if (name == "xgemm" && (algorithm == "gpublas" || algorithm == "gputhread"))
             {
                 // Keeping the FLOPs calculation simple
                 perf = 2.0 * size * size * size / (gpu_time); // FLOP/s
                 perf_unit = "FLOPs";
             }
-
+        if (name == "xgemm" && (algorithm == "simple" || algorithm == "openmp" || algorithm == "cblas"))
+            {
+                // Keeping the FLOPs calculation simple
+                std:: cout << rapl_time <<std::endl;
+                perf = 2.0 * size * size * size / (rapl_time); // RAPL time could be dangerous
+                perf_unit = "FLOPs";
+            }
     }
 
 };
