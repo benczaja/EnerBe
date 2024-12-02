@@ -11,6 +11,8 @@ find_library(STDCXX_LIB NAMES ${LIBSTDCXX_NAME})
 if (STDCXX_LIB)
     message(STATUS "Found libstdc++: ${STDCXX_LIB}")
     string(REPLACE "/libstdc++.so" "" STDCXX_LIB_DIR ${STDCXX_LIB})
+    set(CMAKE_BUILD_RPATH "${CMAKE_BUILD_RPATH};${STDCXX_LIB_DIR}")
+    set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_RPATH};${STDCXX_LIB_DIR}")
 
 else()
     message(FATAL_ERROR "libstdc++ not found!")
@@ -44,12 +46,21 @@ if (ENABLE_HIP)
 
     set(HIP_PATH "/opt/rocm/hip" CACHE PATH "Path to which HIP has been installed")
     set(CMAKE_HIP_FLAGS "--offload-arch=gfx90a -fopenmp")
-    SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-rpath -Wl,/opt/rocm/lib")
+    SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-rpath -Wl,/opt/rocm/lib,-rpath -Wl,/opt/rocm/llvm/lib")
     set_source_files_properties(${SOURCES} PROPERTIES LANGUAGE HIP)
 endif()
 
 
 file(GLOB SOURCES "*.cpp")
+
+
+if (ENABLE_CUDA)
+    enable_language(CUDA)
+    #find_package(CUDAToolkit)
+    set(CMAKE_CUDA_FLAGS "-Xcompiler=-fopenmp -gencode arch=compute_75,code=sm_75 -gencode arch=compute_80,code=sm_80 -gencode arch=compute_90,code=sm_90 -lineinfo --ptxas-options=-v --disable-warnings")
+    set(CUDA_LIB_DIR "/usr/local/cuda/lib64")
+    set_source_files_properties(${SOURCES} PROPERTIES LANGUAGE CUDA)
+endif()
 
 
 if (ENABLE_PMT)
@@ -74,7 +85,7 @@ if (ENABLE_PMT)
         ExternalProject_Add(PMT_LIBRARY
 	    INSTALL_DIR			"${PROJECT_SOURCE_DIR}/pmt"
         GIT_REPOSITORY      "https://git.astron.nl/RD/pmt.git" 
-        CMAKE_ARGS          "${PMT_CONFIG_ARGS}"
+        CMAKE_ARGS          "${PMT_CONFIG_ARGS}" 
 	    )
         include_directories(${PROJECT_SOURCE_DIR}/pmt/include)
         link_directories(${PROJECT_SOURCE_DIR}/pmt/lib)
@@ -87,11 +98,7 @@ if (ENABLE_PMT)
     endif()
 endif()
 
-if (ENABLE_CUDA)
-    enable_language(CUDA)
-    set(CMAKE_CUDA_FLAGS "-Xcompiler=-fopenmp -gencode arch=compute_80,code=sm_80 -gencode arch=compute_90,code=sm_90 -lineinfo --ptxas-options=-v --disable-warnings")
-    set_source_files_properties(${SOURCES} PROPERTIES LANGUAGE CUDA)
-endif()
+
 
 
 
