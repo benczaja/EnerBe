@@ -352,6 +352,8 @@ class BenchMarker:
                         print("Could not find REGEX match for "+ device_type + pattern +": in " + self.tmp_out_file)
 
             # regex the results:
+            perf_pattern = r'PERF:\s(?P<rperf>' + self.regex_number + r')'
+            perf_unit_pattern = r'PERF_UNIT:\s(?P<rperfunit>\w*)'
             name_pattern = r'NAME:\s(?P<rname>\w*)'
             algo_pattern = r'ALGO:\s(?P<ralgo>\w*)'
             precision_pattern = r'PRECISION:\s(?P<rprecision>\d*)\sbytes'
@@ -362,6 +364,10 @@ class BenchMarker:
             size_pattern = r'SIZE:\s(?P<rsize>' + self.regex_number + r')\s'
             nruns_pattern = r'NRUNS:\s(?P<rnruns>' + self.regex_number + r')'
 
+            x = re.search(perf_pattern, output,re.MULTILINE)
+            self.results['PERF'] = [x['rperf']]
+            x = re.search(perf_unit_pattern, output,re.MULTILINE)
+            self.results['PERF_UNIT'] = [x['rperfunit']]
             x = re.search(name_pattern, output,re.MULTILINE)
             self.results['NAME'] = [x['rname']]
             x = re.search(algo_pattern, output,re.MULTILINE)
