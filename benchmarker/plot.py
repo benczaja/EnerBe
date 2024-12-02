@@ -68,6 +68,10 @@ class Plotter():
 
                 if plot_data['PERF_UNIT'].unique()[0] == "FLOPs":
                     plot_data['PERF'] /= 1e9
+                    if algo == "cblas":
+                        plot_data["GFLOP/J"] = plot_data['PERF']/plot_data['CPU_WATTS']
+                    if algo == "gpublas":
+                        plot_data["GFLOP/J"] = plot_data['PERF']/plot_data['GPU_WATTS']
         
                 f, axs = plt.subplots(3, 2, sharex=True, figsize=(8, 10))
 
@@ -75,7 +79,7 @@ class Plotter():
                 sns.lineplot(x=x, y="PERF",  hue="GPU_NAME", style=style,  data=plot_data, palette=self.arch_palette, markers=True,ax=axs[0,1])
                 
                 sns.lineplot(x=x, y="CPU_WATTS", hue="CPU_NAME", style=style,  data=plot_data, palette=self.arch_palette, markers=True,ax=axs[1,0],legend=False)
-                sns.lineplot(x=x, y="CPU_JOULES",hue="CPU_NAME", style=style,  data=plot_data, palette=self.arch_palette, markers=True,ax=axs[2,0],legend=False)
+                sns.lineplot(x=x, y="GFLOP/J",hue="CPU_NAME", style=style,  data=plot_data, palette=self.arch_palette, markers=True,ax=axs[2,0],legend=False)
                 
                 sns.lineplot(x=x, y="GPU_WATTS", hue="GPU_NAME", style=style,  data=plot_data, palette=self.arch_palette, markers=True,ax=axs[1,1],legend=False)
                 sns.lineplot(x=x, y="GPU_JOULES",hue="GPU_NAME", style=style,  data=plot_data, palette=self.arch_palette, markers=True,ax=axs[2,1],legend=False)
@@ -86,7 +90,7 @@ class Plotter():
 
                 axs[0,0].set_ylabel("CPU G" + plot_data['PERF_UNIT'].unique()[0])
                 axs[1,0].set_ylabel("CPU Power (W)")
-                axs[2,0].set_ylabel("CPU Energy (J)")
+                axs[2,0].set_ylabel("GFLOP/J")
 
                 f.suptitle(title)
                 axs[0,0].legend(loc=2, prop={'size': 6}, bbox_to_anchor=[0, 1.6])
