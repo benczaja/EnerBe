@@ -95,7 +95,7 @@ class Plotter():
 
                 axs[0,0].set_ylabel("CPU TIME (s)")
                 axs[1,0].set_ylabel("CPU Power (W)")
-                axs[2,0].set_ylabel("GFLOP/J")
+                axs[2,0].set_ylabel("CPU Energy (J)")
 
                 f.suptitle(title)
                 axs[0,0].legend(loc=2, prop={'size': 6}, bbox_to_anchor=[0, 1.6])
@@ -150,7 +150,7 @@ class Plotter():
                 axs[1,1].set_ylabel("GPU Power (W)")
                 axs[2,1].set_ylabel("FLOP/J")
 
-                axs[0,0].set_ylabel("GPU "+plot_data['PERF_UNIT'].unique()[0])
+                axs[0,0].set_ylabel("CPU "+plot_data['PERF_UNIT'].unique()[0])
                 axs[1,0].set_ylabel("CPU Power (W)")
                 axs[2,0].set_ylabel("FLOP/J")
 
