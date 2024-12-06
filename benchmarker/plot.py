@@ -120,32 +120,41 @@ class Plotter():
 
                 f, axs = plt.subplots(3, 2, sharex=True, figsize=(8, 10))
 
+
+                sns.lineplot(x=x, y="CPU_WATTS", hue="CPU_NAME", style=style,  data=plot_data, palette=self.arch_palette, markers=True,ax=axs[1,0])
+                sns.lineplot(x=x, y="GPU_WATTS", hue="GPU_NAME", style=style,  data=plot_data, palette=self.arch_palette, markers=True,ax=axs[1,1])
+
+
                 if "gpu" in algo:
-                    sns.lineplot(x=x, y="PERF",  hue="GPU_NAME", style=style,  data=plot_data, palette=self.arch_palette, markers=True,ax=axs[0,1])
+                    plot_data['PERF/J'] = plot_data['PERF']/plot_data['GPU_WATTS']
+                    sns.lineplot(x=x, y="PERF",  hue="GPU_NAME", style=style,  data=plot_data, palette=self.arch_palette, markers=True,ax=axs[0,1],legend=False)
+                    sns.lineplot(x=x, y='PERF/J',hue="GPU_NAME", style=style,  data=plot_data, palette=self.arch_palette, markers=True,ax=axs[2,1],legend=False)
                 else:
-                    sns.lineplot(x=x, y="PERF",  hue="CPU_NAME", style=style,  data=plot_data, palette=self.arch_palette, markers=True,ax=axs[0,0])
-
-                sns.lineplot(x=x, y="CPU_WATTS", hue="CPU_NAME", style=style,  data=plot_data, palette=self.arch_palette, markers=True,ax=axs[1,0],legend=False)
-                sns.lineplot(x=x, y="GPU_WATTS", hue="GPU_NAME", style=style,  data=plot_data, palette=self.arch_palette, markers=True,ax=axs[1,1],legend=False)
-
-                sns.lineplot(x=x, y="CPU_JOULES",hue="CPU_NAME", style=style,  data=plot_data, palette=self.arch_palette, markers=True,ax=axs[2,0],legend=False)
-                sns.lineplot(x=x, y="GPU_JOULES",hue="GPU_NAME", style=style,  data=plot_data, palette=self.arch_palette, markers=True,ax=axs[2,1],legend=False)
-
+                    plot_data['PERF/J'] = plot_data['PERF']/plot_data['CPU_WATTS']
+                    sns.lineplot(x=x, y="PERF",  hue="CPU_NAME", style=style,  data=plot_data, palette=self.arch_palette, markers=True,ax=axs[0,0],legend=False)
+                    sns.lineplot(x=x, y='PERF/J',hue="CPU_NAME", style=style,  data=plot_data, palette=self.arch_palette, markers=True,ax=axs[2,0],legend=False)
+                    
                 axs[0,1].set_ylabel("GPU "+plot_data['PERF_UNIT'].unique()[0])
                 axs[1,1].set_ylabel("GPU Power (W)")
-                axs[2,1].set_ylabel("GPU Energy (J)")
+                axs[2,1].set_ylabel("FLOP/J")
 
-                axs[0,0].set_ylabel("CPU TIME (s)")
+                axs[0,0].set_ylabel("GPU "+plot_data['PERF_UNIT'].unique()[0])
                 axs[1,0].set_ylabel("CPU Power (W)")
-                axs[2,0].set_ylabel("GFLOP/J")
+                axs[2,0].set_ylabel("FLOP/J")
 
-                f.suptitle(title)
-                axs[0,0].legend(loc=2, prop={'size': 6}, bbox_to_anchor=[0, 1.6])
-                axs[0,1].legend(loc=2, prop={'size': 6}, bbox_to_anchor=[0, 1.6])
+                axs[2,0].semilogy()
+                axs[2,1].semilogy()
 
-                plt.tight_layout()
+                axs[2,0].set_xlabel("Size")
+                axs[2,1].set_xlabel("Size")
 
-                plt.savefig("PPE_" + name + "_" + algo +".png",dpi=200)
+                f.supxlabel(title)
+                axs[1,0].legend(loc=2, prop={'size': 6}, bbox_to_anchor=[0.15, 2.6])
+                axs[1,1].legend(loc=2, prop={'size': 6}, bbox_to_anchor=[0.15, 2.6])
+
+                plt.subplots_adjust(wspace=0.22, hspace=0.05,bottom=0.1)
+            
+                plt.savefig("PPE_" + name + "_" + algo +".png",dpi=200,bbox_inches='tight')
 
     def GPU_TPE_plot(self,x,*args, **kwargs):
         hue = kwargs.get('hue', None)
