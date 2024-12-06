@@ -21,9 +21,9 @@ then
     # this probably needs to be fixed on LIZA
     export LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LIBRARY_PATH
     # BLAS
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cvmfs/software.eessi.io/versions/2023.06/software/linux/x86_64/amd/zen3/software/GCCcore/13.2.0/lib64
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cvmfs/software.eessi.io/versions/2023.06/software/linux/x86_64/intel/skylake_avx512/software/FlexiBLAS/3.3.1-GCC-13.2.0/lib
     # LIBSTD
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cvmfs/software.eessi.io/versions/2023.06/software/linux/x86_64/amd/zen3/software/OpenMPI/4.1.6-GCC-13.2.0/lib
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cvmfs/software.eessi.io/versions/2023.06/software/linux/x86_64/intel/skylake_avx512/software/GCCcore/13.2.0/lib64
 fi
 if [ $1 == "arm" ]
 then

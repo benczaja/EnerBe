@@ -417,7 +417,7 @@ class BenchMarker:
                 try:
                     output = subprocess.check_output(['rocm-smi', '--showproductname']).decode("utf-8")
                     print(output)
-                    pattern = r'Card series:\s*(?P<gpuname>.*)'
+                    pattern = r'Card Series:\s*(?P<gpuname>.*)'
                     x = re.search(pattern, output,re.MULTILINE)
                     self.arch_info["GPU_NAME"] = x['gpuname']
         
@@ -526,6 +526,7 @@ if __name__ == "__main__":
         plotter.load_data(benchmarker.EnerBe_root_dir + "/benchmarker/tmp_results/results.csv")
         #Maybe a good place to apply masks to the data
         plotter.TPE_plot(x="SIZE",style="PRECISION")
+        plotter.PPE_plot(x="SIZE",style="PRECISION")
 
     if args.run:
 

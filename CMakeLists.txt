@@ -17,4 +17,4 @@ include_directories(".")
 
 option(ENABLE_CUDA "Compile Cuda programs" OFF)
 option(ENABLE_HIP  "Compile HIP programs" OFF)
-option(ENABLE_PMT "Compile programs with PMT functionality" OFF)
+option(ENABLE_PMT "Compile programs with PMT functionality" ON)
