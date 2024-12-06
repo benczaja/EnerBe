@@ -16,14 +16,15 @@ class Plotter():
             "NVIDIA H100": "tab:green",
             "AMD EPYC 9334 32-Core Processor (x2)": "tab:green", # host for H100s
 
-            'NVIDIA TITAN RTX': 'tab:orange',
-            'Intel(R) Xeon(R) Gold 5118 CPU @ 2.30GHz (x2)': 'tab:orange', # host for TITAN RTX
-            'Intel(R) Xeon(R) Gold 6230 CPU @ 2.10GHz (x2)': 'tab:orange',
+            'NVIDIA TITAN RTX': 'tab:brown',
+            'Intel(R) Xeon(R) Gold 5118 CPU @ 2.30GHz (x2)': 'tab:brown', # host for TITAN RTX
+            'Intel(R) Xeon(R) Gold 6230 CPU @ 2.10GHz (x2)': 'tab:olive',
 
             'NVIDIA GH200 480GB': "tab:purple",
             'NVIDIA GH200 480GB (x1)': "tab:purple",
+            '- (x1)': "tab:purple", # because ben is lazy
 
-            "Instinct MI210": "tab:orange",
+            "Aldebaran/MI200 [Instinct MI210]": "tab:orange",
 
             "AMD Instinct MI300A Accelerator (x4)": "tab:red",
             "AMD Instinct MI300A Accelerator": "tab:red",
@@ -37,22 +38,33 @@ class Plotter():
 
             "Graviton3 (x1)": "tab:grey"
             }
+        
+        self.precision_style={
+            "32": "--",
+            "64": "-"
+            }
  
     def load_data(self,result_csv):
         self.data = pd.read_csv(result_csv,low_memory=False)
         self.plot_data = self.data
         self.plot_data["PRECISION"] = self.plot_data["PRECISION"]*8  
+        #self.plot_data["PRECISION"] = self.plot_data["PRECISION"].astype(str)
+
+        self.plot_data = self.plot_data.sort_values(by=["PRECISION"], ascending=False)
+
 
     def TPE_plot(self, x, *args, **kwargs):
         style = kwargs.get('style', None)
         sort_by = kwargs.get('sort_by', None)
 
+
         self.plot_data['CPU_NAME'] = self.plot_data['CPU_NAME'] + " (x" +self.plot_data['Sockets'].astype(str) + ")"
         for name in self.plot_data["NAME"].unique():
             for algo in self.plot_data["ALGO"].unique():
+
+                
             
                 plot_data = self.plot_data[(self.plot_data['NAME'] == name) & (self.plot_data['ALGO'] == algo)]
-
                 if len(plot_data) == 0:
                     continue
                 print("Plotting\nName: " + name + "\nAlgo: " + algo)
@@ -70,8 +82,7 @@ class Plotter():
                 f, axs = plt.subplots(3, 2, sharex=True, figsize=(8, 10))
 
                 sns.lineplot(x=x, y="CPU_TIME",  hue="CPU_NAME", style=style,  data=plot_data, palette=self.arch_palette, markers=True,ax=axs[0,0])
-                sns.lineplot(x=x, y="GPU_TIME",  hue="GPU_NAME", style=style,  data=plot_data, palette=self.arch_palette, markers=True,ax=axs[0,1])
-                
+
                 sns.lineplot(x=x, y="CPU_WATTS", hue="CPU_NAME", style=style,  data=plot_data, palette=self.arch_palette, markers=True,ax=axs[1,0],legend=False)
                 sns.lineplot(x=x, y="GPU_WATTS", hue="GPU_NAME", style=style,  data=plot_data, palette=self.arch_palette, markers=True,ax=axs[1,1],legend=False)
 
@@ -99,6 +110,7 @@ class Plotter():
         sort_by = kwargs.get('sort_by', None)
 
         #self.plot_data['CPU_NAME'] = self.plot_data['CPU_NAME'] + " (x" +self.plot_data['Sockets'].astype(str) + ")"
+        
         for name in self.plot_data["NAME"].unique():
             for algo in self.plot_data["ALGO"].unique():
             
