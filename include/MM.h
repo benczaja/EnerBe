@@ -11,5 +11,6 @@ public:
 
     ~MM() {}
 
-    void naiveGEMM();  // naive matrix multiplication
+    void naiveGEMM(); 
+    void tiledGEMM(); 
 };
