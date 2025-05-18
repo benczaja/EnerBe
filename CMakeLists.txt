@@ -1,20 +1,20 @@
-# Almost all CMake files should start with this
-# You should always specify a range with the newest
-# and oldest tested versions of CMake. This will ensure
-# you pick up the best policies.
-cmake_minimum_required(VERSION 3.24.0)
+cmake_minimum_required(VERSION 3.14)
+project(EnerBe)
 
-# This is your project statement. You should always list languages;
-# Listing the version is nice here since it sets lots of useful variables
-project(
-  EnerBe
-  VERSION 1.0
-  LANGUAGES C CXX)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Find packages go here.
-add_subdirectory(src)
-include_directories(".")
+# Set source and header directories
+include_directories(include)
 
-option(ENABLE_CUDA "Compile Cuda programs" OFF)
-option(ENABLE_HIP  "Compile HIP programs" OFF)
-option(ENABLE_PMT "Compile programs with PMT functionality" OFF)
+# Collect all source files
+set(SOURCES
+    src/MM.cpp
+    main.cpp
+)
+
+# Define the executable
+add_executable(EnerBe ${SOURCES})
+
+target_compile_options(EnerBe PRIVATE -Wall -Wextra -O3)
+
