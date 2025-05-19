@@ -4,6 +4,9 @@ project(EnerBe)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Find OpenMP
+find_package(OpenMP REQUIRED)
+
 # Set source and header directories
 include_directories(include)
 
@@ -16,5 +19,6 @@ set(SOURCES
 # Define the executable
 add_executable(EnerBe ${SOURCES})
 
-target_compile_options(EnerBe PRIVATE -Wall -Wextra -O3)
+target_compile_options(EnerBe PRIVATE -Wall -Wextra -O3 -march=native)
+target_link_libraries(EnerBe PRIVATE OpenMP::OpenMP_CXX)
 

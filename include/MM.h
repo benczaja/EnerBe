@@ -11,6 +11,10 @@ public:
 
     ~MM() {}
 
+    // Serial Implementations
     void naiveGEMM(); 
     void tiledGEMM(); 
+    // OpenMP Implementations
+    void naiveOpenMPGEMM();
+    void tiledOpenMPGEMM();
 };
