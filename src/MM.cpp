@@ -69,7 +69,7 @@ void MM<T>::naiveOpenMPGEMM() {
     Profiler profiler;
     
     profiler.timestart = profiler.measureOpenMPTime();
-    #pragma omp parallel for // Parallelize the outer two loops
+    #pragma omp parallel for collapse(2)// Parallelize the outer three
     for (int i = 0; i < mesh.Nx; ++i) {
         for (int j = 0; j < mesh.Ny; ++j) {
             T sum =0;
@@ -99,7 +99,7 @@ void MM<T>::tiledOpenMPGEMM(){
         for (int jj =0; jj < mesh.Ny; jj+=blockSize){
             for (int kk =0; kk < mesh.Ny; kk+=blockSize){
                 // Loop through the blocks
-                #pragma omp parallel for 
+                #pragma omp parallel for collapse(2)
                 for (int i = ii; i < std::min(ii + blockSize, mesh.Nx); ++i) {
                     for (int j = jj; j < std::min(jj + blockSize, mesh.Ny); ++j) {
                         T sum = 0;
