@@ -1,19 +1,64 @@
 #include <ctime>
 #include <omp.h>
+#include <iostream>
+#include <memory>
+#include <pmt.h> // needed for PMT
 
 
 class Profiler {
     public:
+        double time = 0.0;
+        double power = 0.0;
+        double energy = 0.0;
+
         double timestart = 0.0;
         double timeend = 0.0;
 
+        //std::unique_ptr<pmt::PMT> RAPLsensor = pmt::rapl::Rapl::Create();
+        // std::unique ptr<pmt::PMT> RAPLsensor(pmt::rapl::Rapl::Create());
+        std::unique_ptr<pmt::PMT> RAPLsensor = pmt::Create("Rapl");
+
+        pmt::State RAPLstart, RAPLend;
+        //auto RAPLstart;// = RAPLsensor->Read();
+        //auto RAPLend;// = RAPLsensor->Read();
+        bool measured = false;
+
+
     double measureSerialTime(){
-        // Sample the timer
-        clock_t currentTime = clock();
-        return (double) currentTime / CLOCKS_PER_SEC;
+
+        if (!measured) {
+            clock_t currentTime = clock();
+            timestart = (double) currentTime / CLOCKS_PER_SEC;
+            measured = true;
+        }else{
+            clock_t currentTime = clock();
+            timeend = (double) currentTime / CLOCKS_PER_SEC;
+            time = timeend - timestart;
+            measured = false;
+        }
     }
-    double measureOpenMPTime(){
-        // Sample the timer
-        return omp_get_wtime(); // Double
+    void measureOpenMPTime(){
+
+        if (!measured) {
+            timestart = omp_get_wtime();
+            measured = true;
+        }else{
+            timeend = omp_get_wtime();
+            time = timeend - timestart;
+            measured = false;
+        }
+    }
+
+    void measureRAPL(){
+        if (!measured) {
+            RAPLstart = RAPLsensor->Read();
+            measured = true;
+        }else{
+            RAPLend = RAPLsensor->Read();
+            time = pmt::PMT::seconds(RAPLstart, RAPLend);
+            power = pmt::PMT::watts(RAPLstart, RAPLend);
+            energy = pmt::PMT::joules(RAPLstart, RAPLend);
+            measured = false;
+        }
     }
 };

@@ -16,7 +16,8 @@ void MM<T>::naiveGEMM() {
     std::cout << "[MM] A prec: "<<sizeof(mesh.A[0])*8.0<<"\n"<<endl;
     Profiler profiler;
     
-    profiler.timestart = profiler.measureSerialTime();
+    profiler.measureRAPL();
+    
     for (int i = 0; i < mesh.Nx; ++i) {
         for (int j = 0; j < mesh.Ny; ++j) {
             T sum = static_cast<T>(0.0);
@@ -26,9 +27,11 @@ void MM<T>::naiveGEMM() {
             mesh.C[i * mesh.Ny + j] = sum; // Just element-wise multiply as a placeholder 
         }
     }
-    profiler.timeend = profiler.measureSerialTime();
+    profiler.measureRAPL();
 
-    std::cout << "[MM] Time taken: " << profiler.timeend - profiler.timestart << " seconds\n";
+    std::cout << "[MM] Time taken: " << profiler.time << " seconds\n";
+    std::cout << "[MM] Power taken: " << profiler.power << " W\n";
+    std::cout << "[MM] Energy taken: " << profiler.energy << " J\n";
 }
 
 
@@ -40,7 +43,7 @@ void MM<T>::tiledGEMM(){
     int blockSize = 32000/(3* sizeof(T)); // 3200 bytes/ sizeof(T) bytes per element
     Profiler profiler;
 
-    profiler.timestart = profiler.measureSerialTime();
+    profiler.measureSerialTime();
     
     for (int ii =0; ii < mesh.Nx; ii+=blockSize){
         for (int jj =0; jj < mesh.Ny; jj+=blockSize){
@@ -58,10 +61,9 @@ void MM<T>::tiledGEMM(){
             }
         }
     }
-    profiler.timeend = profiler.measureSerialTime();
+    profiler.measureSerialTime();
 
-
-    std::cout << "[MM] Time taken: " << profiler.timeend - profiler.timestart << " seconds\n";
+    std::cout << "[MM] Time taken: " << profiler.time << " seconds\n";
 }
 
 template<typename T>
@@ -70,7 +72,7 @@ void MM<T>::naiveOpenMPGEMM() {
     std::cout << "[MM] Running naiveOpenMPGEMM (prec "<<sizeof(T)*8.0<<" bits) on matrices A, B -> C\n";
     Profiler profiler;
     
-    profiler.timestart = profiler.measureOpenMPTime();
+    profiler.measureOpenMPTime();
     #pragma omp parallel for collapse(2)// Parallelize the outer three
     for (int i = 0; i < mesh.Nx; ++i) {
         for (int j = 0; j < mesh.Ny; ++j) {
@@ -81,9 +83,9 @@ void MM<T>::naiveOpenMPGEMM() {
             mesh.C[i * mesh.Ny + j] = sum; // Just element-wise multiply as a placeholder 
         }
     }
-    profiler.timeend = profiler.measureOpenMPTime();
+    profiler.measureOpenMPTime();
 
-    std::cout << "[MM] Time taken: " << profiler.timeend - profiler.timestart << " seconds\n";
+    std::cout << "[MM] Time taken: " << profiler.time << " seconds\n";
 }
 
 
@@ -95,7 +97,7 @@ void MM<T>::tiledOpenMPGEMM(){
     int blockSize = 32000/(3* sizeof(T)); // 3200 bytes/ sizeof(T) bytes per element
     Profiler profiler;
 
-    profiler.timestart = profiler.measureOpenMPTime();
+    profiler.measureOpenMPTime();
     
     for (int ii =0; ii < mesh.Nx; ii+=blockSize){
         for (int jj =0; jj < mesh.Ny; jj+=blockSize){
@@ -114,6 +116,6 @@ void MM<T>::tiledOpenMPGEMM(){
             }
         }
     }
-    profiler.timeend = profiler.measureOpenMPTime();
-    std::cout << "[MM] Time taken: " << profiler.timeend - profiler.timestart << " seconds\n";
+    profiler.measureOpenMPTime();
+    std::cout << "[MM] Time taken: " << profiler.time << " seconds\n";
 }
