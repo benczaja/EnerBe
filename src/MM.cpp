@@ -6,18 +6,20 @@
 // THis is needed because I want to keep the kernal implementations in the cpp
 template class MM<double>;
 template class MM<float>;
+template class MM<_Float16>;
 
 
 template<typename T>
 void MM<T>::naiveGEMM() {
     // Example dummy implementation (matrix multiply)
     std::cout << "[MM] Running naiveGEMM (prec "<<sizeof(T)*8.0<<" bits) on matrices A, B -> C\n";
+    std::cout << "[MM] A prec: "<<sizeof(mesh.A[0])*8.0<<"\n"<<endl;
     Profiler profiler;
     
     profiler.timestart = profiler.measureSerialTime();
     for (int i = 0; i < mesh.Nx; ++i) {
         for (int j = 0; j < mesh.Ny; ++j) {
-            T sum =0;
+            T sum = static_cast<T>(0.0);
              for (int k = 0; k < mesh.Ny; ++k) {
                 sum += mesh.A[i * mesh.Ny + k] * mesh.B[k * mesh.Ny + j];
             }

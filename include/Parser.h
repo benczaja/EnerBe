@@ -47,6 +47,7 @@ void print_usage()
         std::cout << algorithm_to_string(alg) << std::endl;
     }
     fprintf(stderr, "Accepted precisions are:\n");
+    std::cout << "--half (Most likely unsuported on your CPU. check the compiler flags, youll have better luck on AARCH)" << std::endl;
     std::cout << "--single" << std::endl;
     std::cout << "--double" << std::endl;
 }
@@ -99,6 +100,10 @@ void parse_arguments(int count, char*  args[], int& problem_size, std::string& p
         if (!success_precision) {
             if (arg == "--float") {
                 precision = "float";
+                success_precision = true;
+            }
+            else if (arg == "--half") {
+                precision = "half";
                 success_precision = true;
             }
             else if (arg == "--double") {

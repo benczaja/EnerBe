@@ -11,7 +11,7 @@ void run_algorithm(int size, AlgorithmType chosen_alg) {
     Initialize2D<T> initializer(mesh);
     initializer.initializeMatrices();
     MM<T> mm(mesh);
-
+    
     switch (chosen_alg) {
         case AlgorithmType::naiveGEMM:
             mm.naiveGEMM();
@@ -36,11 +36,12 @@ int main(int argc, char *argv[]) {
     AlgorithmType chosen_alg = AlgorithmType::Unknown;
 
     parse_arguments(argc, argv, size, precision, chosen_alg);
-
     if (precision == "single") {
         run_algorithm<float>(size, chosen_alg);
     } else if (precision == "double") {
         run_algorithm<double>(size, chosen_alg);
+    } else if (precision == "half") {
+        run_algorithm<_Float16>(size, chosen_alg);
     } else {
         std::cerr << "Unknown precision: " << precision << std::endl;
         return 1;
