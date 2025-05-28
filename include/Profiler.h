@@ -7,6 +7,8 @@
 
 class Profiler {
     public:
+        bool measured = false;
+
         double time = 0.0;
         double power = 0.0;
         double energy = 0.0;
@@ -14,17 +16,12 @@ class Profiler {
         double timestart = 0.0;
         double timeend = 0.0;
 
-        //std::unique_ptr<pmt::PMT> RAPLsensor = pmt::rapl::Rapl::Create();
-        // std::unique ptr<pmt::PMT> RAPLsensor(pmt::rapl::Rapl::Create());
-        std::unique_ptr<pmt::PMT> RAPLsensor = pmt::Create("Rapl");
+        // PMT stuff
+        std::unique_ptr<pmt::PMT> RAPLsensor = pmt::rapl::Rapl::Create();
+        pmt::State RAPLstart = RAPLsensor->Read();
+        pmt::State RAPLend = RAPLsensor->Read();
 
-        pmt::State RAPLstart, RAPLend;
-        //auto RAPLstart;// = RAPLsensor->Read();
-        //auto RAPLend;// = RAPLsensor->Read();
-        bool measured = false;
-
-
-    double measureSerialTime(){
+    void measureSerialTime(){
 
         if (!measured) {
             clock_t currentTime = clock();
@@ -60,5 +57,11 @@ class Profiler {
             energy = pmt::PMT::joules(RAPLstart, RAPLend);
             measured = false;
         }
+    }
+
+    void printResults() const {
+        std::cout << "[Profiler] Time: " << time << " seconds\n";
+        std::cout << "[Profiler] Power: " << power << " W\n";
+        std::cout << "[Profiler] Energy: " << energy << " J\n";
     }
 };

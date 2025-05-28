@@ -21,7 +21,7 @@ public:
 
     // Fills A, B, C
     void initializeMatrices() {
-        std::cout << "Initializing 2D Matricies of size (" << mesh.Nx << "," << mesh.Ny << ")" << std::endl;
+        std::cout << "[Init] Initializing 2D Matricies of size (" << mesh.Nx << "," << mesh.Ny << ")" << std::endl;
         mesh.A = (T *) malloc((mesh.Nx * mesh.Ny) * sizeof(T));
         mesh.B = (T *) malloc((mesh.Nx * mesh.Ny) * sizeof(T));
         mesh.C = (T *) malloc((mesh.Nx * mesh.Ny) * sizeof(T));
@@ -32,7 +32,7 @@ public:
             unsigned int randomState = i ^ globalSeed;
             mesh.A[i] = (T) rand_r(&randomState) / RAND_MAX;
             mesh.B[i] = (T) rand_r(&randomState) / RAND_MAX;
-            mesh.C[i] = 0.0;
+            mesh.C[i] = static_cast<T>(0.0);
         }
     }
 };

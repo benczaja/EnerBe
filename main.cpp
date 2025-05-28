@@ -4,6 +4,8 @@
 #include "MM.h"
 #include "Parser.h"
 #include <iostream>
+#include <pmt.h>
+
 
 template<typename T>
 void run_algorithm(int size, AlgorithmType chosen_alg) {
@@ -34,6 +36,7 @@ int main(int argc, char *argv[]) {
     int size = 0;
     std::string precision = "single"; // default precision
     AlgorithmType chosen_alg = AlgorithmType::Unknown;
+
 
     parse_arguments(argc, argv, size, precision, chosen_alg);
     if (precision == "single") {
