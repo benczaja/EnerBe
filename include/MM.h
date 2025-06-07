@@ -17,4 +17,7 @@ public:
     // OpenMP Implementations
     void naiveOpenMPGEMM();
     void tiledOpenMPGEMM();
+    // CUDA Implementations
+    void threadCudaGEMM();
+    void threadCudaGEMM_kernal();
 };
