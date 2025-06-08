@@ -16,10 +16,19 @@ class Profiler {
         double timestart = 0.0;
         double timeend = 0.0;
 
-        // PMT stuff
-        std::unique_ptr<pmt::PMT> RAPLsensor = pmt::rapl::Rapl::Create();
-        pmt::State RAPLstart = RAPLsensor->Read();
-        pmt::State RAPLend = RAPLsensor->Read();
+        // Create the PMT RAPL sensors
+        std::unique_ptr<pmt::PMT> RAPLsensor;
+        pmt::State RAPLstart;
+        pmt::State RAPLend;
+
+        // Probably best to do it the constructor
+        Profiler()
+            : RAPLsensor(pmt::rapl::Rapl::Create()),
+            RAPLstart(RAPLsensor->Read()),
+        
+            RAPLend(RAPLsensor->Read()) {}
+
+
 
     void measureSerialTime(){
 
