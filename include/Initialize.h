@@ -30,8 +30,8 @@ public:
 
         for (int i = 0; i < (mesh.Nx * mesh.Ny); i++) {
             unsigned int randomState = i ^ globalSeed;
-            mesh.A[i] = (T) rand_r(&randomState) / RAND_MAX;
-            mesh.B[i] = (T) rand_r(&randomState) / RAND_MAX;
+            mesh.A[i] = (T) rand_r(&randomState) / (T) RAND_MAX;
+            mesh.B[i] = (T) rand_r(&randomState) / (T) RAND_MAX;
             mesh.C[i] = static_cast<T>(0.0);
         }
     }

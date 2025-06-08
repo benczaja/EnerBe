@@ -5,10 +5,14 @@
 #include "Parser.h"
 #include <iostream>
 #include <pmt.h>
+#ifdef ENABLE_CUDA
+    #include <cuda_runtime.h>
+    #include <cuda_fp16.h>
+#endif
 
 
 template<typename T>
-void run_algorithm(int size, AlgorithmType chosen_alg) {
+void run_CPU_algorithm(int size, AlgorithmType chosen_alg) {
     Mesh2D<T> mesh(size, size);
     Initialize2D<T> initializer(mesh);
     initializer.initializeMatrices();
@@ -31,6 +35,24 @@ void run_algorithm(int size, AlgorithmType chosen_alg) {
             throw std::runtime_error("Unknown algorithm type");
     }
 }
+#ifdef ENABLE_CUDA
+template<typename T>
+void run_GPU_algorithm(int size, AlgorithmType chosen_alg) {
+    Mesh2D<T> mesh(size, size);
+    Initialize2D<T> initializer(mesh);
+    initializer.initializeMatrices();
+    MM<T> mm(mesh);
+    
+    switch (chosen_alg) {
+        case AlgorithmType::threadCudaGEMM:
+            mm.threadCudaGEMM();
+            break;
+        default:
+            throw std::runtime_error("Unknown algorithm type");
+    }
+}
+#endif
+
 
 int main(int argc, char *argv[]) {
     int size = 0;
@@ -40,11 +62,15 @@ int main(int argc, char *argv[]) {
 
     parse_arguments(argc, argv, size, precision, chosen_alg);
     if (precision == "single") {
-        run_algorithm<float>(size, chosen_alg);
+        run_CPU_algorithm<float>(size, chosen_alg);
     } else if (precision == "double") {
-        run_algorithm<double>(size, chosen_alg);
+        run_CPU_algorithm<double>(size, chosen_alg);
     } else if (precision == "half") {
-        run_algorithm<_Float16>(size, chosen_alg);
+        #ifdef ENABLE_CUDA
+            run_GPU_algorithm<__half>(size, chosen_alg);
+        #else
+            run_GPU_algorithm<_Float16>(size, chosen_alg);
+        #endif
     } else {
         std::cerr << "Unknown precision: " << precision << std::endl;
         return 1;

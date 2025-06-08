@@ -25,7 +25,6 @@ class Profiler {
         Profiler()
             : RAPLsensor(pmt::rapl::Rapl::Create()),
             RAPLstart(RAPLsensor->Read()),
-        
             RAPLend(RAPLsensor->Read()) {}
 
 

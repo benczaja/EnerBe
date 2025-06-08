@@ -8,6 +8,10 @@ enum class AlgorithmType {
     tiledGEMM,
     naiveOpenMPGEMM,
     tiledOpenMPGEMM,
+
+    #ifdef ENABLE_CUDA
+        threadCudaGEMM,
+    #endif
     Unknown
 };
 
@@ -16,6 +20,9 @@ inline AlgorithmType algorithm_from_string(const std::string& s) {
     if (s == "--tiled-gemm")    return AlgorithmType::tiledGEMM;
     if (s == "--naiveopenmp-gemm")    return AlgorithmType::naiveOpenMPGEMM;
     if (s == "--tiledopenmp-gemm")    return AlgorithmType::tiledOpenMPGEMM;
+    #ifdef ENABLE_CUDA
+        if (s == "--threadcuda-gemm") return AlgorithmType::threadCudaGEMM;
+    #endif  
     return AlgorithmType::Unknown;
 }
 
@@ -24,7 +31,10 @@ inline std::string algorithm_to_string(AlgorithmType alg) {
     case AlgorithmType::naiveGEMM: return "--naive-gemm";
     case AlgorithmType::tiledGEMM: return "--tiled-gemm";
     case AlgorithmType::naiveOpenMPGEMM: return "--naiveopenmp-gemm";    
-    case AlgorithmType::tiledOpenMPGEMM: return "--tiledopenmp-gemm";    
+    case AlgorithmType::tiledOpenMPGEMM: return "--tiledopenmp-gemm";
+    #ifdef ENABLE_CUDA
+        case AlgorithmType::threadCudaGEMM: return "--threadcuda-gemm";
+    #endif
     default:                            return "Unknown";
     }
 }
@@ -41,6 +51,9 @@ void print_usage()
     AlgorithmType all_algorithms[] = {
         AlgorithmType::naiveGEMM, AlgorithmType::tiledGEMM,
         AlgorithmType::naiveOpenMPGEMM, AlgorithmType::tiledOpenMPGEMM
+        #ifdef ENABLE_CUDA
+            , AlgorithmType::threadCudaGEMM
+        #endif
         };
     fprintf(stderr, "\nAccepted algorithms are:\n");
     for (auto alg : all_algorithms) {
